@@ -1,15 +1,32 @@
 class Entity{
-  Integer X;
-  Integer Y;
+  Integer x;
+  Integer y;
+  PImage model;
+  
+  Entity(Integer x, Integer y){
+    this.x = x;
+    this.y = y;
+  }
   
   Integer getX(){
-    return 0;//to compile
-  }
-  Integer getY(){
-    return 0;//to compile
+    return x;
   }
   
+  Integer getY(){
+    return y;
+  }
+  
+  void display(){}
 }
+
+interface Alive{
+  Integer getHealth();
+  Integer getStrength();
+  void setHealth(Integer newhealth);
+  void setStrength(Integer newstrength);
+}
+
+  
 
 void setup(){}
 void draw(){}
