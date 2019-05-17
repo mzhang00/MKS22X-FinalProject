@@ -1,8 +1,17 @@
+//Player player = new Player(width/2, height/2, 100, 10);
+ArrayList<Room> rooms;
+
+class Room{
+  Integer number = 1;
+  //ArrayList<Monster> enemies;
+  //loot
+}  
+
 class Entity {
   Integer x;
   Integer y;
   PImage model;
-  
+
   Entity(){
   }
 
@@ -34,6 +43,12 @@ class Player extends Entity implements Alive {
   Integer health;
   Integer strength;
   
+  /*Player(Integer newx, Integer newy, Integer h, Integer s){
+    health = h;
+    strength = s;
+    super(newx,newy);
+  }*/
+  
   Integer getHealth() {
     return 1;
   }
@@ -49,7 +64,7 @@ class Player extends Entity implements Alive {
 void makeGrid(){
   for(int i = 0; i < width/10; i++){
     for (int c = 0; c < height/10; c++){
-      fill(255);
+      noFill();
       stroke(0);
       rect(i * 10, c * 10, 10, 10);
     }
