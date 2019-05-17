@@ -2,8 +2,12 @@ class Entity{
   Integer X;
   Integer Y;
   
-  Integer getX(){}
-  Integer getY(){}
+  Integer getX(){
+    return 0;//to compile
+  }
+  Integer getY(){
+    return 0;//to compile
+  }
   
 }
 
