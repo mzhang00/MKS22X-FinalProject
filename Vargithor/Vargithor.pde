@@ -46,9 +46,19 @@ class Player extends Entity implements Alive {
   }
 }
 
-
+void makeGrid(){
+  for(int i = 0; i < width/10; i++){
+    for (int c = 0; c < height/10; c++){
+      fill(255);
+      stroke(0);
+      rect(i * 10, c * 10, 10, 10);
+    }
+  }
+}
 
 void setup() {
+  size(1000,700);
+  makeGrid();
 }
 void draw() {
 }
