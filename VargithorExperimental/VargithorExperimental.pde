@@ -52,6 +52,7 @@ class Player extends Entity implements Alive {
   Integer health;
   Integer strength;
   Integer speed;
+  boolean up,down,left,right;
   
   /*Player(Integer newx, Integer newy, Integer h, Integer s){
     health = h;
