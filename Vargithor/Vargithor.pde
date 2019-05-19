@@ -74,32 +74,36 @@ class Player extends Entity implements Alive {
   void setStrength(Integer newstrength) {
   }
   void keyPressed(){
-    
+    switch(key)
+    {
+      case 'w' : up == true;
+      case 's' : down == true;
+      case 'a' : left == true;
+      case 'd' : right == true;
+    }
   }
   void keyReleased(){
+    switch(key)
+    {
+      case 'w' : up == false;
+      case 's' : down == false;
+      case 'a' : left == false;
+      case 'd' : right == false;
+    }
   }
   void move() {
     float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
-    while(keyPressed)
+    boolean diagonalMoving = up && left || up && right || down && left || down && right;
+    if(diagonalMoving)
     {
-      if (key == 'w')
-      {
-        y -= speed;
-      }
-      if (key == 's')
-      {
-        y += speed;
-      }
-      if (key == 'a')
-      {
-        x += speed;
-      }
-      if (key == 'd')
-      {
-        x -= speed;
-      }
+      x += speed * diagonalFactor * (int(left) + int(right));
+      y += speed * diagonalFactor * (int(up) + int(down));
     }
-    
+    else
+    {
+      x += speed * (int(left) + int(right));
+      y += speed * (int(up) + int(down));
+    }
   }
 }
 
