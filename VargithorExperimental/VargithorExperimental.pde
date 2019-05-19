@@ -28,6 +28,14 @@ class Entity {
     return y;
   }
 
+  void setX(Integer input) {
+    x = input;
+  }
+  
+  void setY(Integer input) {
+    y = input;
+  }
+
   void display() {
   }
 }
@@ -43,6 +51,7 @@ interface Alive {
 class Player extends Entity implements Alive {
   Integer health;
   Integer strength;
+  Integer speed;
   
   /*Player(Integer newx, Integer newy, Integer h, Integer s){
     health = h;
@@ -56,13 +65,40 @@ class Player extends Entity implements Alive {
   Integer getStrength() {
     return 1;
   }
+  Integer getSpeed() }
+    return 1;
+  }
   void setHealth(Integer newhealth) {
   }
   void setStrength(Integer newstrength) {
   }
   void keyPressed(){
+    
   }
   void keyReleased(){
+  }
+  void move() {
+    float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
+    while(keyPressed)
+    {
+      if (key == 'w')
+      {
+        y -= speed;
+      }
+      if (key == 's')
+      {
+        y += speed;
+      }
+      if (key == 'a')
+      {
+        x += speed;
+      }
+      if (key == 'd')
+      {
+        x -= speed;
+      }
+    }
+    
   }
 }
 
