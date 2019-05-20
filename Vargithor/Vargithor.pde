@@ -123,7 +123,7 @@ void makeGrid() {
   }
 }
 
-Player player = new Player(500.0, 350.0, 10, 10, 10);
+Player player = new Player(500.0, 350.0, 10, 10, 5);
 
 void keyPressed() {
   switch(key)
