@@ -1,125 +1,153 @@
 //Player player = new Player(width/2, height/2, 100, 10);
-ArrayList<Room> rooms;
+//ArrayList<Room> rooms;
 
-class Room{
+class Room {
   Integer number = 1;
   //ArrayList<Monster> enemies;
   //loot
 }  
 
 class Entity {
-  Integer x;
-  Integer y;
-  PImage model;
+  Float x;
+  Float y;
+  //PImage model;
 
-  Entity(){
-  }
-
-  Entity(Integer x, Integer y) {
+  Entity(Float x, Float y) {
     this.x = x;
     this.y = y;
   }
 
-  Integer getX() {
+  Float getX() {
     return x;
   }
 
-  Integer getY() {
+  Float getY() {
     return y;
   }
 
-  void setX(Integer input) {
+  void setX(Float input) {
     x = input;
   }
-  
-  void setY(Integer input) {
+
+  void setY(Float input) {
     y = input;
   }
 
   void display() {
+    ellipse(x, y, 10, 10);
   }
-}
 
-interface Alive {
-  Integer getHealth();
-  Integer getStrength();
-  void setHealth(Integer newhealth);
-  void setStrength(Integer newstrength);
-}
-
-
-class Player extends Entity implements Alive {
-  Integer health;
-  Integer strength;
-  Integer speed;
-  boolean up,down,left,right;
-  
-  /*Player(Integer newx, Integer newy, Integer h, Integer s){
-    health = h;
-    strength = s;
-    super(newx,newy);
-  }*/
-  
-  Integer getHealth() {
-    return 1;
-  }
-  Integer getStrength() {
-    return 1;
-  }
-  Integer getSpeed() }
-    return 1;
-  }
-  void setHealth(Integer newhealth) {
-  }
-  void setStrength(Integer newstrength) {
-  }
-  void keyPressed(){
-    switch(key)
-    {
-      case 'w' : up == true;
-      case 's' : down == true;
-      case 'a' : left == true;
-      case 'd' : right == true;
+  void detect(Entity other) {
+    if (other.getX() == this.getX() && other.getY() == this.getY()) {
+      //
     }
   }
-  void keyReleased(){
+}
+
+
+class Player extends Entity {
+  Integer health;
+  Integer strength;
+  Integer speed = 10;
+  boolean up, down, left, right;
+
+  Player(Float newx, Float newy, Integer h, Integer s) {
+    super(newx, newy);    
+    health = h;
+    strength = s;
+  }
+
+  void display() {
+    rectMode(CENTER);
+    fill(0, 255, 0);
+    rect(x, y, 10, 10);
+  }
+
+  Integer getHealth() {
+    return health;
+  }
+  Integer getStrength() {
+    return strength;
+  }
+  Integer getSpeed() {
+    return speed;
+  }
+  void setHealth(Integer newhealth) {
+    health = newhealth;
+  }
+
+  void setStrength(Integer newstrength) {
+    strength = newstrength;
+  }
+  void keyPressed() {
     switch(key)
     {
-      case 'w' : up == false;
-      case 's' : down == false;
-      case 'a' : left == false;
-      case 'd' : right == false;
+    case 'w' : 
+      up = true;
+    case 's' : 
+      down = true;
+    case 'a' : 
+      left = true;
+    case 'd' : 
+      right = true;
+    }
+  }
+  void keyReleased() {
+    switch(key)
+    {
+    case 'w' : 
+      up = false;
+    case 's' : 
+      down = false;
+    case 'a' : 
+      left = false;
+    case 'd' : 
+      right = false;
     }
   }
   void move() {
-    float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
+    //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
+    Float diagonalFactor = new Float(Math.sqrt(1 / ((Math.pow(1, 2)) + 1)));
     boolean diagonalMoving = up && left || up && right || down && left || down && right;
-    if(diagonalMoving)
+    if (diagonalMoving)
     {
-      x += speed * diagonalFactor * (int(left) + int(right));
-      y += speed * diagonalFactor * (int(up) + int(down));
-    }
-    else
+      x += float(speed) * diagonalFactor * (float((int(left) + int(right))));
+      y += float(speed) * diagonalFactor * (float((int(up) + int(down))));
+    } else
     {
-      x += speed * (int(left) + int(right));
-      y += speed * (int(up) + int(down));
+      x += float(speed) * float(int(left) + int(right));
+      y += float(speed) * float(int(up) + int(down));
     }
   }
 }
 
-void makeGrid(){
-  for(int i = 0; i < width/10; i++){
-    for (int c = 0; c < height/10; c++){
-      noFill();
-      stroke(0);
-      rect(i * 10, c * 10, 10, 10);
+void makeGrid() {
+  for (int i = 0; i < width/10; i++) {
+    for (int c = 0; c < height/10; c++) {
+      if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
+        fill(101, 67, 33);
+        stroke(0);
+        rect(i * 10, c * 10, 10, 10);
+      } else {
+        noFill();
+        stroke(0);
+        rect(i * 10, c * 10, 10, 10);
+      }
     }
   }
 }
+
+Player player = new Player(500.0, 350.0, 10, 10);
 
 void setup() {
-  size(1000,700);
+  size(1000, 700);
   makeGrid();
+  System.out.println(width/2);
+  System.out.println(player.getX());
+  player.display();
 }
+
 void draw() {
+  //System.out.println(player.getX());
+  player.move();
 }
