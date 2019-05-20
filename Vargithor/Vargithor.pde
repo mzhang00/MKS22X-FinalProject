@@ -1,6 +1,15 @@
 //Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+interface Alive{
+  Integer getHealth();
+  Integer getStrength();
+  Integer getSpeed();
+  void setSpeed(Integer speed);
+  void setHealth(Integer newhealth);
+  void setStrength(Integer newstrength);
+}
+
 class Room {
   Integer number = 1;
   //ArrayList<Monster> enemies;
@@ -45,7 +54,19 @@ class Entity {
 }
 
 
-class Player extends Entity {
+class Bullet extends Entity {
+  Integer strength;
+  Float xDirection;
+  Float yDirection;
+  Bullet(Integer s, Float thisx, Float thisy, Float newx, Float newy){
+    super(thisx,thisy);
+    strength = s;
+    xDirection = newx;
+    yDirection = newy;
+  }
+}
+
+class Player extends Entity implements Alive {
   Integer health;
   Integer strength;
   Integer speed;
