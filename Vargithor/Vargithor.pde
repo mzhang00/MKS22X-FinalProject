@@ -1,7 +1,7 @@
 //Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
-interface Alive{
+interface Alive {
   Integer getHealth();
   Integer getStrength();
   Integer getSpeed();
@@ -19,7 +19,7 @@ class Room {
 class Entity {
   Float x;
   Float y;
-  //PImage model;
+  PShape model;
 
   Entity(Float x, Float y) {
     this.x = x;
@@ -54,15 +54,32 @@ class Entity {
 }
 
 
-class Bullet extends Entity {
+class myBullet extends Entity {
   Integer strength;
   Float xDirection;
   Float yDirection;
-  Bullet(Integer s, Float thisx, Float thisy, Float newx, Float newy){
-    super(thisx,thisy);
+  myBullet(Integer s, Float thisx, Float thisy, Float newx, Float newy) {
+    super(thisx, thisy);
     strength = s;
     xDirection = newx;
     yDirection = newy;
+  }
+  void display() {
+    model = createShape(ELLIPSE, x, y, 3, 3);
+    model.setFill(color(0, 0, 0));
+    shape(model);
+  }
+  void move() {
+    if (x != xDirection && y != yDirection){
+      
+    x -= (x - xDirection)/500.0;
+    y -= (y - yDirection)/350.0;
+    }
+  }
+  void die() {
+    if (x <= 0 || x >= 1000 || y <= 0 || y >= 700) {
+      bullets.remove(this);
+    }
   }
 }
 
@@ -77,16 +94,19 @@ class Player extends Entity implements Alive {
     super(newx, newy);    
     health = h;
     strength = str;
-    speed = spd; 
-    
+    speed = spd;
   }
-   void display(){
+  void shoot() {
+    if (mousex != null && mousey != null) {
+      myBullet bullet = new myBullet(1, x, y, mousex, mousey);
+      bullets.add(bullet);
+    }
+  }
+  void display() {
     rectMode(CENTER);
     model = createShape(RECT, x, y, 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
-    
-      
   }
 
   Integer getHealth() {
@@ -105,11 +125,11 @@ class Player extends Entity implements Alive {
   void setStrength(Integer newstrength) {
     strength = newstrength;
   }
-  
+
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
-  
+
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
     //System.out.println(int(left) + " " + int(right));
@@ -143,8 +163,8 @@ void makeGrid() {
     }
   }
 }
-
-Player player = new Player(500.0, 350.0, 10, 10, 5);
+ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
+Player player = new Player(500.0, 350.0, 5, 5, 5);
 
 void keyPressed() {
   switch(key)
@@ -181,18 +201,48 @@ void keyReleased() {
   }
 }
 
+Float mousex;
+Float mousey;
+
+void mouseClicked() {
+ mousex = (float) mouseX;
+ mousey = (float) mouseY;
+ }
+/*
+void mousePressed() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}
+void mouseDragged() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}*/
+
+void mouseReleased() {
+  mousex = null;
+  mousey = null;
+}
+
+
 void setup() {
   size(1000, 700);
   makeGrid();
-  System.out.println(width/2);
-  System.out.println(player.getX());
+  //System.out.println(width/2);
+  //System.out.println(player.getX());
   //player.display();
 }
 
 void draw() {
-  //System.out.println(player.getX());
+  System.out.println(mousex + " " + mousey);
   background(255);
   makeGrid();
   player.display();
   player.move();
+  player.shoot();
+  for (myBullet bullet : bullets) {
+    bullet.display(); 
+    bullet.move();
+  }
+  mousex = null;
+  mousey = null;
 }
