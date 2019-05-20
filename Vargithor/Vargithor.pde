@@ -59,7 +59,7 @@ class Player extends Entity {
     speed = spd; 
     
   }
-  void display(){
+   void display(){
     rectMode(CENTER);
     model = createShape(RECT, x, y, 10, 10);
     model.setFill(color(0, 255, 0));
@@ -167,6 +167,7 @@ void setup() {
 
 void draw() {
   //System.out.println(player.getX());
+  background(255);
   player.display();
   player.move();
 }

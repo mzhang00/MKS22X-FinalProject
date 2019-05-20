@@ -64,6 +64,7 @@ class Player extends Entity {
     model = createShape(RECT, x, y, 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
+    
   }
 
   Integer getHealth() {
@@ -167,6 +168,7 @@ void setup() {
 
 void draw() {
   //System.out.println(player.getX());
+  background(255);
   player.display();
   player.move();
 }
