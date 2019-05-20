@@ -64,6 +64,8 @@ class Player extends Entity {
     model = createShape(RECT, x, y, 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
+    
+      
   }
 
   Integer getHealth() {
@@ -105,11 +107,12 @@ class Player extends Entity {
 }
 
 void makeGrid() {
+  rectMode(CORNER);
   for (int i = 0; i < width/10; i++) {
     for (int c = 0; c < height/10; c++) {
       if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
         fill(101, 67, 33);
-        stroke(0);
+        noStroke();
         rect(i * 10, c * 10, 10, 10);
       } else {
         noFill();
@@ -168,6 +171,7 @@ void setup() {
 void draw() {
   //System.out.println(player.getX());
   background(255);
+  makeGrid();
   player.display();
   player.move();
 }
