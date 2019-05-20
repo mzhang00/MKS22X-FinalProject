@@ -56,7 +56,6 @@ class Player extends Entity {
     health = h;
     strength = s;
   }
-
   void display() {
     rectMode(CENTER);
     fill(0, 255, 0);
@@ -79,44 +78,20 @@ class Player extends Entity {
   void setStrength(Integer newstrength) {
     strength = newstrength;
   }
-  void keyPressed() {
-    switch(key)
-    {
-    case 'w' : 
-      up = true;
-    case 's' : 
-      down = true;
-    case 'a' : 
-      left = true;
-    case 'd' : 
-      right = true;
-    }
-  }
-  void keyReleased() {
-    switch(key)
-    {
-    case 'w' : 
-      up = false;
-    case 's' : 
-      down = false;
-    case 'a' : 
-      left = false;
-    case 'd' : 
-      right = false;
-    }
-  }
+  
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
+    //System.out.println(int(left) + " " + int(right));
     Float diagonalFactor = new Float(Math.sqrt(1 / ((Math.pow(1, 2)) + 1)));
     boolean diagonalMoving = up && left || up && right || down && left || down && right;
     if (diagonalMoving)
     {
-      x += float(speed) * diagonalFactor * (float((int(left) + int(right))));
-      y += float(speed) * diagonalFactor * (float((int(up) + int(down))));
+      x += float(speed) * diagonalFactor * (float((int(right) - int(left))));
+      y += float(speed) * diagonalFactor * (float((int(down) - int(up))));
     } else
     {
-      x += float(speed) * float(int(left) + int(right));
-      y += float(speed) * float(int(up) + int(down));
+      x += float(speed) * float(int(right) - int(left));
+      y += float(speed) * float(int(down) - int(up));
     }
   }
 }
@@ -139,15 +114,51 @@ void makeGrid() {
 
 Player player = new Player(500.0, 350.0, 10, 10);
 
+void keyPressed() {
+  switch(key)
+  {
+  case 'w' : 
+    player.up = true;
+    break;
+  case 's' : 
+    player.down = true;
+    break;
+  case 'a' : 
+    player.left = true;
+    break;
+  case 'd' : 
+    player.right = true;
+    break;
+  }
+}
+void keyReleased() {
+  switch(key)
+  {
+  case 'w' : 
+    player.up = false;
+    break;
+  case 's' : 
+    player.down = false;
+    break;
+  case 'a' : 
+    player.left = false;
+    break;
+  case 'd' : 
+    player.right = false;
+    break;
+  }
+}
+
 void setup() {
   size(1000, 700);
   makeGrid();
   System.out.println(width/2);
   System.out.println(player.getX());
-  player.display();
+  //player.display();
 }
 
 void draw() {
   //System.out.println(player.getX());
+  player.display();
   player.move();
 }
