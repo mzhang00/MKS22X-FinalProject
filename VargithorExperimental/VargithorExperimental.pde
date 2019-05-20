@@ -48,18 +48,22 @@ class Entity {
 class Player extends Entity {
   Integer health;
   Integer strength;
-  Integer speed = 10;
+  Integer speed;
   boolean up, down, left, right;
+  PShape model;
 
-  Player(Float newx, Float newy, Integer h, Integer s) {
+  Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
     health = h;
-    strength = s;
+    strength = str;
+    speed = spd; 
+    
   }
-  void display() {
+  void display(){
     rectMode(CENTER);
-    fill(0, 255, 0);
-    rect(x, y, 10, 10);
+    model = createShape(RECT, x, y, 10, 10);
+    model.setFill(color(0, 255, 0));
+    shape(model);
   }
 
   Integer getHealth() {
@@ -77,6 +81,10 @@ class Player extends Entity {
 
   void setStrength(Integer newstrength) {
     strength = newstrength;
+  }
+  
+  void setSpeed(Integer newspeed) {
+    speed = newspeed;
   }
   
   void move() {
@@ -112,7 +120,7 @@ void makeGrid() {
   }
 }
 
-Player player = new Player(500.0, 350.0, 10, 10);
+Player player = new Player(500.0, 350.0, 10, 10, 10);
 
 void keyPressed() {
   switch(key)
