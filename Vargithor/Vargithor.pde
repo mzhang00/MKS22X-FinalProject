@@ -5,9 +5,10 @@ interface Alive {
   Integer getHealth();
   Integer getStrength();
   Integer getSpeed();
-  void setSpeed(Integer speed);
+  
   void setHealth(Integer newhealth);
   void setStrength(Integer newstrength);
+  void setSpeed(Integer speed);
 }
 
 class Room {
@@ -162,6 +163,11 @@ void makeGrid() {
       }
     }
   }
+}
+
+class Monster extends Entity implements Alive{
+  Integer health;
+  Integer strength;
 }
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);
