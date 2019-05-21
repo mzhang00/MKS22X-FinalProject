@@ -5,9 +5,10 @@ interface Alive {
   Integer getHealth();
   Integer getStrength();
   Integer getSpeed();
-  void setSpeed(Integer speed);
+  
   void setHealth(Integer newhealth);
   void setStrength(Integer newstrength);
+  void setSpeed(Integer newspeed);
 }
 
 class Room {
@@ -147,6 +148,47 @@ class Player extends Entity implements Alive {
   }
 }
 
+
+
+class Monster extends Entity implements Alive{
+  Integer health;
+  Integer strength;
+  Integer speed;
+  PShape model;
+  
+  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
+    super(newx, newy);    
+    health = h;
+    strength = str;
+    speed = spd;
+  }
+  
+  Integer getHealth(){
+    return health;
+  }
+  Integer getStrength(){
+    return strength;
+  }
+  Integer getSpeed(){
+    return speed;
+  }
+  
+  void setHealth(Integer newhealth){
+    health = newhealth;
+  }
+  void setStrength(Integer newstrength){
+    strength = newstrength;
+  }
+  void setSpeed(Integer newspeed){
+    speed = newspeed;
+  }
+  
+  void move(){
+    
+  }
+  
+}
+
 void makeGrid() {
   rectMode(CORNER);
   for (int i = 0; i < width/10; i++) {
@@ -163,6 +205,7 @@ void makeGrid() {
     }
   }
 }
+
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);
 

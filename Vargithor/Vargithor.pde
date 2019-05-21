@@ -168,6 +168,30 @@ void makeGrid() {
 class Monster extends Entity implements Alive{
   Integer health;
   Integer strength;
+  Integer speed;
+  PShape model;
+  
+  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
+    super(newx, newy);    
+    health = h;
+    strength = str;
+    speed = spd;
+  }
+  
+  Integer getHealth(){
+    return this.health;
+  }
+  Integer getStrength(){
+    return this.strength;
+  }
+  Integer getSpeed(){
+    return this.speed;
+  }
+  
+  void setHealth(Integer newhealth){}
+  void setStrength(Integer newstrength){}
+  void setSpeed(Integer speed){}
+  
 }
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);
