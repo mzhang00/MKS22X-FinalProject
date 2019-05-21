@@ -227,6 +227,7 @@ void mouseReleased() {
 void setup() {
   size(1000, 700);
   makeGrid();
+  frameRate(60);
   //System.out.println(width/2);
   //System.out.println(player.getX());
   //player.display();
