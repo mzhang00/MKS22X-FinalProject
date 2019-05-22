@@ -1,7 +1,7 @@
 //Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
-inte//Player player = new Player(width/2, height/2, 100, 10);
+//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
 interface Alive {
