@@ -8,7 +8,7 @@ interface Alive {
   
   void setHealth(Integer newhealth);
   void setStrength(Integer newstrength);
-  void setSpeed(Integer speed);
+  void setSpeed(Integer newspeed);
 }
 
 class Room {
@@ -148,6 +148,71 @@ class Player extends Entity implements Alive {
   }
 }
 
+
+
+class Monster extends Entity implements Alive{
+  Integer health, strength, speed;
+  PShape model;
+  Float xinc, yinc;
+  
+  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
+    super(newx, newy);    
+    health = h;
+    strength = str;
+    speed = spd;
+    
+    do
+    {
+      xinc = random(-5, 5);
+      yinc = random(-5, 5);
+    } 
+    while (5 - Math.abs(xinc) > 3 && 5 - Math.abs(yinc) > 3);
+    //this loop ensures values from -5 to -2, and 2 to 5, but not small values 
+    //for both x and y between -2 and 2.
+  }
+  
+  Integer getHealth(){
+    return health;
+  }
+  Integer getStrength(){
+    return strength;
+  }
+  Integer getSpeed(){
+    return speed;
+  }
+  
+  void setHealth(Integer newhealth){
+    health = newhealth;
+  }
+  void setStrength(Integer newstrength){
+    strength = newstrength;
+  }
+  void setSpeed(Integer newspeed){
+    speed = newspeed;
+  }
+  
+  void move(){
+    
+  }
+  
+  void jitter(){
+    //float newWidth = x + xinc;
+    //float newHeight = y + yinc;
+    if ((Math.abs(x + xinc - width/2) > (width/2 - 25)) || Math.abs(y + yinc - height/2) > (height/2 - 25))
+      //if (newWidth > (width - 25) || newWidth < 25 ||
+      //  newHeight  > (height - 25) || newHeight < 25)
+    {
+      x -= xinc;
+      y -= yinc;
+    } else
+    {
+      x += xinc;
+      y += yinc;
+    }
+  }
+  
+}
+
 void makeGrid() {
   rectMode(CORNER);
   for (int i = 0; i < width/10; i++) {
@@ -165,34 +230,6 @@ void makeGrid() {
   }
 }
 
-class Monster extends Entity implements Alive{
-  Integer health;
-  Integer strength;
-  Integer speed;
-  PShape model;
-  
-  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
-    super(newx, newy);    
-    health = h;
-    strength = str;
-    speed = spd;
-  }
-  
-  Integer getHealth(){
-    return this.health;
-  }
-  Integer getStrength(){
-    return this.strength;
-  }
-  Integer getSpeed(){
-    return this.speed;
-  }
-  
-  void setHealth(Integer newhealth){}
-  void setStrength(Integer newstrength){}
-  void setSpeed(Integer speed){}
-  
-}
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);
 
