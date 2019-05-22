@@ -1,6 +1,10 @@
 //Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
+Player player = new Player(500.0, 350.0, 5, 5, 5);
+Monster monster = new Monster(500.0, 350.0, 5, 5, 5);
+
 interface Alive {
   Integer getHealth();
   Integer getStrength();
@@ -18,33 +22,31 @@ class Room {
 }  
 
 class Entity {
-  Float x;
-  Float y;
+  PVector location;
   PShape model;
 
   Entity(Float x, Float y) {
-    this.x = x;
-    this.y = y;
+    location = new PVector(x,y);
   }
 
   Float getX() {
-    return x;
+    return location.x;
   }
 
   Float getY() {
-    return y;
+    return location.y;
   }
 
   void setX(Float input) {
-    x = input;
+    location.set(input, location.y);
   }
 
   void setY(Float input) {
-    y = input;
+    location.set(location.x, input);
   }
 
   void display() {
-    ellipse(x, y, 10, 10);
+    ellipse(getX(), getY(), 10, 10);
   }
 
   void detect(Entity other) {
@@ -99,7 +101,7 @@ class Player extends Entity implements Alive {
   }
   void shoot() {
     if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, x, y, mousex, mousey);
+      myBullet bullet = new myBullet(1, getX(), getY(), mousex, mousey);
       bullets.add(bullet);
     }
   }
@@ -153,7 +155,7 @@ class Player extends Entity implements Alive {
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
-  Float xinc, yinc;
+  PVector velocity;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
@@ -186,7 +188,7 @@ class Monster extends Entity implements Alive {
 
   void display() {
     ellipseMode(CENTER);
-    model = createShape(ELLIPSE, x, y, 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
@@ -197,9 +199,9 @@ class Monster extends Entity implements Alive {
   }
 
   private void bounceWallRealistic() {
-    if (Math.abs(x + xinc - width/2) > (width/2 - 10))
+    if (Math.abs(getX() + xinc - width/2) > (width/2 - 10))
       xinc *= -1;
-    if (Math.abs(y + yinc - height/2) > (height/2 - 10))
+    if (Math.abs(getY() + yinc - height/2) > (height/2 - 10))
       yinc *= -1;
   }
   private void bounceWallRandom() {
@@ -219,10 +221,9 @@ class Monster extends Entity implements Alive {
   private void generateRandomXincYinc() {
     do
     {
-      xinc = random(-5, 5);
-      yinc = random(-5, 5);
+      velocity.set(random(-5, 5), random(-5, 5));
     } 
-    while (5 - Math.abs(xinc) > 3 && 5 - Math.abs(yinc) > 3);
+    while (5 - Math.abs(velocity.x) > 3 && 5 - Math.abs(velocity.y) > 3);
   }
 
   private void jitter() {
@@ -264,12 +265,6 @@ void makeGrid() {
     }
   }
 }
-
-
-
-ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
-Player player = new Player(500.0, 350.0, 5, 5, 5);
-Monster monster = new Monster(500.0, 350.0, 5, 5, 5);
 
 void keyPressed() {
   switch(key)
