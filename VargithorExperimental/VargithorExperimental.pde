@@ -199,8 +199,6 @@ class Monster extends Entity implements Alive{
     //float newWidth = x + xinc;
     //float newHeight = y + yinc;
     if ((Math.abs(x + xinc - width/2) > (width/2 - 25)) || Math.abs(y + yinc - height/2) > (height/2 - 25))
-      //if (newWidth > (width - 25) || newWidth < 25 ||
-      //  newHeight  > (height - 25) || newHeight < 25)
     {
       x -= xinc;
       y -= yinc;
@@ -209,6 +207,10 @@ class Monster extends Entity implements Alive{
       x += xinc;
       y += yinc;
     }
+  }
+  
+  private void randomDirection(){
+    
   }
   
 }
