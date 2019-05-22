@@ -192,18 +192,19 @@ class Monster extends Entity implements Alive {
   }
 
   void move() {
-    //jitter();
-    straightLine();
+    jitter();
+    //straightLine();
   }
 
   private void bounceWallRealistic() {
-    if (Math.abs(x + xinc - width/2) > (width/2 - 25))
+    if (Math.abs(x + xinc - width/2) > (width/2 - 10))
       xinc *= -1;
-    if (Math.abs(y + yinc - height/2) > (height/2 - 25))
+    if (Math.abs(y + yinc - height/2) > (height/2 - 10))
       yinc *= -1;
   }
   private void bounceWallRandom() {
-    if ((Math.abs(x + xinc - width/2) > (width/2 - 25)) || (Math.abs(y + yinc - height/2) > (height/2 - 25)))
+    if ((Math.abs(x + xinc - width/2) > (width/2 - 10)) || 
+      (Math.abs(y + yinc - height/2) > (height/2 - 10)))
     {
       do
       {
@@ -227,10 +228,12 @@ class Monster extends Entity implements Alive {
   private void jitter() {
     //float newWidth = x + xinc;
     //float newHeight = y + yinc;
-    if (millis() % 1000 == 0)//if(frameCount % 60 == 0)
-    {
-      generateRandomXincYinc();
-    }
+    //if (millis() % 1000 == 0)
+    //if(frameCount % 60 == 0)
+    //{
+    //  generateRandomXincYinc();
+    //}
+    generateRandomXincYinc();
     bounceWallRealistic();
 
     x += xinc;
@@ -261,6 +264,8 @@ void makeGrid() {
     }
   }
 }
+
+
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);
