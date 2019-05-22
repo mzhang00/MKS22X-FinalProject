@@ -5,10 +5,9 @@ interface Alive {
   Integer getHealth();
   Integer getStrength();
   Integer getSpeed();
-  
+  void setSpeed(Integer speed);
   void setHealth(Integer newhealth);
   void setStrength(Integer newstrength);
-  void setSpeed(Integer newspeed);
 }
 
 class Room {
@@ -59,11 +58,17 @@ class myBullet extends Entity {
   Integer strength;
   Float xDirection;
   Float yDirection;
-  myBullet(Integer s, Float thisx, Float thisy, Float newx, Float newy) {
+  Float speed;
+  Float slope;
+  PVector velocity;
+  myBullet(Integer s, Float thisx, Float thisy, Float newx, Float newy, Float sp) {
     super(thisx, thisy);
     strength = s;
     xDirection = newx;
+    speed = sp;
     yDirection = newy;
+    slope = (y - yDirection)/(xDirection - x);
+    //velocity
   }
   void display() {
     model = createShape(ELLIPSE, x, y, 3, 3);
@@ -73,8 +78,9 @@ class myBullet extends Entity {
   void move() {
     if (x != xDirection && y != yDirection){
       
-    x -= (x - xDirection)/500.0;
-    y -= (y - yDirection)/350.0;
+      x += 1;
+      y -= slope;
+      System.out.println(slope);
     }
   }
   void die() {
@@ -99,7 +105,7 @@ class Player extends Entity implements Alive {
   }
   void shoot() {
     if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, x, y, mousex, mousey);
+      myBullet bullet = new myBullet(1, x, y, mousex, mousey, 3.0);
       bullets.add(bullet);
     }
   }
@@ -148,73 +154,6 @@ class Player extends Entity implements Alive {
   }
 }
 
-
-
-class Monster extends Entity implements Alive{
-  Integer health, strength, speed;
-  PShape model;
-  Float xinc, yinc;
-  
-  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
-    super(newx, newy);    
-    health = h;
-    strength = str;
-    speed = spd;
-    
-    do
-    {
-      xinc = random(-5, 5);
-      yinc = random(-5, 5);
-    } 
-    while (5 - Math.abs(xinc) > 3 && 5 - Math.abs(yinc) > 3);
-    //this loop ensures values from -5 to -2, and 2 to 5, but not small values 
-    //for both x and y between -2 and 2.
-  }
-  
-  Integer getHealth(){
-    return health;
-  }
-  Integer getStrength(){
-    return strength;
-  }
-  Integer getSpeed(){
-    return speed;
-  }
-  
-  void setHealth(Integer newhealth){
-    health = newhealth;
-  }
-  void setStrength(Integer newstrength){
-    strength = newstrength;
-  }
-  void setSpeed(Integer newspeed){
-    speed = newspeed;
-  }
-  
-  void move(){
-    jitter();
-  }
-  
-  private void jitter(){
-    //float newWidth = x + xinc;
-    //float newHeight = y + yinc;
-    if ((Math.abs(x + xinc - width/2) > (width/2 - 25)) || Math.abs(y + yinc - height/2) > (height/2 - 25))
-    {
-      x -= xinc;
-      y -= yinc;
-    } else
-    {
-      x += xinc;
-      y += yinc;
-    }
-  }
-  
-  private void randomDirection(){
-    
-  }
-  
-}
-
 void makeGrid() {
   rectMode(CORNER);
   for (int i = 0; i < width/10; i++) {
@@ -231,7 +170,6 @@ void makeGrid() {
     }
   }
 }
-
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);
 
@@ -296,7 +234,6 @@ void mouseReleased() {
 void setup() {
   size(1000, 700);
   makeGrid();
-  frameRate(60);
   //System.out.println(width/2);
   //System.out.println(player.getX());
   //player.display();
