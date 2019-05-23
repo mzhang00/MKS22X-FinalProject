@@ -1,8 +1,9 @@
 //Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
-//Player player = new Player(width/2, height/2, 100, 10);
-//ArrayList<Room> rooms;
+ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
+Player player = new Player(500.0, 350.0, 5, 5, 5);
+Monster monster = new Monster(500.0, 350.0, 5, 5, 5);
 
 interface Alive {
   Integer getHealth();
@@ -21,33 +22,31 @@ class Room {
 }  
 
 class Entity {
-  Float x;
-  Float y;
+  PVector location;
   PShape model;
 
   Entity(Float x, Float y) {
-    this.x = x;
-    this.y = y;
+    location = new PVector(x,y);
   }
 
   Float getX() {
-    return x;
+    return location.x;
   }
 
   Float getY() {
-    return y;
+    return location.y;
   }
 
   void setX(Float input) {
-    x = input;
+    location.set(input, location.y);
   }
 
   void setY(Float input) {
-    y = input;
+    location.set(location.x, input);
   }
 
   void display() {
-    ellipse(x, y, 10, 10);
+    ellipse(getX(), getY(), 10, 10);
   }
 
   void detect(Entity other) {
@@ -69,46 +68,49 @@ class myBullet extends Entity {
     yDirection = newy;
   }
   void display() {
-    model = createShape(ELLIPSE, x, y, 3, 3);
+    model = createShape(ELLIPSE, getX(), getY(), 3, 3);
     model.setFill(color(0, 0, 0));
     shape(model);
   }
   void move() {
-    if (x != xDirection && y != yDirection) {
-
-      x -= (x - xDirection)/500.0;
-      y -= (y - yDirection)/350.0;
+    if (getX() != xDirection && getY() != yDirection) {
+      location.set((getX() - xDirection)/500.0, (getY() - yDirection)/350.0);
     }
   }
   void die() {
-    if (x <= 0 || x >= 1000 || y <= 0 || y >= 700) {
+    if (getX() <= 0 || getX() >= 1000 || getY() <= 0 || getY() >= 700) {
       bullets.remove(this);
     }
   }
 }
 
 class Player extends Entity implements Alive {
-  Integer health;
-  Integer strength;
-  Integer speed;
+  Integer health, strength, speed;
   boolean up, down, left, right;
   PShape model;
+  PVector velocity;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
     health = h;
     strength = str;
     speed = spd;
+    
+    do
+    {
+      velocity = new PVector(random(-5, 5), random(-5, 5));
+    } 
+    while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
   }
   void shoot() {
     if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, x, y, mousex, mousey);
+      myBullet bullet = new myBullet(1, getX(), getY(), mousex, mousey);
       bullets.add(bullet);
     }
   }
   void display() {
     rectMode(CENTER);
-    model = createShape(RECT, x, y, 10, 10);
+    model = createShape(RECT, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
   }
@@ -141,12 +143,12 @@ class Player extends Entity implements Alive {
     boolean diagonalMoving = up && left || up && right || down && left || down && right;
     if (diagonalMoving)
     {
-      x += float(speed) * diagonalFactor * (float((int(right) - int(left))));
-      y += float(speed) * diagonalFactor * (float((int(down) - int(up))));
+      location.set(getX() + float(speed) * diagonalFactor * (float((int(right) - int(left)))),
+      getY() + float(speed) * diagonalFactor * (float((int(down) - int(up)))));
     } else
     {
-      x += float(speed) * float(int(right) - int(left));
-      y += float(speed) * float(int(down) - int(up));
+      location.set(getX() + float(speed) * float(int(right) - int(left)),
+      getY() + float(speed) * float(int(down) - int(up)));
     }
   }
 }
@@ -156,7 +158,7 @@ class Player extends Entity implements Alive {
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
-  Float xinc, yinc;
+  PVector velocity;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
@@ -164,7 +166,11 @@ class Monster extends Entity implements Alive {
     strength = str;
     speed = spd;
 
-    generateRandomXincYinc();
+    do
+    {
+      velocity = new PVector(random(-5, 5), random(-5, 5));
+    } 
+    while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
   }
 
   Integer getHealth() {
@@ -186,35 +192,41 @@ class Monster extends Entity implements Alive {
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
+  
+  float getXSpeed(){
+    return velocity.x;
+  }
+  float getYSpeed(){
+    return velocity.y;
+  }
 
   void display() {
     ellipseMode(CENTER);
-    model = createShape(ELLIPSE, x, y, 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
 
-void move() {
+  void move() {
     jitter();
     //straightLine();
   }
 
   private void bounceWallRealistic() {
-    if (Math.abs(x + xinc - width/2) > (width/2 - 10))
-      xinc *= -1;
-    if (Math.abs(y + yinc - height/2) > (height/2 - 10))
-      yinc *= -1;
+    if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
+      velocity.set(getXSpeed() * -1, getYSpeed());
+    if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
+      velocity.set(getXSpeed(), getYSpeed() * -1);
   }
   private void bounceWallRandom() {
-    if ((Math.abs(x + xinc - width/2) > (width/2 - 10)) || 
-      (Math.abs(y + yinc - height/2) > (height/2 - 10)))
+    if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
+      (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
     {
       do
       {
-        xinc = random(-5, 5);
-        yinc = random(-5, 5);
+        velocity.set(random(-5, 5), random(-5, 5));
       } 
-      while (5 - Math.abs(xinc) > 3 && 5 - Math.abs(yinc) > 3);
+      while (5 - Math.abs(getXSpeed()) > 3 && 5 - Math.abs(getYSpeed()) > 3);
       //this loop ensures values from -5 to -2, and 2 to 5, but not small values 
       //for both x and y between -2 and 2.
     }
@@ -222,10 +234,9 @@ void move() {
   private void generateRandomXincYinc() {
     do
     {
-      xinc = random(-5, 5);
-      yinc = random(-5, 5);
+      velocity.set(random(-5, 5), random(-5, 5));
     } 
-    while (5 - Math.abs(xinc) > 3 && 5 - Math.abs(yinc) > 3);
+    while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
   }
 
   private void jitter() {
@@ -239,15 +250,12 @@ void move() {
     generateRandomXincYinc();
     bounceWallRealistic();
 
-    x += xinc;
-    y += yinc;
+    location.set(getX() + getXSpeed(), getY() + getYSpeed());
   }
 
   private void straightLine() {
     bounceWallRealistic();
-
-    x += xinc;
-    y += yinc;
+    velocity.set(getX() + getXSpeed(), getY() + getYSpeed());
   }
 }
 
@@ -267,10 +275,6 @@ void makeGrid() {
     }
   }
 }
-
-ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
-Player player = new Player(500.0, 350.0, 5, 5, 5);
-Monster monster = new Monster(500.0, 350.0, 5, 5, 5);
 
 void keyPressed() {
   switch(key)
