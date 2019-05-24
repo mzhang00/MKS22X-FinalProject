@@ -2,6 +2,12 @@
 AP CS Final Project
 Development log:
 
+May 24th 2019:
+=======================================================================================
+Derek Lao:
+* Added inRange(float, float) method
+* Added code to make monster chase player at a certain range, but run away at another range, but the monster seems to chase the player at twice the speed than its regular movement speed, without me coding that in. Must fix later.
+
 May 23rd 2019:
 =======================================================================================
 Derek Lao: 
