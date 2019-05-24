@@ -199,6 +199,10 @@ class Monster extends Entity implements Alive {
     return velocity.y;
   }
 
+  private void detect() {
+    //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^221
+    //if (Math.pow(player.getX(), 2);
+  }
   private void bounceWallRealistic() {
     if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
       velocity.set(getXSpeed() * -1, getYSpeed());
