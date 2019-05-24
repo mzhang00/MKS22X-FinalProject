@@ -200,7 +200,7 @@ class Monster extends Entity implements Alive {
   }
 
   private void detect() {
-    //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^221
+    //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^2;
     //if (Math.pow(player.getX(), 2);
   }
   private void bounceWallRealistic() {
