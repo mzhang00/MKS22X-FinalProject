@@ -152,8 +152,6 @@ class Player extends Entity implements Alive {
   }
 }
 
-
-
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
@@ -327,8 +325,7 @@ void keyReleased() {
   }
 }
 
-Float mousex;
-Float mousey;
+Float mousex, mousey;
 
 void mouseClicked() {
   mousex = (float) mouseX;
