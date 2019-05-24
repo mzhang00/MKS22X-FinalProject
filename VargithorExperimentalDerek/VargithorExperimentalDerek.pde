@@ -165,11 +165,8 @@ class Monster extends Entity implements Alive {
     strength = str;
     speed = spd;
 
-    do
-    {
-      velocity = new PVector(random(-5, 5), random(-5, 5));
-    } 
-    while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
+    velocity = new PVector(random(-5, 5), random(-5, 5));
+    generateRandomDirection();
   }
 
   Integer getHealth() {
@@ -199,13 +196,6 @@ class Monster extends Entity implements Alive {
     return velocity.y;
   }
 
-  void display() {
-    ellipseMode(CENTER);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
-    model.setFill(color(255, 0, 0));
-    shape(model);
-  }
-
   private void bounceWallRealistic() {
     if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
       velocity.set(getXSpeed() * -1, getYSpeed());
@@ -225,28 +215,30 @@ class Monster extends Entity implements Alive {
       //for both x and y between -2 and 2.
     }
   }
-  private void generateRandomXincYinc() {
-    do
-    {
-      velocity.set(random(-5, 5), random(-5, 5));
-    } 
-    while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
+  private void generateRandomDirection() {
+    velocity.set(random(-5, 5), random(-5, 5));
+    velocity.setMag(float(getSpeed()));
+  }
+  
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(255, 0, 0));
+    shape(model);
   }
 
   void move() {
-    jitter();
-    //straightLine();
+    //jitter();
+    straightLine();
   }
 
   private void jitter() {
-    //float newWidth = x + xinc;
-    //float newHeight = y + yinc;
     //if (millis() % 1000 == 0)
     //if(frameCount % 60 == 0)
     //{
-    //  generateRandomXincYinc();
+    //  generateRandomDirection();
     //}
-    generateRandomXincYinc();
+    generateRandomDirection();
     bounceWallRealistic();
 
     location.add(velocity);
