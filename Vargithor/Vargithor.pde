@@ -168,7 +168,7 @@ class Monster extends Entity implements Alive {
 
     velocity = new PVector(random(-5, 5), random(-5, 5));
     generateRandomDirection();
-    
+
     player = givenPlayer;
   }
 
@@ -191,17 +191,20 @@ class Monster extends Entity implements Alive {
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
-  
-  float getXSpeed(){
+
+  float getXSpeed() {
     return velocity.x;
   }
-  float getYSpeed(){
+  float getYSpeed() {
     return velocity.y;
   }
 
-  private void detect() {
-    //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^221
-    //if (Math.pow(player.getX(), 2);
+  private boolean inRange(float range) {
+    //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^2;
+    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) <= Math.pow(range,2))
+      return true;
+    else
+      return false;
   }
   private void bounceWallRealistic() {
     if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
@@ -210,24 +213,18 @@ class Monster extends Entity implements Alive {
       velocity.set(getXSpeed(), getYSpeed() * -1);
   }
   private void bounceWallRandom() {
-    if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
-      (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
+    if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
     {
-      do
-      {
-        velocity.set(random(-5, 5), random(-5, 5));
-      } 
-      while (5 - Math.abs(getXSpeed()) > 3 && 5 - Math.abs(getYSpeed()) > 3);
-      //this loop ensures values from -5 to -2, and 2 to 5, but not small values 
-      //for both x and y between -2 and 2.
+      velocity.set(random(-5, 5), random(-5, 5));
+      velocity.setMag(float(speed));
     }
   }
   private void generateRandomDirection() {
-    float angle = random(0,360);
+    float angle = random(0, 360);
     velocity.rotate(angle);
     velocity.setMag(float(getSpeed()));
   }
-  
+
   void display() {
     ellipseMode(CENTER);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
@@ -239,15 +236,17 @@ class Monster extends Entity implements Alive {
     //jitter();
     //straightLine();
     //wander();
-    followPlayer();
+    if(inRange(100.0))
+    {
+      followPlayer();
+    }
+    else
+    {
+      wander();
+    }
   }
 
   private void jitter() {
-    //if (millis() % 1000 == 0)
-    //if(frameCount % 60 == 0)
-    //{
-    //  generateRandomDirection();
-    //}
     generateRandomDirection();
     bounceWallRealistic();
     location.add(velocity);
@@ -257,10 +256,10 @@ class Monster extends Entity implements Alive {
     bounceWallRealistic();
     location.add(velocity);
   }
-  
+
   private void wander() {
     //if (millis() % 1000 == 1)
-    if(frameCount % 60 == 1)
+    if (frameCount % 60 == 1)
     {
       generateRandomDirection();
       velocity.setMag(float(getSpeed())/2.0);
@@ -268,7 +267,7 @@ class Monster extends Entity implements Alive {
     bounceWallRealistic();
     location.add(velocity);
   }
-  
+
   private void followPlayer() {
     velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
     velocity.setMag(float(speed));
