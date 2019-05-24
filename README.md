@@ -6,7 +6,8 @@ May 23rd 2019:
 =======================================================================================
 Derek Lao: 
 Completed vector usage for player and monster movement up until this point.
-Wrote and successfully tested calculator for taking the calculators
+Wrote and successfully tested followPlayer
+Wrote and successfully tested monster to wander, and when detects player in vicinity, it will follow the player.
 
 May 22nd 2019:
 ========================================================================================
