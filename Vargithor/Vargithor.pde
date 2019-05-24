@@ -136,20 +136,19 @@ class Player extends Entity implements Alive {
     speed = newspeed;
   }
 
+  float getXSpeed(){
+    return velocity.x;
+  }
+  float getYSpeed(){
+    return velocity.y;
+  }
+
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
-    //System.out.println(int(left) + " " + int(right));
-    Float diagonalFactor = new Float(Math.sqrt(1 / ((Math.pow(1, 2)) + 1)));
-    boolean diagonalMoving = up && left || up && right || down && left || down && right;
-    if (diagonalMoving)
-    {
-      location.set(getX() + float(speed) * diagonalFactor * (float((int(right) - int(left)))),
-      getY() + float(speed) * diagonalFactor * (float((int(down) - int(up)))));
-    } else
-    {
-      location.set(getX() + float(speed) * float(int(right) - int(left)),
-      getY() + float(speed) * float(int(down) - int(up)));
-    }
+    //boolean diagonalMoving = up && left || up && right || down && left || down && right;
+    velocity.set(float((int(right) - int(left))), float((int(down) - int(up))));
+    velocity.setMag(float(getSpeed()));
+    location.add(velocity);
   }
 }
 

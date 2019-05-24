@@ -135,21 +135,20 @@ class Player extends Entity implements Alive {
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
+  
+  float getXSpeed(){
+    return velocity.x;
+  }
+  float getYSpeed(){
+    return velocity.y;
+  }
 
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
-    //System.out.println(int(left) + " " + int(right));
-    Float diagonalFactor = new Float(Math.sqrt(1 / ((Math.pow(1, 2)) + 1)));
-    boolean diagonalMoving = up && left || up && right || down && left || down && right;
-    if (diagonalMoving)
-    {
-      location.set(getX() + float(speed) * diagonalFactor * (float((int(right) - int(left)))),
-      getY() + float(speed) * diagonalFactor * (float((int(down) - int(up)))));
-    } else
-    {
-      location.set(getX() + float(speed) * float(int(right) - int(left)),
-      getY() + float(speed) * float(int(down) - int(up)));
-    }
+    //boolean diagonalMoving = up && left || up && right || down && left || down && right;
+    velocity.set(float((int(right) - int(left))), float((int(down) - int(up))));
+    velocity.setMag(float(getSpeed()));
+    location.add(velocity);
   }
 }
 
@@ -207,11 +206,6 @@ class Monster extends Entity implements Alive {
     shape(model);
   }
 
-  void move() {
-    jitter();
-    //straightLine();
-  }
-
   private void bounceWallRealistic() {
     if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
       velocity.set(getXSpeed() * -1, getYSpeed());
@@ -239,6 +233,11 @@ class Monster extends Entity implements Alive {
     while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
   }
 
+  void move() {
+    jitter();
+    //straightLine();
+  }
+
   private void jitter() {
     //float newWidth = x + xinc;
     //float newHeight = y + yinc;
@@ -250,12 +249,12 @@ class Monster extends Entity implements Alive {
     generateRandomXincYinc();
     bounceWallRealistic();
 
-    location.set(getX() + getXSpeed(), getY() + getYSpeed());
+    location.add(velocity);
   }
 
   private void straightLine() {
     bounceWallRealistic();
-    velocity.set(getX() + getXSpeed(), getY() + getYSpeed());
+    location.add(velocity);
   }
 }
 

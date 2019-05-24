@@ -1,34 +1,22 @@
-// Instead of a bunch of floats, we now just have two PVector variables.
-PVector location;
-PVector velocity;
-
 void setup() {
   size(200,200);
   smooth();
-  background(255);
-  location = new PVector(100,100);
-  velocity = new PVector(2.5,5);
 }
 
 void draw() {
-  noStroke();
-  fill(255,10);
-  rect(0,0,width,height);
+  background(255);
   
-  // Add the current speed to the location.
-  location.add(velocity);
+  PVector mouse = new PVector(mouseX,mouseY);
+  PVector center = new PVector(width/2,height/2);
+  mouse.sub(center);
 
-  // We still sometimes need to refer to the individual components of a PVector 
-  // and can do so using the dot syntax (location.x, velocity.y, etc.)
-  if ((location.x > width) || (location.x < 0)) {
-    velocity.x = velocity.x * -1;
-  }
-  if ((location.y > height) || (location.y < 0)) {
-    velocity.y = velocity.y * -1;
-  }
-
-  // Display circle at x location
-  stroke(0);
-  fill(175);
-  ellipse(location.x,location.y,16,16);
+  // The magnitude (i.e. length) of a vector can be accessed via the mag() function.  
+  // Here it is used as the width to a rectangle drawn at the top of the window.
+  float m = mouse.mag();
+  fill(0);
+  rect(0,0,m,10);
+  
+  translate(width/2,height/2);
+  line(0,0,mouse.x,mouse.y);
+  
 }
