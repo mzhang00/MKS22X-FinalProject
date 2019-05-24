@@ -3,7 +3,7 @@
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
-Monster monster = new Monster(500.0, 350.0, 5, 5, 2, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd)
+Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 
 interface Alive {
   Integer getHealth();
@@ -26,7 +26,7 @@ class Entity {
   PShape model;
 
   Entity(Float x, Float y) {
-    location = new PVector(x,y);
+    location = new PVector(x, y);
   }
 
   Float getX() {
@@ -95,7 +95,7 @@ class Player extends Entity implements Alive {
     health = h;
     strength = str;
     speed = spd;
-    
+
     do
     {
       velocity = new PVector(random(-5, 5), random(-5, 5));
@@ -135,11 +135,11 @@ class Player extends Entity implements Alive {
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
-  
-  float getXSpeed(){
+
+  float getXSpeed() {
     return velocity.x;
   }
-  float getYSpeed(){
+  float getYSpeed() {
     return velocity.y;
   }
 
@@ -151,6 +151,8 @@ class Player extends Entity implements Alive {
     location.add(velocity);
   }
 }
+
+
 
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
@@ -168,6 +170,13 @@ class Monster extends Entity implements Alive {
     generateRandomDirection();
 
     player = givenPlayer;
+  }
+  
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(255, 0, 0));
+    shape(model);
   }
 
   Integer getHealth() {
@@ -197,24 +206,39 @@ class Monster extends Entity implements Alive {
     return velocity.y;
   }
 
-  private boolean inRange(float range) {
+  boolean inRange(float range) {
     //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^2;
     if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) <= Math.pow(range,2))
       return true;
     else
       return false;
   }
-  private void bounceWallRealistic() {
+  
+  boolean inRange(float rangeMin, float rangeMax) {
+    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) <= Math.pow(rangeMax,2) && 
+      Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) >= Math.pow(rangeMin,2))
+      return true;
+    else
+      return false;
+  }
+  
+  void bounceWallRealistic() {
     if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
       velocity.set(getXSpeed() * -1, getYSpeed());
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(getXSpeed(), getYSpeed() * -1);
   }
-  private void bounceWallRandom() {
-    if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
+  void bounceWallRandom() {
+    if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
+      (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
     {
-      velocity.set(random(-5, 5), random(-5, 5));
-      velocity.setMag(float(speed));
+      do
+      {
+        velocity.set(random(-5, 5), random(-5, 5));
+      } 
+      while (5 - Math.abs(getXSpeed()) > 3 && 5 - Math.abs(getYSpeed()) > 3);
+      //this loop ensures values from -5 to -2, and 2 to 5, but not small values 
+      //for both x and y between -2 and 2.
     }
   }
   private void generateRandomDirection() {
@@ -223,39 +247,43 @@ class Monster extends Entity implements Alive {
     velocity.setMag(float(getSpeed()));
   }
 
-  void display() {
-    ellipseMode(CENTER);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
-    model.setFill(color(255, 0, 0));
-    shape(model);
-  }
+  
 
   void move() {
     //jitter();
     //straightLine();
     //wander();
-    if(inRange(100.0))
+    if(inRange(50.0, 100.0))
     {
       followPlayer();
     }
+    if(inRange(50.0))
+    {
+      runFromPlayer();
+    }
     else
     {
-      wander();
+      wanderRegular();
     }
   }
 
-  private void jitter() {
+  void jitter() {
+    //if (millis() % 1000 == 0)
+    //if(frameCount % 60 == 0)
+    //{
+    //  generateRandomDirection();
+    //}
     generateRandomDirection();
     bounceWallRealistic();
     location.add(velocity);
   }
 
-  private void straightLine() {
+  void straightLine() {
     bounceWallRealistic();
     location.add(velocity);
   }
 
-  private void wander() {
+  void wanderSlow() {
     //if (millis() % 1000 == 1)
     if (frameCount % 60 == 1)
     {
@@ -264,12 +292,72 @@ class Monster extends Entity implements Alive {
     }
     bounceWallRealistic();
     location.add(velocity);
+    velocity.setMag(float(getSpeed()));
+  }
+  
+  void wanderRegular() {
+    if (frameCount % 60 == 1)
+      generateRandomDirection();
+    bounceWallRealistic();
+    location.add(velocity);
   }
 
-  private void followPlayer() {
+  void followPlayer() {
     velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
     velocity.setMag(float(speed));
+    
+    bounceWallRealistic();
     location.add(velocity);
+  }
+  
+  void runFromPlayer() {
+    velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
+    velocity.setMag(float(speed));
+    
+    bounceWallRealistic();
+    location.sub(velocity);
+  }
+}
+
+class Chaser extends Monster{
+  Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
+    super(newx, newy, h, str, spd, givenPlayer);
+  }
+  
+  void move() {
+    if(inRange(50.0, 100.0))
+    {
+      followPlayer();
+    }
+    if(inRange(50.0))
+    {
+      runFromPlayer();
+    }
+    else
+    {
+      wanderRegular();
+    }
+  }
+}
+class Coward extends Monster{
+  Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
+    super(newx, newy, h, str, spd, givenPlayer);
+  }
+  
+  void move() {
+    if(inRange(100.0))
+    {
+      followPlayer();
+    }
+    else
+    {
+      wanderRegular();
+    }
+  }
+}
+class Circler extends Monster{
+  Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
+    super(newx, newy, h, str, spd, givenPlayer);
   }
 }
 
@@ -325,7 +413,8 @@ void keyReleased() {
   }
 }
 
-Float mousex, mousey;
+Float mousex;
+Float mousey;
 
 void mouseClicked() {
   mousex = (float) mouseX;
