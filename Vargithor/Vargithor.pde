@@ -2,8 +2,8 @@
 //ArrayList<Room> rooms;
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
-Player player = new Player(500.0, 350.0, 5, 5, 5);
-Monster monster = new Monster(500.0, 350.0, 5, 5, 5);
+Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
+Monster monster = new Monster(500.0, 350.0, 5, 5, 2, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd)
 
 interface Alive {
   Integer getHealth();
@@ -158,8 +158,9 @@ class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
   PVector velocity;
+  Player player;
 
-  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd) {
+  Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy);    
     health = h;
     strength = str;
@@ -167,6 +168,8 @@ class Monster extends Entity implements Alive {
 
     velocity = new PVector(random(-5, 5), random(-5, 5));
     generateRandomDirection();
+    
+    player = givenPlayer;
   }
 
   Integer getHealth() {
@@ -216,7 +219,8 @@ class Monster extends Entity implements Alive {
     }
   }
   private void generateRandomDirection() {
-    velocity.set(random(-5, 5), random(-5, 5));
+    float angle = random(0,360);
+    velocity.rotate(angle);
     velocity.setMag(float(getSpeed()));
   }
   
@@ -229,7 +233,9 @@ class Monster extends Entity implements Alive {
 
   void move() {
     //jitter();
-    straightLine();
+    //straightLine();
+    //wander();
+    followPlayer();
   }
 
   private void jitter() {
@@ -240,12 +246,28 @@ class Monster extends Entity implements Alive {
     //}
     generateRandomDirection();
     bounceWallRealistic();
-
     location.add(velocity);
   }
 
   private void straightLine() {
     bounceWallRealistic();
+    location.add(velocity);
+  }
+  
+  private void wander() {
+    //if (millis() % 1000 == 1)
+    if(frameCount % 60 == 1)
+    {
+      generateRandomDirection();
+      velocity.setMag(float(getSpeed())/2.0);
+    }
+    bounceWallRealistic();
+    location.add(velocity);
+  }
+  
+  private void followPlayer() {
+    velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
+    velocity.setMag(float(speed));
     location.add(velocity);
   }
 }
