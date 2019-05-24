@@ -250,21 +250,26 @@ class Monster extends Entity implements Alive {
   
 
   void move() {
+    
+    //if(inRange(50.0, 100.0))
+    //  followPlayer();
+    //if(inRange(50.0))
+    //  runFromPlayer();
+    //else
+    //  wanderRegular();
+    
+    if(inRange(50.0))
+      runFromPlayer();
+    else
+      followPlayer();
+    
+    
     //jitter();
     //straightLine();
-    //wander();
-    if(inRange(50.0, 100.0))
-    {
-      followPlayer();
-    }
-    if(inRange(50.0))
-    {
-      runFromPlayer();
-    }
-    else
-    {
-      wanderRegular();
-    }
+    //wanderRegular();
+    //wanderSlow();
+    //followPlayer();
+    //runFromPlayer();
   }
 
   void jitter() {
@@ -324,6 +329,13 @@ class Chaser extends Monster{
     super(newx, newy, h, str, spd, givenPlayer);
   }
   
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(255, 0, 0));
+    shape(model);
+  }
+  
   void move() {
     if(inRange(50.0, 100.0))
     {
@@ -344,6 +356,13 @@ class Coward extends Monster{
     super(newx, newy, h, str, spd, givenPlayer);
   }
   
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(255, 0, 0));
+    shape(model);
+  }
+  
   void move() {
     if(inRange(100.0))
     {
@@ -359,6 +378,15 @@ class Circler extends Monster{
   Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
   }
+  
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(255, 0, 0));
+    shape(model);
+  }
+  
+  void move() {}
 }
 
 void makeGrid() {
