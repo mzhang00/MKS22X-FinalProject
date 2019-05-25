@@ -3,6 +3,7 @@
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
+ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
@@ -25,11 +26,12 @@ class Room {
 }  
 
 class Entity {
-  PVector location;
+  PVector location, velocity;
   PShape model;
 
   Entity(Float x, Float y) {
     location = new PVector(x, y);
+    velocity = new PVector(0, 0);
   }
 
   Float getX() {
@@ -39,6 +41,14 @@ class Entity {
   Float getY() {
     return location.y;
   }
+  
+  Float getXSpeed() {
+    return velocity.x;
+  }
+  
+  Float getYSpeed() {
+    return velocity.y;
+  }
 
   void setX(Float input) {
     location.set(input, location.y);
@@ -46,6 +56,14 @@ class Entity {
 
   void setY(Float input) {
     location.set(location.x, input);
+  }
+  
+  void setXSpeed(Float input) {
+    velocity.set(input, velocity.y);
+  }
+  
+  void setYSpeed(Float input) {
+    velocity.set(velocity.x, input);
   }
 
   void display() {
@@ -57,6 +75,8 @@ class Entity {
       //
     }
   }
+  
+  void move() {}
 }
 
 
@@ -91,19 +111,12 @@ class Player extends Entity implements Alive {
   Integer health, strength, speed;
   boolean up, down, left, right;
   PShape model;
-  PVector velocity;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
     health = h;
     strength = str;
     speed = spd;
-
-    do
-    {
-      velocity = new PVector(random(-5, 5), random(-5, 5));
-    } 
-    while (5 - Math.abs(getSpeed()) > 3 && 5 - Math.abs(getSpeed()) > 3);
   }
   void shoot() {
     if (mousex != null && mousey != null) {
@@ -139,13 +152,6 @@ class Player extends Entity implements Alive {
     speed = newspeed;
   }
 
-  float getXSpeed() {
-    return velocity.x;
-  }
-  float getYSpeed() {
-    return velocity.y;
-  }
-
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
     //boolean diagonalMoving = up && left || up && right || down && left || down && right;
@@ -169,7 +175,6 @@ class Player extends Entity implements Alive {
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
-  PVector velocity;
   Player player;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
@@ -177,10 +182,7 @@ class Monster extends Entity implements Alive {
     health = h;
     strength = str;
     speed = spd;
-
-    velocity = new PVector(random(-5, 5), random(-5, 5));
     generateRandomDirection();
-
     player = givenPlayer;
   }
   
@@ -209,13 +211,6 @@ class Monster extends Entity implements Alive {
   }
   void setSpeed(Integer newspeed) {
     speed = newspeed;
-  }
-
-  float getXSpeed() {
-    return velocity.x;
-  }
-  float getYSpeed() {
-    return velocity.y;
   }
 
   boolean inRange(float range) {
@@ -257,17 +252,17 @@ class Monster extends Entity implements Alive {
   }
 
   void move() {
-    if(inRange(50.0, 100.0))
-      followPlayer();
-    else if(inRange(50.0))
-      runFromPlayer();
-    else
-      wanderRegular();
-    
-    //if(inRange(50.0))
+    //if(inRange(50.0, 100.0))
+    //  followPlayer();
+    //else if(inRange(50.0))
     //  runFromPlayer();
     //else
-    //  followPlayer();
+    //  wanderRegular();
+    
+    if(inRange(50.0))
+      runFromPlayer();
+    else
+      followPlayer();
     
     //jitter();
     //straightLine();
@@ -356,6 +351,11 @@ class Chaser extends Monster{
     {
       wanderRegular();
     }
+    
+    //if(inRange(50.0))
+    //  runFromPlayer();
+    //else
+    //  followPlayer();
   }
 }
 class Coward extends Monster{
@@ -481,6 +481,9 @@ void setup() {
   thingsToDisplay.add(player);
   thingsToDisplay.add(monster);
   thingsToDisplay.add(chaser);
+  thingsToMove.add(player);
+  thingsToMove.add(monster);
+  thingsToMove.add(chaser);
 }
 
 void draw() {
@@ -492,8 +495,11 @@ void draw() {
   {
     e.display();
   }
-  player.move();
-  monster.move();
+  for (Entity e : thingsToMove)
+  {
+    e.move();
+  }
+
   player.shoot();
   //monster.shoot();
   for (myBullet bullet : bullets) {
