@@ -146,9 +146,18 @@ class Player extends Entity implements Alive {
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
     //boolean diagonalMoving = up && left || up && right || down && left || down && right;
+    
     velocity.set(float((int(right) - int(left))), float((int(down) - int(up))));
     velocity.setMag(float(getSpeed()));
+    
+    PVector holder = velocity;
+    if(Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
+      velocity.set(0, holder.y);
+    if(Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
+      velocity.set(holder.x, 0);
+      
     location.add(velocity);
+    velocity.set(holder);
   }
 }
 
@@ -245,17 +254,17 @@ class Monster extends Entity implements Alive {
   }
 
   void move() {
-    //if(inRange(50.0, 100.0))
-    //  followPlayer();
+    if(inRange(50.0, 100.0))
+      followPlayer();
+    else if(inRange(50.0))
+      runFromPlayer();
+    else
+      wanderRegular();
+    
     //if(inRange(50.0))
     //  runFromPlayer();
     //else
-    //  wanderRegular();
-    
-    if(inRange(50.0))
-      runFromPlayer();
-    else
-      followPlayer();
+    //  followPlayer();
     
     //jitter();
     //straightLine();

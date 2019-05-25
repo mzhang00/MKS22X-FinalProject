@@ -146,9 +146,18 @@ class Player extends Entity implements Alive {
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
     //boolean diagonalMoving = up && left || up && right || down && left || down && right;
+    
     velocity.set(float((int(right) - int(left))), float((int(down) - int(up))));
     velocity.setMag(float(getSpeed()));
+    
+    PVector holder = velocity;
+    if(Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
+      velocity.set(0, holder.y);
+    if(Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
+      velocity.set(holder.x, 0);
+      
     location.add(velocity);
+    velocity.set(holder);
   }
 }
 
@@ -208,14 +217,11 @@ class Monster extends Entity implements Alive {
 
   boolean inRange(float range) {
     //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^2;
-    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) <= Math.pow(range,2))
-      return true;
-    else
-      return false;
+    return inRange(0, range);
   }
   
   boolean inRange(float rangeMin, float rangeMax) {
-    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) <= Math.pow(rangeMax,2) && 
+    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) < Math.pow(rangeMax,2) && 
       Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) >= Math.pow(rangeMin,2))
       return true;
     else
@@ -247,22 +253,18 @@ class Monster extends Entity implements Alive {
     velocity.setMag(float(getSpeed()));
   }
 
-  
-
   void move() {
+    if(inRange(50.0, 100.0))
+      followPlayer();
+    else if(inRange(50.0))
+      runFromPlayer();
+    else
+      wanderRegular();
     
-    //if(inRange(50.0, 100.0))
-    //  followPlayer();
     //if(inRange(50.0))
     //  runFromPlayer();
     //else
-    //  wanderRegular();
-    
-    if(inRange(50.0))
-      runFromPlayer();
-    else
-      followPlayer();
-    
+    //  followPlayer();
     
     //jitter();
     //straightLine();
@@ -316,11 +318,10 @@ class Monster extends Entity implements Alive {
   }
   
   void runFromPlayer() {
-    velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
+    velocity.set(this.getX() - player.getX(), this.getY() - player.getY());
     velocity.setMag(float(speed));
-    
     bounceWallRealistic();
-    location.sub(velocity);
+    location.add(velocity);
   }
 }
 
