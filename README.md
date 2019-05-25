@@ -2,11 +2,18 @@
 AP CS Final Project
 Development log:
 
+May 25th 2019:
+=======================================================================================
+Derek Lao:
+* Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
 May 24th 2019:
 =======================================================================================
 Derek Lao:
 * Added inRange(float, float) method
-* Added code to make monster chase player at a certain range, but run away at another range, but the monster seems to chase the player at twice the speed than its regular movement speed, without me coding that in. Tested runFromPlayer() and followPlayer() to separately work though.
+* Added code to make monster chase player at a certain range, but run away at another range, but the monster seems to chase the player at twice the speed than its regular movement speed, without me coding that in. Tested runFromPlayer() and followPlayer() to separately work though. 
+* Problem was fixed by use of else if statements... Not sure why though
+* Fixed problem where when monster is running away from player, it would sometimes step out of the arena
+* Implemented code to keep the player from stepping out of the arena
 
 May 23rd 2019:
 =======================================================================================
