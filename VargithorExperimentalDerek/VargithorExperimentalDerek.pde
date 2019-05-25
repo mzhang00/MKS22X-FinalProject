@@ -2,8 +2,11 @@
 //ArrayList<Room> rooms;
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
+ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);
+
 
 interface Alive {
   Integer getHealth();
@@ -331,8 +334,11 @@ class Chaser extends Monster{
   }
   
   void display() {
-    ellipseMode(CENTER);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    PVector point2 = new PVector(-2,1);
+    PVector point3 = new PVector(2,1);
+    point2.setMag(0.5);
+    point3.setMag(0.5);
+    model = createShape(TRIANGLE, getX() + 5, getY() + 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
@@ -472,6 +478,9 @@ void setup() {
   //System.out.println(width/2);
   //System.out.println(player.getX());
   //player.display();
+  thingsToDisplay.add(player);
+  thingsToDisplay.add(monster);
+  thingsToDisplay.add(chaser);
 }
 
 void draw() {
@@ -479,8 +488,10 @@ void draw() {
   //System.out.println(mousex + " " + mousey);
   background(255);
   makeGrid();
-  player.display();
-  monster.display();
+  for (Entity e : thingsToDisplay)
+  {
+    e.display();
+  }
   player.move();
   monster.move();
   player.shoot();
