@@ -252,17 +252,17 @@ class Monster extends Entity implements Alive {
   }
 
   void move() {
-    //if(inRange(50.0, 100.0))
-    //  followPlayer();
-    //else if(inRange(50.0))
-    //  runFromPlayer();
-    //else
-    //  wanderRegular();
-    
-    if(inRange(50.0))
+    if(inRange(50.0, 100.0))
+      followPlayer();
+    else if(inRange(50.0))
       runFromPlayer();
     else
-      followPlayer();
+      wanderRegular();
+    
+    //if(inRange(50.0))
+    //  runFromPlayer();
+    //else
+    //  followPlayer();
     
     //jitter();
     //straightLine();
@@ -339,23 +339,23 @@ class Chaser extends Monster{
   }
   
   void move() {
-    if(inRange(50.0, 100.0))
-    {
-      followPlayer();
-    }
-    else if(inRange(50.0))
-    {
-      runFromPlayer();
-    }
-    else
-    {
-      wanderRegular();
-    }
-    
-    //if(inRange(50.0))
-    //  runFromPlayer();
-    //else
+    //if(inRange(50.0, 100.0))
+    //{
     //  followPlayer();
+    //}
+    //else if(inRange(50.0))
+    //{
+    //  runFromPlayer();
+    //}
+    //else
+    //{
+    //  wanderRegular();
+    //}
+    
+    if(inRange(50.0))
+      runFromPlayer();
+    else
+      followPlayer();
   }
 }
 class Coward extends Monster{
