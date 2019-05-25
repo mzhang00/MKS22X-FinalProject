@@ -1,22 +1,36 @@
+public class Thing{
+  PShape model;
+  PVector location;
+  
+  Thing(float x, float y)
+  {
+    location = new PVector(x, y);
+  }
+  
+  float getX(){return location.x;}
+  float getY(){return location.y;}
+  
+  
+  
+  void display() {
+    PShape model;
+    PVector point2 = new PVector(-2,1);
+    PVector point3 = new PVector(2,1);
+    point2.setMag(5);
+    point3.setMag(5);
+    model = createShape(TRIANGLE, getX(), getY() - 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
+    model.setFill(color(255, 0, 0));
+    shape(model);
+  }
+}
+
+Thing yes = new Thing(200, 200);
+
 void setup() {
-  size(200,200);
-  smooth();
+  size(400,400);
 }
 
 void draw() {
   background(255);
-  
-  PVector mouse = new PVector(mouseX,mouseY);
-  PVector center = new PVector(width/2,height/2);
-  mouse.sub(center);
-
-  // The magnitude (i.e. length) of a vector can be accessed via the mag() function.  
-  // Here it is used as the width to a rectangle drawn at the top of the window.
-  float m = mouse.mag();
-  fill(0);
-  rect(0,0,m,10);
-  
-  translate(width/2,height/2);
-  line(0,0,mouse.x,mouse.y);
-  
+  yes.display();
 }

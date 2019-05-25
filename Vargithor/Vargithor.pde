@@ -5,7 +5,7 @@ ArrayList<myBullet> bullets = new ArrayList<myBullet>();
 ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);
+Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 
 
 interface Alive {
@@ -336,9 +336,9 @@ class Chaser extends Monster{
   void display() {
     PVector point2 = new PVector(-2,1);
     PVector point3 = new PVector(2,1);
-    point2.setMag(0.5);
-    point3.setMag(0.5);
-    model = createShape(TRIANGLE, getX() + 5, getY() + 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
+    point2.setMag(5);
+    point3.setMag(5);
+    model = createShape(TRIANGLE, getX(), getY() - 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
