@@ -252,22 +252,22 @@ class Monster extends Entity implements Alive {
   }
 
   void move() {
-    //if(inRange(50.0, 100.0))
-    //  followPlayer();
-    //else if(inRange(50.0))
-    //  runFromPlayer();
-    //else
-    //  wanderRegular();
-    
-    if(inRange(50.0))
+    if(inRange(50.0, 100.0))
+      followPlayer();
+    else if(inRange(50.0))
       runFromPlayer();
     else
-      followPlayer();
+      wanderRegular(60);
+    
+    //if(inRange(50.0))
+    //  runFromPlayer();
+    //else
+    //  followPlayer();
     
     //jitter();
     //straightLine();
-    //wanderRegular();
-    //wanderSlow();
+    //wanderRegular(60);
+    //wanderSlow(60);
     //followPlayer();
     //runFromPlayer();
   }
@@ -288,9 +288,9 @@ class Monster extends Entity implements Alive {
     location.add(velocity);
   }
 
-  void wanderSlow() {
+  void wanderSlow(Integer k) {
     //if (millis() % 1000 == 1)
-    if (frameCount % 60 == 1)
+    if (frameCount % k == 1)
     {
       generateRandomDirection();
       velocity.setMag(float(getSpeed())/2.0);
@@ -300,8 +300,8 @@ class Monster extends Entity implements Alive {
     velocity.setMag(float(getSpeed()));
   }
   
-  void wanderRegular() {
-    if (frameCount % 60 == 1)
+  void wanderRegular(Integer k) {
+    if (frameCount % k == 1)
       generateRandomDirection();
     bounceWallRealistic();
     location.add(velocity);
@@ -328,34 +328,35 @@ class Chaser extends Monster{
     super(newx, newy, h, str, spd, givenPlayer);
   }
   
-  void display() {
-    PVector point2 = new PVector(-2,1);
-    PVector point3 = new PVector(2,1);
-    point2.setMag(5);
-    point3.setMag(5);
-    model = createShape(TRIANGLE, getX(), getY() - 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
+  void display() {//equilateral triangle, or triangle with height = player height and base = player height?
+    //PVector point2 = new PVector(-2,1);
+    //PVector point3 = new PVector(2,1);
+    //point2.setMag(5);
+    //point3.setMag(5);
+    //model = createShape(TRIANGLE, getX(), getY() - 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
+    model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
   
   void move() {
-    if(inRange(50.0, 100.0))
-    {
-      followPlayer();
-    }
-    else if(inRange(50.0))
-    {
-      runFromPlayer();
-    }
-    else
-    {
-      wanderRegular();
-    }
-    
-    //if(inRange(50.0))
-    //  runFromPlayer();
-    //else
+    //if(inRange(50.0, 100.0))
+    //{
     //  followPlayer();
+    //}
+    //else if(inRange(50.0))
+    //{
+    //  runFromPlayer();
+    //}
+    //else
+    //{
+    //  wanderRegular(60);
+    //}
+    
+    if(inRange(50.0))
+      runFromPlayer();
+    else
+      followPlayer();
   }
 }
 class Coward extends Monster{
@@ -377,7 +378,7 @@ class Coward extends Monster{
     }
     else
     {
-      wanderRegular();
+      wanderRegular(60);
     }
   }
 }
