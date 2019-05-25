@@ -6,6 +6,7 @@ May 25th 2019:
 =======================================================================================
 Derek Lao:
 * Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
+  
 May 24th 2019:
 =======================================================================================
 Derek Lao:
