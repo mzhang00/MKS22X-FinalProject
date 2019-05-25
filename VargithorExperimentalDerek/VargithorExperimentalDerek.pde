@@ -342,7 +342,7 @@ class Chaser extends Monster{
     {
       followPlayer();
     }
-    if(inRange(50.0))
+    else if(inRange(50.0))
     {
       runFromPlayer();
     }
@@ -367,7 +367,7 @@ class Coward extends Monster{
   void move() {
     if(inRange(100.0))
     {
-      followPlayer();
+      runFromPlayer();
     }
     else
     {
