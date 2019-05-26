@@ -1,4 +1,4 @@
-//Player player = new Player(width/2, height/2, 100, 10);
+//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
@@ -83,26 +83,25 @@ class Entity {
 
 class myBullet extends Entity {
   Integer strength;
-  Float xDirection;
-  Float yDirection;
-  myBullet(Integer s, Float thisx, Float thisy, Float newx, Float newy) {
-    super(thisx, thisy);
+  Float speed;
+  myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
+    super(origin.getX(), origin.getY());
     strength = s;
-    xDirection = newx;
-    yDirection = newy;
+    speed = sp;
+    location.set(origin.getX(), origin.getY());
+    velocity.set(targetx - origin.getX(), targety - origin.getY());
+    velocity.setMag(speed);
   }
   void display() {
-    model = createShape(ELLIPSE, getX(), getY(), 3, 3);
+    model = createShape(ELLIPSE, location.x, location.y, 3, 3);
     model.setFill(color(0, 0, 0));
     shape(model);
   }
   void move() {
-    if (getX() != xDirection && getY() != yDirection) {
-      location.set((getX() - xDirection)/500.0, (getY() - yDirection)/350.0);
-    }
+    location.add(velocity);
   }
   void die() {
-    if (getX() <= 0 || getX() >= 1000 || getY() <= 0 || getY() >= 700) {
+    if (location.x <= 0 || location.x >= 1000 || location.y <= 0 || location.y >= 700) {
       bullets.remove(this);
     }
   }
@@ -121,7 +120,7 @@ class Player extends Entity implements Alive {
   }
   void shoot() {
     if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, getX(), getY(), mousex, mousey);
+      myBullet bullet = new myBullet(1, this, mousex, mousey, 3.0);
       bullets.add(bullet);
     }
   }
@@ -508,5 +507,4 @@ void draw() {
     bullet.move();
   }
   mousex = null;
-  mousey = null;
-}
+  mousey = null;}

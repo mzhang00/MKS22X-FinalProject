@@ -83,17 +83,11 @@ class Entity {
 
 class myBullet extends Entity {
   Integer strength;
-  Float xDirection;
-  Float yDirection;
   Float speed;
-  PVector location;
-  PVector velocity;
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;
-    xDirection = targetx;
     speed = sp;
-    yDirection = targety;
     location.set(origin.getX(), origin.getY());
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
@@ -513,5 +507,4 @@ void draw() {
     bullet.move();
   }
   mousex = null;
-  mousey = null;
-}
+  mousey = null;}
