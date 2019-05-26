@@ -127,6 +127,8 @@ class Player extends Entity implements Alive {
     if (mousex != null && mousey != null) {
       myBullet bullet = new myBullet(1, this, mousex, mousey, 3.0);
       bullets.add(bullet);
+      mousex = null;
+      mousey = null;
     }
   }
   void display() {
@@ -438,6 +440,7 @@ void keyPressed() {
     break;
   }
 }
+
 void keyReleased() {
   switch(key)
   {
@@ -470,10 +473,10 @@ void mousePressed() {
  mousey = (float) mouseY;
  }*/
 
-void mouseReleased() {
-  mousex = null;
-  mousey = null;
-}
+/*void mouseReleased() {
+ mousex = null;
+ mousey = null;
+ }*/
 
 
 void setup() {
@@ -509,7 +512,7 @@ void draw() {
 
   player.shoot();
   //monster.shoot();
-  
+
   for (int i = 0; i < bullets.size(); i++) {
     myBullet bullet = bullets.get(i);
     bullet.display(); 
@@ -518,7 +521,4 @@ void draw() {
       i--;
     }
   }
-  
-  mousex = null;
-  mousey = null;
 }
