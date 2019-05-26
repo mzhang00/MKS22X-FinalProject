@@ -4,11 +4,17 @@ Development log:
 
 May 25th 2019:
 =======================================================================================
+Michael Zhang:
+* Finished implementing bullets using PVectors.
+
 Derek Lao:
 * Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
   
 May 24th 2019:
 =======================================================================================
+Michael Zhang:
+* Did not work on project; studied for an AP Exam
+
 Derek Lao:
 * Added inRange(float, float) method
 * Added code to make monster chase player at a certain range, but run away at another range, but the monster seems to chase the player at twice the speed than its regular movement speed, without me coding that in. Tested runFromPlayer() and followPlayer() to separately work though. 
@@ -18,6 +24,9 @@ Derek Lao:
 
 May 23rd 2019:
 =======================================================================================
+Michael Zhang:
+* Did not work on project; studied for an AP Exam
+
 Derek Lao: 
 * Completed vector usage for player and monster movement up until this point.
 * Wrote and successfully tested followPlayer
