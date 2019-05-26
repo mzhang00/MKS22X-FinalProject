@@ -59,30 +59,25 @@ class myBullet extends Entity {
   Float xDirection;
   Float yDirection;
   Float speed;
-  Float slope;
-  myBullet(Integer s, Float thisx, Float thisy, Float newx, Float newy, Float sp) {
-    super(thisx, thisy);
+  PVector location;
+  PVector velocity;
+  myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
+    super(origin.getX(), origin.getY());
     strength = s;
-    xDirection = newx;
+    xDirection = targetx;
     speed = sp;
-    yDirection = newy;
-    slope = (y - yDirection)/(x - xDirection);
+    yDirection = targety;
+    location.set(origin.getX(), origin.getY());
+    velocity.set(targetx - origin.getX(), targety - origin.getY());
+    velocity.setMag(speed);
   }
   void display() {
-    model = createShape(ELLIPSE, x, y, 3, 3);
+    model = createShape(ELLIPSE, location.x, location.y, 3, 3);
     model.setFill(color(0, 0, 0));
     shape(model);
   }
   void move() {
-    x += (xDirection - x) / 1000;
-    y += (yDirection - y) / 1000;
-    /*if (slope > 1) {
-      x += slope;
-      y -= 1;
-    } else {
-      x += slope;
-      y -= 1;
-    }*/
+    location.add(velocity);
   }
   void die() {
     if (x <= 0 || x >= 1000 || y <= 0 || y >= 700) {
@@ -106,7 +101,7 @@ class Player extends Entity implements Alive {
   }
   void shoot() {
     if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, x, y, mousex, mousey, 3.0);
+      myBullet bullet = new myBullet(1, this, mousex, mousey, 3.0);
       bullets.add(bullet);
     }
   }
