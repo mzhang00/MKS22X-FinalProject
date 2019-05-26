@@ -60,15 +60,13 @@ class myBullet extends Entity {
   Float yDirection;
   Float speed;
   Float slope;
-  PVector velocity;
   myBullet(Integer s, Float thisx, Float thisy, Float newx, Float newy, Float sp) {
     super(thisx, thisy);
     strength = s;
     xDirection = newx;
     speed = sp;
     yDirection = newy;
-    slope = (y - yDirection)/(xDirection - x);
-    //velocity
+    slope = (y - yDirection)/(x - xDirection);
   }
   void display() {
     model = createShape(ELLIPSE, x, y, 3, 3);
@@ -76,12 +74,15 @@ class myBullet extends Entity {
     shape(model);
   }
   void move() {
-    if (x != xDirection && y != yDirection){
-      
-      x += 1;
-      y -= slope;
-      System.out.println(slope);
-    }
+    x += (xDirection - x) / 1000;
+    y += (yDirection - y) / 1000;
+    /*if (slope > 1) {
+      x += slope;
+      y -= 1;
+    } else {
+      x += slope;
+      y -= 1;
+    }*/
   }
   void die() {
     if (x <= 0 || x >= 1000 || y <= 0 || y >= 700) {
@@ -159,7 +160,7 @@ void makeGrid() {
   for (int i = 0; i < width/10; i++) {
     for (int c = 0; c < height/10; c++) {
       if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
-        fill(101, 67, 33);
+        fill(0);
         noStroke();
         rect(i * 10, c * 10, 10, 10);
       } else {
@@ -212,18 +213,18 @@ Float mousex;
 Float mousey;
 
 void mouseClicked() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }
-/*
-void mousePressed() {
   mousex = (float) mouseX;
   mousey = (float) mouseY;
 }
-void mouseDragged() {
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
-}*/
+/*
+void mousePressed() {
+ mousex = (float) mouseX;
+ mousey = (float) mouseY;
+ }
+ void mouseDragged() {
+ mousex = (float) mouseX;
+ mousey = (float) mouseY;
+ }*/
 
 void mouseReleased() {
   mousex = null;
