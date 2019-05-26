@@ -1,5 +1,4 @@
 //Player player = new Player(width/2, height/2, 100, 10);
-////Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
@@ -8,6 +7,7 @@ ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
 
 
 interface Alive {
@@ -32,7 +32,7 @@ class Entity {
 
   Entity(Float x, Float y) {
     location = new PVector(x, y);
-    velocity = new PVector(0, 0);
+    velocity = new PVector(1, 0);
   }
 
   Float getX() {
@@ -274,11 +274,6 @@ class Monster extends Entity implements Alive {
   }
 
   void jitter() {
-    //if (millis() % 1000 == 0)
-    //if(frameCount % 60 == 0)
-    //{
-    //  generateRandomDirection();
-    //}
     generateRandomDirection();
     bounceWallRealistic();
     location.add(velocity);
@@ -304,6 +299,9 @@ class Monster extends Entity implements Alive {
   void wanderRegular(Integer k) {
     if (frameCount % k == 1)
       generateRandomDirection();
+    //Integer modulo = millis() % k;
+    //if (modulo < float(k) / 120.0 && modulo >= float(k) / 120.0)
+    //  generateRandomDirection();
     bounceWallRealistic();
     location.add(velocity);
   }
@@ -490,6 +488,7 @@ void setup() {
 
 void draw() {
   System.out.println(frameRate);
+  System.out.println(millis());
   //System.out.println(mousex + " " + mousey);
   background(255);
   makeGrid();
