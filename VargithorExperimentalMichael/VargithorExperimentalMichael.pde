@@ -1,6 +1,8 @@
 //Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+Float mousex;
+Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
@@ -172,8 +174,6 @@ class Player extends Entity implements Alive {
     velocity.set(holder);
   }
 }
-
-
 
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
@@ -360,6 +360,7 @@ class Chaser extends Monster {
       followPlayer();
   }
 }
+
 class Coward extends Monster {
   Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -382,6 +383,7 @@ class Coward extends Monster {
     }
   }
 }
+
 class Circler extends Monster {
   Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -454,9 +456,6 @@ void keyReleased() {
   }
 }
 
-Float mousex;
-Float mousey;
-
 void mouseClicked() {
   mousex = (float) mouseX;
   mousey = (float) mouseY;
@@ -510,6 +509,7 @@ void draw() {
 
   player.shoot();
   //monster.shoot();
+  
   for (int i = 0; i < bullets.size(); i++) {
     myBullet bullet = bullets.get(i);
     bullet.display(); 
@@ -518,6 +518,7 @@ void draw() {
       i--;
     }
   }
+  
   mousex = null;
   mousey = null;
 }
