@@ -42,11 +42,11 @@ class Entity {
   Float getY() {
     return location.y;
   }
-  
+
   Float getXSpeed() {
     return velocity.x;
   }
-  
+
   Float getYSpeed() {
     return velocity.y;
   }
@@ -58,11 +58,11 @@ class Entity {
   void setY(Float input) {
     location.set(location.x, input);
   }
-  
+
   void setXSpeed(Float input) {
     velocity.set(input, velocity.y);
   }
-  
+
   void setYSpeed(Float input) {
     velocity.set(velocity.x, input);
   }
@@ -76,8 +76,9 @@ class Entity {
       //
     }
   }
-  
-  void move() {}
+
+  void move() {
+  }
 }
 
 
@@ -100,10 +101,12 @@ class myBullet extends Entity {
   void move() {
     location.add(velocity);
   }
-  void die() {
+  boolean die() {
     if (location.x <= 0 || location.x >= 1000 || location.y <= 0 || location.y >= 700) {
       bullets.remove(this);
+      return true;
     }
+    return false;
   }
 }
 
@@ -155,16 +158,16 @@ class Player extends Entity implements Alive {
   void move() {
     //Float diagonalFactor = Math.sqrt(1 / ((Math.pow(k,2)) + 1));
     //boolean diagonalMoving = up && left || up && right || down && left || down && right;
-    
+
     velocity.set(float((int(right) - int(left))), float((int(down) - int(up))));
     velocity.setMag(float(getSpeed()));
-    
+
     PVector holder = velocity;
-    if(Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
+    if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
       velocity.set(0, holder.y);
-    if(Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
+    if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(holder.x, 0);
-      
+
     location.add(velocity);
     velocity.set(holder);
   }
@@ -185,7 +188,7 @@ class Monster extends Entity implements Alive {
     generateRandomDirection();
     player = givenPlayer;
   }
-  
+
   void display() {
     ellipseMode(CENTER);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
@@ -217,15 +220,15 @@ class Monster extends Entity implements Alive {
     //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^2;
     return inRange(0, range);
   }
-  
+
   boolean inRange(float rangeMin, float rangeMax) {
-    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) < Math.pow(rangeMax,2) && 
-      Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) >= Math.pow(rangeMin,2))
+    if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) < Math.pow(rangeMax, 2) && 
+      Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) >= Math.pow(rangeMin, 2))
       return true;
     else
       return false;
   }
-  
+
   void bounceWallRealistic() {
     if (Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10))
       velocity.set(getXSpeed() * -1, getYSpeed());
@@ -252,18 +255,18 @@ class Monster extends Entity implements Alive {
   }
 
   void move() {
-    if(inRange(50.0, 100.0))
+    if (inRange(50.0, 100.0))
       followPlayer();
-    else if(inRange(50.0))
+    else if (inRange(50.0))
       runFromPlayer();
     else
       wanderRegular(60);
-    
+
     //if(inRange(50.0))
     //  runFromPlayer();
     //else
     //  followPlayer();
-    
+
     //jitter();
     //straightLine();
     //wanderRegular(60);
@@ -294,7 +297,7 @@ class Monster extends Entity implements Alive {
     location.add(velocity);
     velocity.setMag(float(getSpeed()));
   }
-  
+
   void wanderRegular(Integer k) {
     if (frameCount % k == 1)
       generateRandomDirection();
@@ -308,11 +311,11 @@ class Monster extends Entity implements Alive {
   void followPlayer() {
     velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
     velocity.setMag(float(speed));
-    
+
     bounceWallRealistic();
     location.add(velocity);
   }
-  
+
   void runFromPlayer() {
     velocity.set(this.getX() - player.getX(), this.getY() - player.getY());
     velocity.setMag(float(speed));
@@ -321,11 +324,11 @@ class Monster extends Entity implements Alive {
   }
 }
 
-class Chaser extends Monster{
+class Chaser extends Monster {
   Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
   }
-  
+
   void display() {//equilateral triangle, or triangle with height = player height and base = player height?
     //PVector point2 = new PVector(-2,1);
     //PVector point3 = new PVector(2,1);
@@ -336,7 +339,7 @@ class Chaser extends Monster{
     model.setFill(color(255, 0, 0));
     shape(model);
   }
-  
+
   void move() {
     //if(inRange(50.0, 100.0))
     //{
@@ -350,49 +353,49 @@ class Chaser extends Monster{
     //{
     //  wanderRegular(60);
     //}
-    
-    if(inRange(50.0))
+
+    if (inRange(50.0))
       runFromPlayer();
     else
       followPlayer();
   }
 }
-class Coward extends Monster{
+class Coward extends Monster {
   Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
   }
-  
+
   void display() {
     ellipseMode(CENTER);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
-  
+
   void move() {
-    if(inRange(100.0))
+    if (inRange(100.0))
     {
       runFromPlayer();
-    }
-    else
+    } else
     {
       wanderRegular(60);
     }
   }
 }
-class Circler extends Monster{
+class Circler extends Monster {
   Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
   }
-  
+
   void display() {
     ellipseMode(CENTER);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
   }
-  
-  void move() {}
+
+  void move() {
+  }
 }
 
 void makeGrid() {
@@ -400,7 +403,11 @@ void makeGrid() {
   for (int i = 0; i < width/10; i++) {
     for (int c = 0; c < height/10; c++) {
       if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
-        fill(101, 67, 33);
+        if (c == 500) {
+          fill(255, 10, 10);
+        } else {
+          fill(0, 0, 0);
+        }
         noStroke();
         rect(i * 10, c * 10, 10, 10);
       } else {
@@ -488,6 +495,7 @@ void setup() {
 void draw() {
   System.out.println(frameRate);
   System.out.println(millis());
+  //System.out.println(bullets);
   //System.out.println(mousex + " " + mousey);
   background(255);
   makeGrid();
@@ -502,9 +510,14 @@ void draw() {
 
   player.shoot();
   //monster.shoot();
-  for (myBullet bullet : bullets) {
+  for (int i = 0; i < bullets.size(); i++) {
+    myBullet bullet = bullets.get(i);
     bullet.display(); 
     bullet.move();
+    if (bullet.die()) {
+      i--;
+    }
   }
   mousex = null;
-  mousey = null;}
+  mousey = null;
+}
