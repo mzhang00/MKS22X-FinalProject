@@ -322,6 +322,19 @@ class Monster extends Entity implements Alive {
     bounceWallRealistic();
     location.add(velocity);
   }
+  
+  void circlePlayer(Float radius) {
+    //at every instant, the monster will calculate
+    if(Math.pow(getX(), 2) + Math.pow(getY(), 2) >= Math.pow(radius, 2))
+    {
+      //calculate tangent point to the circle from the monster's current location, 
+      //such that the monster will enter the circle and then circle the player clockwise
+      //if given that tangent point, p,q, the equation is px + qy = radius^2
+    }
+    bounceWallRealistic();
+    location.add(velocity);
+    velocity.rotate(velocity.mag() / radius);
+  }
 }
 
 class Chaser extends Monster {
