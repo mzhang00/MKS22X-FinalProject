@@ -15,6 +15,8 @@ Michael Zhang:
 
 Derek Lao:
 * Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
+* Added movement code for chaser, to chase player unconditionally up until it gets too close
+* Added movement code for coward, where it would only run away when player gets too close, but otherwise it just wanders
   
 May 24th 2019:
 =======================================================================================
