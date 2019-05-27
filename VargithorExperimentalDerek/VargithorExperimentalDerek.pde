@@ -253,6 +253,16 @@ class Monster extends Entity implements Alive {
     velocity.rotate(angle);
     velocity.setMag(float(getSpeed()));
   }
+  
+  Float[] calculateSlopeOfTangentToCircleCenteredAtOriginFromExternalPoint(Float xcoor, Float ycoor, Float radius){
+    Float xcoorSquared = (float) Math.pow(xcoor, 2);
+    Float ycoorSquared = (float) Math.pow(ycoor, 2);
+    Float radiusSquared = (float) Math.pow(radius, 2);
+    Float[] answers = new Float[2];
+    answers[0] = (float) ((xcoor * ycoor) + radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    answers[1] = (float) ((xcoor * ycoor) - radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    return answers;
+  }
 
   void move() {
     if (inRange(50.0, 100.0))
@@ -330,6 +340,10 @@ class Monster extends Entity implements Alive {
       //calculate tangent point to the circle from the monster's current location, 
       //such that the monster will enter the circle and then circle the player clockwise
       //if given that tangent point, p,q, the equation is px + qy = radius^2
+      
+      //based on calculated formula, and tested on desmos.com, the two slopes of the lines tangent to a circle centered at origin, from an external point (a,b) is
+      //(ab +- radius * (sqrt(a^2 + b^2 - radius^2)))/(a^2 - R^2)
+      
     }
     bounceWallRealistic();
     location.add(velocity);
