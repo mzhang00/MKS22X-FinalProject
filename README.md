@@ -2,6 +2,10 @@
 AP CS Final Project
 Development log:
 
+May 26th 2019:
+=======================================================================================
+Michael Zhang:
+* Added doors to rooms for the characters to progress through rooms/levels
 
 May 26th 2019:
 =======================================================================================
@@ -11,7 +15,8 @@ Michael Zhang:
 May 25th 2019:
 =======================================================================================
 Michael Zhang:
-* Finished implementing bullets using PVectors, still need to make it smooter related to the framerate
+* Finished implementing bullets using PVectors, still need to make it smoother related to the framerate
+* Gun does not shoot smoothly yet, but bullets are fixed
 
 Derek Lao:
 * Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
