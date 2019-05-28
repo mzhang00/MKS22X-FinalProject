@@ -2,15 +2,21 @@
 AP CS Final Project
 Development log:
 
-May 26th 2019:
+May 27th 2019:
 =======================================================================================
 Michael Zhang:
 * Added doors to rooms for the characters to progress through rooms/levels
+
+Derek Lao:
+* Created method that takes 3 paramters: x coordinate of external point, y coordinate of external point, and radius of circle, to calcualte the two slopes of an external point to a circle centered at the origin
 
 May 26th 2019:
 =======================================================================================
 Michael Zhang:
 * Started work on room generation and progressing through levels
+
+Derek Lao:
+* Calculated two slopes of the tangent lines of an external point to a circle centered at the origin
 
 May 25th 2019:
 =======================================================================================
