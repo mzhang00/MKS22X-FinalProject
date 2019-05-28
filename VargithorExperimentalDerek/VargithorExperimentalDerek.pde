@@ -132,9 +132,14 @@ class Player extends Entity implements Alive {
   }
   void display() {
     rectMode(CENTER);
-    model = createShape(RECT, getX(), getY(), 10, 10);
+    //model = createShape(ELLIPSE, getX(), getY(), 200, 200);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
+    
+    noFill();
+    ellipse(getX(), getY(), 100, 100);
+    fill(255,255,255);
   }
 
   Integer getHealth() {
@@ -340,14 +345,24 @@ class Monster extends Entity implements Alive {
     //at every instant, the monster will calculate
     Float xdistance = getX() - player.getX();
     Float ydistance = getY() - player.getY();
+    //boolean k = true;
     if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2) && k)
     {
       System.out.println("greater than");
       Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
-      velocity.set(1,slopes[1]);
-      velocity.setMag(getSpeed());
-      bounceWallRealistic();
-      location.add(velocity);
+      //if(slopes[1] <= 999999999)
+      //{
+        velocity.set(1,slopes[1]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      //}
+      //else
+      //{
+      //  k = false;
+      //  System.out.println(k);
+      //}
     }
     else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
     {
@@ -365,6 +380,13 @@ class Monster extends Entity implements Alive {
       bounceWallRealistic();
       location.add(velocity);
     }
+    //if(!k)
+    //{
+    //  PVector stuff = new PVector(0, 1);//try PVector(0, -1);
+    //  location.add(stuff);
+    //  System.out.println("hi");
+    //  k = true;
+    //}
   }
 }
 
@@ -458,7 +480,7 @@ void makeGrid() {
         rect(i * 10, c * 10, 10, 10);
       } else {
         noFill();
-        stroke(0);
+        stroke(150);
         rect(i * 10, c * 10, 10, 10);
       }
     }
@@ -504,15 +526,15 @@ void mouseClicked() {
   mousex = (float) mouseX;
   mousey = (float) mouseY;
 }
-/*
-void mousePressed() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }
- void mouseDragged() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }*/
+
+//void mousePressed() {
+// mousex = (float) mouseX;
+// mousey = (float) mouseY;
+// }
+// void mouseDragged() {
+// mousex = (float) mouseX;
+// mousey = (float) mouseY;
+//}
 
 void mouseReleased() {
   mousex = null;
