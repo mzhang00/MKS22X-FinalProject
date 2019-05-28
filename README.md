@@ -9,6 +9,8 @@ Michael Zhang:
 
 Derek Lao:
 * Created method that takes 3 paramters: x coordinate of external point, y coordinate of external point, and radius of circle, to calcualte the two slopes of an external point to a circle centered at the origin
+* Something wrong with the circling movement, such that at the start of the program the circler was being deleted if I moved my player directly left or right of the circler. Must find source of this bug, and fix later.
+* Also, the circler circles correctly clockwise forthe top half of the circle. Other than that, it fails to circle. Must fix later.
 
 May 26th 2019:
 =======================================================================================
