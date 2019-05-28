@@ -345,24 +345,43 @@ class Monster extends Entity implements Alive {
     //at every instant, the monster will calculate
     Float xdistance = getX() - player.getX();
     Float ydistance = getY() - player.getY();
-    //boolean k = true;
-    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
-    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2) && k)
+    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+    boolean k = true;
+    boolean slopesInRange = (slopes[0] <= 999999999 && slopes[0] >= -999999999) && (slopes[1] <= 999999999 && slopes[1] >= -999999999);
+    boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
+    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2) && k)
     {
       System.out.println("greater than");
-      Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
-      //if(slopes[1] <= 999999999)
-      //{
+      if(slopesInRange && slopesOppositeSign)
+      {
+        velocity.set(1,slopes[0]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      }
+      else if(slopesInRange && !slopesOppositeSign)
+      {
         velocity.set(1,slopes[1]);
         velocity.setMag(getSpeed());
         bounceWallRealistic();
         location.add(velocity);
-      //}
-      //else
-      //{
-      //  k = false;
-      //  System.out.println(k);
-      //}
+      }
+      else
+      {
+        if(getX() < player.getX())
+        {
+          velocity.set(0, -1 * speed);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+        else
+        {
+          velocity.set(0, speed);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
     }
     else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
     {
@@ -380,13 +399,14 @@ class Monster extends Entity implements Alive {
       bounceWallRealistic();
       location.add(velocity);
     }
-    //if(!k)
-    //{
-    //  PVector stuff = new PVector(0, 1);//try PVector(0, -1);
-    //  location.add(stuff);
-    //  System.out.println("hi");
-    //  k = true;
-    //}
+    if(!k)
+    {
+      velocity.set(0, -1 * speed);//try PVector(0, -1);
+      bounceWallRealistic();
+      location.add(velocity);
+      System.out.println("hi");
+      k = true;
+    }
   }
 }
 
