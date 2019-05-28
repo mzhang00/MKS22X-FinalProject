@@ -2,16 +2,23 @@
 AP CS Final Project
 Development log:
 
+May 27th 2019:
+=======================================================================================
+Derek Lao:
+* Created method that takes 3 paramters: x coordinate of external point, y coordinate of external point, and radius of circle, to calcualte the two slopes of an external point to a circle centered at the origin
 
 May 26th 2019:
 =======================================================================================
 Michael Zhang:
 * Started work on room generation and progressing through levels
 
+Derek Lao:
+* Calculated two slopes of the tangent lines of an external point to a circle centered at the origin
+
 May 25th 2019:
 =======================================================================================
 Michael Zhang:
-* Finished implementing bullets using PVectors, still need to make it smooter related to the framerate
+* Finished implementing bullets using PVectors, still need to make it smoother related to the framerate
 
 Derek Lao:
 * Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
