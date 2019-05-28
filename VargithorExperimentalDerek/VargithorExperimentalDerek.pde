@@ -449,8 +449,8 @@ void makeGrid() {
   for (int i = 0; i < width/10; i++) {
     for (int c = 0; c < height/10; c++) {
       if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
-        if (c == 500) {
-          fill(255, 10, 10);
+        if (c >= 33 && c <= 36 || i >= 47 && i <= 52) {
+          fill(200, 200, 200);
         } else {
           fill(0, 0, 0);
         }
