@@ -132,8 +132,8 @@ class Player extends Entity implements Alive {
     if (mousex != null && mousey != null) {
       myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
       bullets.add(bullet);
-      mousex = null;
-      mousey = null;
+      //mousex = null;
+      //mousey = null;
     }
   }
   
@@ -506,29 +506,35 @@ void keyReleased() {
   }
 }
 
-void mouseClicked() {
-  //if weapon is pistol
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
+//void mouseClicked() {
+//  //if weapon is pistol
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
+
+void mousePressed() {
+  //if (weapon is machinegun
+  if (millis() % 100 == 0){
+    mousex = (float) mouseX;
+    mousey = (float) mouseY;
+  }
 }
 
-//void mousePressed() {
-//  //if (weapon is machinegun
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
-//}
+void mouseDragged() {
+  //if (weapon is machinegun
+  if (millis() % 100 == 0){
+    mousex = (float) mouseX;
+    mousey = (float) mouseY;
+  }
+}
 
-//void mouseDragged() {
-//  //if (weapon is machinegun
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
-//}
-
-//void mouseReleased() {
-//  //if (weapon is machinegun
-//  mousex = null;
-//  mousey = null;
-//}
+void mouseReleased() {
+  //if (weapon is machinegun
+  if (millis() % 100 == 0){
+    mousex = null;
+    mousey = null;
+  }
+}
 
 void setup() {
   size(1000, 700);
