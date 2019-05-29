@@ -137,6 +137,9 @@ class Player extends Entity implements Alive {
     model = createShape(RECT, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
+    if (health <= 0){
+      this.die();
+    }
   }
 
   Integer getHealth() {
@@ -186,6 +189,9 @@ class Player extends Entity implements Alive {
       energy++;
     }
     System.out.println("energy" + energy);
+  }
+  void die(){
+    endScreen();
   }
 }
 
