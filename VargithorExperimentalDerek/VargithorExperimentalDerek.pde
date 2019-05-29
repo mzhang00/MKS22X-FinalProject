@@ -267,8 +267,18 @@ class Monster extends Entity implements Alive {
     Float ycoorSquared = (float) Math.pow(ycoor, 2);
     Float radiusSquared = (float) Math.pow(radius, 2);
     Float[] answers = new Float[2];
-    answers[0] = (float) ((xcoor * ycoor) + radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
-    answers[1] = (float) ((xcoor * ycoor) - radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    Float slope1 = (float) ((xcoor * ycoor) + radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    Float slope2 = (float) ((xcoor * ycoor) - radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    if(slope1 > slope2)
+    {
+      answers[0] = slope2;
+      answers[1] = slope1;
+    }
+    else
+    {
+      answers[0] = slope1;
+      answers[1] = slope2;
+    }
     return answers;
   }
 
@@ -341,73 +351,76 @@ class Monster extends Entity implements Alive {
     location.add(velocity);
   }
   
-  void circlePlayerClockwise(Float radius) {
-    //at every instant, the monster will calculate
-    Float xdistance = getX() - player.getX();
-    Float ydistance = getY() - player.getY();
-    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
-    boolean k = true;
-    boolean slopesInRange = (slopes[0] <= 999999999 && slopes[0] >= -999999999) && (slopes[1] <= 999999999 && slopes[1] >= -999999999);
-    boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
-    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
-    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2) && k)
-    {
-      System.out.println("greater than");
-      if(slopesInRange && slopesOppositeSign)
-      {
-        velocity.set(1,slopes[0]);
-        velocity.setMag(getSpeed());
-        bounceWallRealistic();
-        location.add(velocity);
-      }
-      else if(slopesInRange && !slopesOppositeSign)
-      {
-        velocity.set(1,slopes[1]);
-        velocity.setMag(getSpeed());
-        bounceWallRealistic();
-        location.add(velocity);
-      }
-      else
-      {
-        if(getX() < player.getX())
-        {
-          velocity.set(0, -1 * speed);
-          bounceWallRealistic();
-          location.add(velocity);
-        }
-        else
-        {
-          velocity.set(0, speed);
-          bounceWallRealistic();
-          location.add(velocity);
-        }
-      }
-    }
-    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
-    {
-      System.out.println("less than");
-      velocity.set(xdistance, ydistance);
-      velocity.setMag(getSpeed());
-      bounceWallRealistic();
-      location.add(velocity);
-    }
-    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
-    {
-      System.out.println("equal to");
-      velocity.set(-1 * ydistance, xdistance);
-      velocity.setMag(getSpeed());
-      bounceWallRealistic();
-      location.add(velocity);
-    }
-    if(!k)
-    {
-      velocity.set(0, -1 * speed);//try PVector(0, -1);
-      bounceWallRealistic();
-      location.add(velocity);
-      System.out.println("hi");
-      k = true;
-    }
-  }
+//  void circlePlayerClockwise(Float radius) {
+//    //at every instant, the monster will calculate
+//    Float xdistance = getX() - player.getX();
+//    Float ydistance = getY() - player.getY();
+//    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+//    //boolean nonInfiniteSlope = true;
+//    boolean slopesInRange = (Math.abs(slopes[0]) <= 999999999 && Math.abs(slopes[0]) > 0) && (Math.abs(slopes[1]) <= 999999999 && Math.abs(slopes[1]) > 0);
+//    boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
+//    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+//    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+//    {
+//      System.out.println("greater than");
+//      if(slopesInRange && slopesOppositeSign && Math.abs(slopes[0]) > 1 && Math.abs(slopes[1]) > 1)
+//      {
+//        velocity.set(1, slopes[0]);
+//        velocity.setMag(getSpeed());
+//        bounceWallRealistic();
+//        location.add(velocity);
+//      }
+//      else if(slopesInRange)
+//      {
+//        velocity.set(1, slopes[1]);
+//        velocity.setMag(getSpeed());
+//        bounceWallRealistic();
+//        location.add(velocity);
+//      }
+//      else
+//      {
+//        if(getX() < player.getX())
+//        {
+//          velocity.set(0, -1 * speed);
+//          bounceWallRealistic();
+//          location.add(velocity);
+//        }
+//        else
+//        {
+//          velocity.set(0, speed);
+//          bounceWallRealistic();
+//          location.add(velocity);
+//        }
+//      }
+//    }
+//    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
+//    {
+//      System.out.println("less than");
+//      velocity.set(xdistance, ydistance);
+//      velocity.setMag(getSpeed());
+//      bounceWallRealistic();
+//      location.add(velocity);
+//    }
+//    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
+//    {
+//      System.out.println("equal to");
+//      velocity.set(-1 * ydistance, xdistance);
+//      velocity.setMag(getSpeed());
+//      bounceWallRealistic();
+//      location.add(velocity);
+//    }
+//  }
+//}
+
+void circlePlayerClockwise(Float radius) {
+  //at every instant, the monster will calculate
+  Float xdistance = getX() - player.getX();
+  Float ydistance = getY() - player.getY();
+  Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+  //boolean nonInfiniteSlope = true;
+  boolean slopesInRange = (Math.abs(slopes[0]) <= 999999999 && Math.abs(slopes[0]) > 0) && (Math.abs(slopes[1]) <= 999999999 && Math.abs(slopes[1]) > 0);
+  boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
+  if(atan(slopes[0]) < atan(ydistance / xdistance))
 }
 
 class Chaser extends Monster {
