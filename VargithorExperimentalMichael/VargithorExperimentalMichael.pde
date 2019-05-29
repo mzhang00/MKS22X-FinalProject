@@ -116,6 +116,7 @@ class Player extends Entity implements Alive {
   Integer health, strength, speed;
   boolean up, down, left, right, dodge;
   PShape model;
+  int energy = 100;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
@@ -172,14 +173,19 @@ class Player extends Entity implements Alive {
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(holder.x, 0);
   
-    if (!dodge){
+    if (dodge && energy > 25){
+      velocity.setMag(float(getSpeed()) * 4);
       location.add(velocity);
       velocity.set(holder);
+      energy -= 25;
     }else{
-      velocity.setMag(float(getSpeed()) * 3);
       location.add(velocity);
       velocity.set(holder);
     }
+    if (energy != 100){
+      energy++;
+    }
+    System.out.println("energy" + energy);
   }
 }
 
