@@ -11,6 +11,8 @@ Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float new
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
 Circler circler = new Circler(500.0, 350.0, 5, 5, 1, player);
+//Circler[] circlers = new Circler[10];
+//for(int i = 0; i < 361 ; i += 10)
 
 
 interface Alive {
@@ -376,10 +378,10 @@ class Monster extends Entity implements Alive {
         }
         else
         {
-          velocity.set(0, getSpeed());
-          velocity.rotate(-1 * getSpeed() / radius);
-          bounceWallRealistic();
-          location.add(velocity);
+          //velocity.set(0, getSpeed());
+          //velocity.rotate(getSpeed() / radius);
+          //bounceWallRealistic();
+          //location.add(velocity);
         }
       }
       else if(getY() > player.getY())
@@ -394,11 +396,27 @@ class Monster extends Entity implements Alive {
         }
         else
         {
-          velocity.set(0, getSpeed());
-          velocity.rotate(-1 * getSpeed() / radius);
-          bounceWallRealistic();
-          location.add(velocity);
+          //velocity.set(0, getSpeed());
+          //velocity.rotate(getSpeed() / radius);
+          //bounceWallRealistic();
+          //location.add(velocity);
         }
+      }
+      //else if((Math.abs(getY() - player.getY()) < 0.5 && getX() < player.getX()))
+      else if(getY() == player.getY() && getX() < player.getX())
+      {
+        velocity.set(0, getSpeed());
+        velocity.rotate(getSpeed() / radius);
+        bounceWallRealistic();
+        location.add(velocity);
+      }
+      //else if((Math.abs(getY() - player.getY()) < 0.5 && getX() > player.getX()))
+      else if((getY() == player.getY() && getX() > player.getX()))
+      {
+        velocity.set(0, -1 * getSpeed());
+        velocity.rotate(getSpeed() / radius);
+        bounceWallRealistic();
+        location.add(velocity);
       }
     }
     else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
