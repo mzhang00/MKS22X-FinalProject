@@ -2,6 +2,15 @@
 AP CS Final Project
 Development log:
 
+May 28th 2019:
+=======================================================================================
+Michael Zhang:
+* Updated the background colors and door colors
+* Updated the speeds of the player and bullets to make them up to par with enemies
+* Added a dodging mechanic that uses a new stat, energy, which replenishes over time
+* Added a game over screen for when the player dies
+* Started working on doing damage and bullet collision with enemies
+
 May 27th 2019:
 =======================================================================================
 Michael Zhang:
