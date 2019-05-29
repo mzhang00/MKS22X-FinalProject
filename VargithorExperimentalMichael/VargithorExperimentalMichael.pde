@@ -11,7 +11,6 @@ Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float new
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
 
-
 interface Alive {
   Integer getHealth();
   Integer getStrength();
@@ -87,6 +86,7 @@ class Entity {
 class myBullet extends Entity {
   Integer strength;
   Float speed;
+  
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;
@@ -95,14 +95,17 @@ class myBullet extends Entity {
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
   }
+  
   void display() {
     model = createShape(ELLIPSE, location.x, location.y, 3, 3);
     model.setFill(color(0, 0, 0));
     shape(model);
   }
+  
   void move() {
     location.add(velocity);
   }
+  
   boolean die() {
     if (location.x <= 0 || location.x >= 1000 || location.y <= 0 || location.y >= 700) {
       bullets.remove(this);
@@ -124,6 +127,7 @@ class Player extends Entity implements Alive {
     strength = str;
     speed = spd;
   }
+  
   void shoot() {
     if (mousex != null && mousey != null) {
       myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
@@ -132,12 +136,13 @@ class Player extends Entity implements Alive {
       mousey = null;
     }
   }
+  
   void display() {
     rectMode(CENTER);
     model = createShape(RECT, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
-    if (health <= 0){
+    if (health <= 0) {
       this.die();
     }
   }
@@ -145,12 +150,15 @@ class Player extends Entity implements Alive {
   Integer getHealth() {
     return health;
   }
+  
   Integer getStrength() {
     return strength;
   }
+  
   Integer getSpeed() {
     return speed;
   }
+  
   void setHealth(Integer newhealth) {
     health = newhealth;
   }
@@ -190,7 +198,8 @@ class Player extends Entity implements Alive {
     }
     System.out.println("energy" + energy);
   }
-  void die(){
+  
+  void die() {
     endScreen();
   }
 }
@@ -219,9 +228,11 @@ class Monster extends Entity implements Alive {
   Integer getHealth() {
     return health;
   }
+  
   Integer getStrength() {
     return strength;
   }
+  
   Integer getSpeed() {
     return speed;
   }
@@ -232,6 +243,7 @@ class Monster extends Entity implements Alive {
   void setStrength(Integer newstrength) {
     strength = newstrength;
   }
+  
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
@@ -255,6 +267,7 @@ class Monster extends Entity implements Alive {
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(getXSpeed(), getYSpeed() * -1);
   }
+  
   void bounceWallRandom() {
     if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
       (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
@@ -268,6 +281,7 @@ class Monster extends Entity implements Alive {
       //for both x and y between -2 and 2.
     }
   }
+  
   private void generateRandomDirection() {
     float angle = random(0, 360);
     velocity.rotate(angle);
@@ -492,24 +506,28 @@ void keyReleased() {
 }
 
 void mouseClicked() {
+  //if weapon is pistol
   mousex = (float) mouseX;
   mousey = (float) mouseY;
 }
-/*
-void mousePressed() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }
- void mouseDragged() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }*/
 
-/*void mouseReleased() {
- mousex = null;
- mousey = null;
- }*/
+//void mousePressed() {
+//  //if (weapon is machinegun
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
 
+//void mouseDragged() {
+//  //if (weapon is machinegun
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
+
+//void mouseReleased() {
+//  //if (weapon is machinegun
+//  mousex = null;
+//  mousey = null;
+//}
 
 void setup() {
   size(1000, 700);
