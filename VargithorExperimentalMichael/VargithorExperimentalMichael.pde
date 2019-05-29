@@ -440,11 +440,12 @@ void makeGrid() {
     for (int c = 0; c < height/10; c++) {
       if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
         if (c >= 33 && c <= 36 || i >= 47 && i <= 52) {
-          fill(255, 255, 255);
+          stroke(200);
+          noFill();
         } else {
+          noStroke();
           fill(0, 0, 0);
         }
-        noStroke();
         rect(i * 10, c * 10, 10, 10);
       } else {
         noFill();
