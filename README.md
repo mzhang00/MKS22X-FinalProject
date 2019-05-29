@@ -11,6 +11,9 @@ Michael Zhang:
 * Added a game over screen for when the player dies
 * Started working on doing damage and bullet collision with enemies
 
+Derek Lao
+* Unsuccessfully implemented orbit movement with slopes. Going to try a different approach, involving arctangents.
+
 May 27th 2019:
 =======================================================================================
 Michael Zhang:
