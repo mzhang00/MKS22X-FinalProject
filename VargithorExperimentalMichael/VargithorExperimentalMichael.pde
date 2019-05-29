@@ -114,7 +114,7 @@ class myBullet extends Entity {
 
 class Player extends Entity implements Alive {
   Integer health, strength, speed;
-  boolean up, down, left, right;
+  boolean up, down, left, right, dodge;
   PShape model;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
@@ -171,9 +171,15 @@ class Player extends Entity implements Alive {
       velocity.set(0, holder.y);
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(holder.x, 0);
-
-    location.add(velocity);
-    velocity.set(holder);
+  
+    if (!dodge){
+      location.add(velocity);
+      velocity.set(holder);
+    }else{
+      velocity.setMag(float(getSpeed()) * 3);
+      location.add(velocity);
+      velocity.set(holder);
+    }
   }
 }
 
@@ -426,6 +432,9 @@ void makeGrid() {
 void keyPressed() {
   switch(key)
   {
+  case 'v' :
+    player.dodge = true;
+    break;
   case 'w' : 
     player.up = true;
     break;
@@ -444,6 +453,9 @@ void keyPressed() {
 void keyReleased() {
   switch(key)
   {
+  case 'v' :
+    player.dodge = false;
+    break;
   case 'w' : 
     player.up = false;
     break;
