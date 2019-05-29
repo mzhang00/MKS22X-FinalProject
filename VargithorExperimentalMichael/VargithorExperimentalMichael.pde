@@ -87,6 +87,7 @@ class Entity {
 class myBullet extends Entity {
   Integer strength;
   Float speed;
+  
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;
@@ -95,14 +96,17 @@ class myBullet extends Entity {
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
   }
+  
   void display() {
     model = createShape(ELLIPSE, location.x, location.y, 3, 3);
     model.setFill(color(0, 0, 0));
     shape(model);
   }
+  
   void move() {
     location.add(velocity);
   }
+  
   boolean die() {
     if (location.x <= 0 || location.x >= 1000 || location.y <= 0 || location.y >= 700) {
       bullets.remove(this);
@@ -116,14 +120,16 @@ class Player extends Entity implements Alive {
   Integer health, strength, speed;
   boolean up, down, left, right, dodge;
   PShape model;
-  int energy = 100;
+  int energy;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);    
     health = h;
     strength = str;
     speed = spd;
+    energy = 100;
   }
+  
   void shoot() {
     if (mousex != null && mousey != null) {
       myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
@@ -132,6 +138,7 @@ class Player extends Entity implements Alive {
       mousey = null;
     }
   }
+  
   void display() {
     rectMode(CENTER);
     model = createShape(RECT, getX(), getY(), 10, 10);
@@ -142,12 +149,15 @@ class Player extends Entity implements Alive {
   Integer getHealth() {
     return health;
   }
+  
   Integer getStrength() {
     return strength;
   }
+  
   Integer getSpeed() {
     return speed;
   }
+  
   void setHealth(Integer newhealth) {
     health = newhealth;
   }
@@ -181,11 +191,12 @@ class Player extends Entity implements Alive {
     }else{
       location.add(velocity);
       velocity.set(holder);
-    }
+
     if (energy != 100){
       energy++;
     }
-    System.out.println("energy" + energy);
+    
+    //System.out.println("energy" + energy);
   }
 }
 
@@ -213,9 +224,11 @@ class Monster extends Entity implements Alive {
   Integer getHealth() {
     return health;
   }
+  
   Integer getStrength() {
     return strength;
   }
+  
   Integer getSpeed() {
     return speed;
   }
@@ -223,9 +236,11 @@ class Monster extends Entity implements Alive {
   void setHealth(Integer newhealth) {
     health = newhealth;
   }
+  
   void setStrength(Integer newstrength) {
     strength = newstrength;
   }
+  
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
@@ -249,6 +264,7 @@ class Monster extends Entity implements Alive {
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(getXSpeed(), getYSpeed() * -1);
   }
+  
   void bounceWallRandom() {
     if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
       (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
@@ -262,6 +278,7 @@ class Monster extends Entity implements Alive {
       //for both x and y between -2 and 2.
     }
   }
+  
   private void generateRandomDirection() {
     float angle = random(0, 360);
     velocity.rotate(angle);
