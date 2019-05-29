@@ -172,17 +172,17 @@ class Player extends Entity implements Alive {
       velocity.set(0, holder.y);
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(holder.x, 0);
-  
-    if (dodge && energy > 25){
+
+    if (dodge && energy > 25) {
       velocity.setMag(float(getSpeed()) * 4);
       location.add(velocity);
       velocity.set(holder);
       energy -= 25;
-    }else{
+    } else {
       location.add(velocity);
       velocity.set(holder);
     }
-    if (energy != 100){
+    if (energy != 100) {
       energy++;
     }
     System.out.println("energy" + energy);
@@ -433,6 +433,14 @@ void makeGrid() {
       }
     }
   }
+}
+
+void endScreen() { 
+  thingsToDisplay.clear();
+  thingsToMove.clear();
+  background(0); 
+  fill(255);
+  text("You Died!", 500, 350);
 }
 
 void keyPressed() {
