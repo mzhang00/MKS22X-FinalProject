@@ -6,7 +6,7 @@ Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
-Player player = new Player(500.0, 350.0, 5, 5, 5);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
+Player player = new Player(500.0, 350.0, 5, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
@@ -125,7 +125,7 @@ class Player extends Entity implements Alive {
   }
   void shoot() {
     if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, this, mousex, mousey, 3.0);
+      myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
       bullets.add(bullet);
       mousex = null;
       mousey = null;
@@ -408,7 +408,7 @@ void makeGrid() {
     for (int c = 0; c < height/10; c++) {
       if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
         if (c >= 33 && c <= 36 || i >= 47 && i <= 52) {
-          fill(200, 200, 200);
+          fill(255, 255, 255);
         } else {
           fill(0, 0, 0);
         }
@@ -416,7 +416,7 @@ void makeGrid() {
         rect(i * 10, c * 10, 10, 10);
       } else {
         noFill();
-        stroke(0);
+        stroke(200);
         rect(i * 10, c * 10, 10, 10);
       }
     }
