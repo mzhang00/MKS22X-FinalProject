@@ -499,7 +499,7 @@ class Monster extends Entity implements Alive {
     else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
     {
       System.out.println("equal to");
-      velocity.set(-1 * ydistance, xdistance);
+      velocity.set(ydistance, -1 * xdistance);
       velocity.setMag(getSpeed());
       bounceWallRealistic();
       location.add(velocity);
