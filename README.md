@@ -2,6 +2,21 @@
 AP CS Final Project
 Development log:
 
+May 30th 2019:
+=======================================================================================
+Derek Lao:
+* Scrapped vector method, brought back slopes method because that was much closer to the final product
+* Implemented POSITIVE_INFINITY in calculations
+* Got circlePlayerClockwise() to work by considering all cases of monster relation to player where a direction flip in the necessary vector was necessary. Cases like when the monster is above the player and is to the left of the player more than a radius amount, less than a radius amount, to the right of the player less than a radius amount, and more than a radius amount, and all of those conditions for when the monster is below the player as well.
+
+May 29th 2019:
+=======================================================================================
+Derek Lao:
+* Created realAngleDifference() method to calculate angle difference between vectors with a sign
+* Created a vectorTangentLines() method to find the two tangent vectors
+* Scrapped original slopes method, and used vector method to make monster do what I want it to do
+* Failed, continue to work on it
+
 May 28th 2019:
 =======================================================================================
 Michael Zhang:
