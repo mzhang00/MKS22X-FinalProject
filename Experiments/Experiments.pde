@@ -1,6 +1,6 @@
-PVector v;
-
-void setup() {
-  v = new PVector(-10.0, -0.00000000001);
-  println(v.heading());  // Prints "1.1071488"
-}
+background(0);
+fill(255);
+textSize(9); 
+text("WORD", 10, 50); 
+textSize(14);
+text("WORD", 10, 70);
