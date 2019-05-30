@@ -208,11 +208,13 @@ void draw() {
       i--;
     }
   }
-
+  
   if (gameMenu)
   {
     fill(0, 128);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
+    text("hisadfhuv;lzhauf;lkjsdhuizhjv;lkawhsifj;", 300, 225, 25, 57);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
+    //text("hi", 300, 225);
   }
 }
