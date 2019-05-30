@@ -23,6 +23,7 @@
 //ArrayList<Room> rooms;
 
 boolean mainMenu, gameMenu, howToScreen;//to be implemented later
+boolean gameIsRunning = true;
 Float mousex;
 Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
@@ -161,6 +162,8 @@ class Player extends Entity implements Alive {
     if (mousex != null && mousey != null) {
       myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
       bullets.add(bullet);
+      mousex = null;
+      mousey = null;
     }
   }
 
@@ -663,45 +666,57 @@ void endScreen() {
 
 //KEYPRESSED
 void keyPressed() {
-  switch(key)
+  if (gameIsRunning)
   {
-  case 'v' :
-    player.dodge = true;
-    break;
-  case 'w' : 
-    player.up = true;
-    break;
-  case 's' : 
-    player.down = true;
-    break;
-  case 'a' : 
-    player.left = true;
-    break;
-  case 'd' : 
-    player.right = true;
-    break;
+    switch(key)
+    {
+    case 'v' :
+      player.dodge = true;
+      break;
+    case 'w' : 
+      player.up = true;
+      break;
+    case 's' : 
+      player.down = true;
+      break;
+    case 'a' : 
+      player.left = true;
+      break;
+    case 'd' : 
+      player.right = true;
+      break;
+    case 'm' :
+      gameMenu = true;
+      break;
+    }
   }
 }
 
 //KEYRELEASED
 void keyReleased() {
-  switch(key)
+  if (gameIsRunning)
   {
-  case 'v' :
-    player.dodge = false;
-    break;
-  case 'w' : 
-    player.up = false;
-    break;
-  case 's' : 
-    player.down = false;
-    break;
-  case 'a' : 
-    player.left = false;
-    break;
-  case 'd' : 
-    player.right = false;
-    break;
+    switch(key)
+    {
+    case 'v' :
+      player.dodge = false;
+      break;
+    case 'w' : 
+      player.up = false;
+      break;
+    case 's' : 
+      player.down = false;
+      break;
+    case 'a' : 
+      player.left = false;
+      break;
+    case 'd' : 
+      player.right = false;
+      break;
+    case 'm' :
+      gameMenu = false;
+      break;
+    }
   }
 }
 
@@ -788,6 +803,10 @@ void draw() {
     }
   }
 
-  mousex = null;
-  mousey = null;
+  if (gameMenu)
+  {
+    fill(255);
+    rectMode(CORNER);
+    rect(250, 175, 500, 350, 25);
+  }
 }
