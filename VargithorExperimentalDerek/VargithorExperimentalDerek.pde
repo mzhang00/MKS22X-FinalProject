@@ -262,80 +262,26 @@ class Monster extends Entity implements Alive {
     velocity.setMag(float(getSpeed()));
   }
   
-  //Float[] slopeTangentLines(Float xmonster, Float ymonster, Float xplayer, Float yplayer, Float radius){
-  //  Float xcoor = xmonster - xplayer;
-  //  Float ycoor = ymonster - yplayer;
-  //  Float xcoorSquared = (float) Math.pow(xcoor, 2);
-  //  Float ycoorSquared = (float) Math.pow(ycoor, 2);
-  //  Float radiusSquared = (float) Math.pow(radius, 2);
-  //  Float[] answers = new Float[2];
-  //  Float slope1 = (float) ((xcoor * ycoor) + radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
-  //  Float slope2 = (float) ((xcoor * ycoor) - radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
-  //  if(slope1 > slope2)
-  //  {
-  //    answers[0] = slope2;
-  //    answers[1] = slope1;
-  //  }
-  //  else
-  //  {
-  //    answers[0] = slope1;
-  //    answers[1] = slope2;
-  //  }
-  //  return answers;
-  //}
-  
-  PVector[] vectorTangentLines(Float xmonster, Float ymonster, Float xplayer, Float yplayer, Float radius){
+  Float[] slopeTangentLines(Float xmonster, Float ymonster, Float xplayer, Float yplayer, Float radius){
     Float xcoor = xmonster - xplayer;
     Float ycoor = ymonster - yplayer;
     Float xcoorSquared = (float) Math.pow(xcoor, 2);
     Float ycoorSquared = (float) Math.pow(ycoor, 2);
     Float radiusSquared = (float) Math.pow(radius, 2);
-    PVector[] answers = new PVector[2];
+    Float[] answers = new Float[2];
     Float slope1 = (float) ((xcoor * ycoor) + radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
     Float slope2 = (float) ((xcoor * ycoor) - radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
-    PVector first = new PVector(1, 0);
-    PVector second = new PVector(1, 0);
-    Float xdistance = getX() - player.getX();
-    Float ydistance = getY() - player.getY();
-    PVector radiusVector = new PVector(-1 * xdistance, -1 * ydistance);
-    
-    first.rotate(atan(slope1));
-    second.rotate(atan(slope2));
-    first.setMag(getSpeed());
-    second.setMag(getSpeed());
-    //System.out.println("atanslope1 is " + atan(slope1) + " atanslope2 is " + atan(slope2));
-    System.out.println("useless line");
-    if(getX() > player.getX() - radius && getX() < player.getX() + radius && getY() > player.getY())
+    if(slope1 > slope2)
     {
-      first.set(-1 * first.x, -1 * first.y);
-    }
-    else if(getX() > player.getX() - radius && getX() < player.getX() + radius && getY() < player.getY())
-    {
-      second.set(-1 * second.x, -1 * second.y);
-    }
-    else if(getX() > player.getX() + radius)
-    {
-      first.set(-1 * first.x, -1 * first.y);
-      second.set(-1 * second.x, -1 * second.y);
-    }
-    
-    System.out.println("first.heading() is " + first.heading() + " second.heading() is " + second.heading());
-    if(realAngleDifference(radiusVector, first) < 0)
-    {
-      answers[0] = first;
-      answers[1] = second;
+      answers[0] = slope2;
+      answers[1] = slope1;
     }
     else
     {
-      answers[0] = second;
-      answers[1] = first;
+      answers[0] = slope1;
+      answers[1] = slope2;
     }
-    System.out.println("answers[0].heading() is " + answers[0].heading() + " answers[1].heading() is " + answers[1].heading());
     return answers;
-  }
-  
-  Float realAngleDifference(PVector v1, PVector v2){
-    return v2.heading() - v1.heading();
   }
 
   void move() {
@@ -407,116 +353,69 @@ class Monster extends Entity implements Alive {
     location.add(velocity);
   }
   
-//  void circlePlayerClockwise(Float radius) {
-//    //at every instant, the monster will calculate
-//    Float xdistance = getX() - player.getX();
-//    Float ydistance = getY() - player.getY();
-//    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
-//    //boolean nonInfiniteSlope = true;
-//    boolean slope1InRange = (Math.abs(slopes[1]) <= 999999999 && Math.abs(slopes[1]) > 0);
-//    boolean slope2InRange = (Math.abs(slopes[0]) <= 999999999 && Math.abs(slopes[0]) > 0);
-//    boolean slopesInRange = slope1InRange && slope2InRange;
-//    boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
-//    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
-//    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
-//    {
-//      if(getY() < player.getY())
-//      {
-//        if(slope2InRange)
-//        {
-//          System.out.println("greater than");
-//          System.out.println("slopes[0]: " + slopes[0]);
-//          System.out.println("slopes[1]: " + slopes[1]);
-//          velocity.set(1, slopes[1]);
-//          velocity.setMag(getSpeed());
-//          bounceWallRealistic();
-//          location.add(velocity);
-//        }
-//        else
-//        {
-//          if(slope1InRange)
-//          {
-//            velocity.set(-1, -1 * slopes[0]);
-//            //velocity.rotate(getSpeed() / radius);
-//            bounceWallRealistic();
-//            location.add(velocity);
-//          }
-//          else
-//          {
-            
-//          }
-//        }
-//      }
-//      else if(getY() > player.getY())
-//      {
-//        if(slope2InRange)
-//        {
-//          System.out.println("greater than");
-//          System.out.println("slopes[0]: " + slopes[0]);
-//          System.out.println("slopes[1]: " + slopes[1]);
-//          velocity.set(-1, -1 * slopes[1]);
-//          velocity.setMag(getSpeed());
-//          bounceWallRealistic();
-//          location.add(velocity);
-//        }
-//        else
-//        {
-//          velocity.set(0, -1 * getSpeed());
-//          velocity.rotate(getSpeed() / radius);
-//          bounceWallRealistic();
-//          location.add(velocity);
-//        }
-//      }
-//      //else if((Math.abs(getY() - player.getY()) < 0.5 && getX() < player.getX()))
-//      //else if(getY() == player.getY() && getX() < player.getX())
-//      //{
-//      //  velocity.set(0, -1 * getSpeed());
-//      //  velocity.rotate(getSpeed() / radius);
-//      //  bounceWallRealistic();
-//      //  location.add(velocity);
-//      //}
-//      ////else if((Math.abs(getY() - player.getY()) < 0.5 && getX() > player.getX()))
-//      //else if((getY() == player.getY() && getX() > player.getX()))
-//      //{
-//      //  velocity.set(0, getSpeed());
-//      //  velocity.rotate(getSpeed() / radius);
-//      //  bounceWallRealistic();
-//      //  location.add(velocity);
-//      //}
-//    }
-//    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
-//    {
-//      System.out.println("less than");
-//      velocity.set(xdistance, ydistance);
-//      velocity.setMag(getSpeed());
-//      bounceWallRealistic();
-//      location.add(velocity);
-//    }
-//    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
-//    {
-//      System.out.println("equal to");
-//      velocity.set(-1 * ydistance, xdistance);
-//      velocity.setMag(getSpeed());
-//      bounceWallRealistic();
-//      location.add(velocity);
-//    }
-//  }
-
   void circlePlayerClockwise(Float radius) {
     //at every instant, the monster will calculate
     Float xdistance = getX() - player.getX();
     Float ydistance = getY() - player.getY();
-    PVector radiusVector = new PVector(-1 * xdistance, -1 * ydistance);
-    PVector[] vectors = vectorTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
     //boolean nonInfiniteSlope = true;
-    //boolean slopesInRange = (Math.abs(slopes[0]) <= 999999999 && Math.abs(slopes[0]) > 0) && (Math.abs(slopes[1]) <= 999999999 && Math.abs(slopes[1]) > 0);
-    //boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
+    boolean slope1InRange = (Math.abs(slopes[0]) < Float.POSITIVE_INFINITY);
+    boolean slope2InRange = (Math.abs(slopes[1]) < Float.POSITIVE_INFINITY);
+    boolean slopesInRange = slope1InRange && slope2InRange;
+    boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
+    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
     if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
     {
-      velocity.set(vectors[0]);
-      velocity.setMag(getSpeed());
-      bounceWallRealistic();
-      location.add(velocity);
+      if(getY() < player.getY() && getX() >= player.getX() - radius && getX() <= player.getX() + radius)
+      {
+        if(slope2InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(1, slopes[1]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+        else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
+      else if(getX() < player.getX() - radius)
+      {
+        velocity.set(1, slopes[0]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      }
+      else if(getX() > player.getX() + radius)
+      {
+        velocity.set(-1, -1 * slopes[0]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      }
+      else
+      {
+        if(slope2InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(-1, -1 * slopes[1]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+        else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
     }
     else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
     {
@@ -535,6 +434,7 @@ class Monster extends Entity implements Alive {
       location.add(velocity);
     }
   }
+
 }
 
 
