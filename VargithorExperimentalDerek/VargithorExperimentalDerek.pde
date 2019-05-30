@@ -354,12 +354,8 @@ class Monster extends Entity implements Alive {
     Float xdistance = getX() - player.getX();
     Float ydistance = getY() - player.getY();
     Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
-    //boolean nonInfiniteSlope = true;
-    boolean slope1InRange = (Math.abs(slopes[0]) < Float.POSITIVE_INFINITY);
+    //boolean slope1InRange = (Math.abs(slopes[0]) < Float.POSITIVE_INFINITY);
     boolean slope2InRange = (Math.abs(slopes[1]) < Float.POSITIVE_INFINITY);
-    boolean slopesInRange = slope1InRange && slope2InRange;
-    boolean slopesOppositeSign = slopes[0] < 0 && slopes[1] > 0 || slopes[0] < 0 && slopes[1] > 0;
-    //if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
     if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
     {
       if(getY() < player.getY() && getX() >= player.getX() - radius && getX() <= player.getX() + radius)
@@ -400,6 +396,84 @@ class Monster extends Entity implements Alive {
         {
           System.out.println("greater than");
           velocity.set(-1, -1 * slopes[1]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+        else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
+    }
+    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
+    {
+      System.out.println("less than");
+      velocity.set(xdistance, ydistance);
+      velocity.setMag(getSpeed());
+      bounceWallRealistic();
+      location.add(velocity);
+    }
+    else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
+    {
+      System.out.println("equal to");
+      velocity.set(-1 * ydistance, xdistance);
+      velocity.setMag(getSpeed());
+      bounceWallRealistic();
+      location.add(velocity);
+    }
+  }
+  
+  void circlePlayerCounterClockwise(Float radius) {
+    //at every instant, the monster will calculate
+    Float xdistance = getX() - player.getX();
+    Float ydistance = getY() - player.getY();
+    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+    boolean slope1InRange = (Math.abs(slopes[0]) < Float.POSITIVE_INFINITY);
+    //boolean slope2InRange = (Math.abs(slopes[1]) < Float.POSITIVE_INFINITY);
+    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+    {
+      if(getY() < player.getY() && getX() >= player.getX() - radius && getX() <= player.getX() + radius)
+      {
+        if(slope1InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(-1, -1 * slopes[0]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+        else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
+      else if(getX() < player.getX() - radius)
+      {
+        velocity.set(1, slopes[1]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      }
+      else if(getX() > player.getX() + radius)
+      {
+        velocity.set(-1, -1 * slopes[1]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      }
+      else
+      {
+        if(slope1InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(1, slopes[0]);
           velocity.setMag(getSpeed());
           bounceWallRealistic();
           location.add(velocity);
@@ -507,7 +581,7 @@ class Circler extends Monster {
   }
 
   void move() {
-    circlePlayerClockwise(100.0);
+    circlePlayerCounterClockwise(100.0);
   }
 }
 
