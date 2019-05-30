@@ -9,7 +9,11 @@ Derek Lao:
 * Implemented POSITIVE_INFINITY in calculations
 * Got circlePlayerClockwise() to work by considering all cases of monster relation to player where a direction flip in the necessary vector was necessary. Cases like when the monster is above the player and is to the left of the player more than a radius amount, less than a radius amount, to the right of the player less than a radius amount, and more than a radius amount, and all of those conditions for when the monster is below the player as well.
 * Successfully implemented circlePlayerCounterClockwise() by switching calls to slope1 to slope2 and vice versa from circlePlayerClockwise(). Tested to work.
-* Created key binding to open gameMenu during game by holding down m. Gave gameMenu transparency.
+* Created key binding to open gameMenu during game by holding down m.
+* Gave gameMenu transparency.
+* Made text nontransparent, made it green, and displays health in the gameMenu
+* Implemented changing size for text
+* Added font for the gameMenu text
 
 May 29th 2019:
 =======================================================================================
@@ -64,7 +68,7 @@ Derek Lao:
 * Added code to display from an ArrayList<Entity> called "thingsToDisplay", does not quite work yet
 * Added movement code for chaser, to chase player unconditionally up until it gets too close
 * Added movement code for coward, where it would only run away when player gets too close, but otherwise it just wanders
-  
+
 May 24th 2019:
 =======================================================================================
 Michael Zhang:
@@ -72,7 +76,7 @@ Michael Zhang:
 
 Derek Lao:
 * Added inRange(float, float) method
-* Added code to make monster chase player at a certain range, but run away at another range, but the monster seems to chase the player at twice the speed than its regular movement speed, without me coding that in. Tested runFromPlayer() and followPlayer() to separately work though. 
+* Added code to make monster chase player at a certain range, but run away at another range, but the monster seems to chase the player at twice the speed than its regular movement speed, without me coding that in. Tested runFromPlayer() and followPlayer() to separately work though.
 * Problem was fixed by use of else if statements... Not sure why though
 * Fixed problem where when monster is running away from player, it would sometimes step out of the arena
 * Implemented code to keep the player from stepping out of the arena
@@ -82,7 +86,7 @@ May 23rd 2019:
 Michael Zhang:
 * Did not work on project, studied for an AP Exam
 
-Derek Lao: 
+Derek Lao:
 * Completed vector usage for player and monster movement up until this point
 * Wrote and successfully tested followPlayer
 * Wrote and successfully tested monster to wander, and when detects player in vicinity, it will follow the player
@@ -122,22 +126,22 @@ Derek Lao:
 
 May 19th 2019:
 ===========================================================================================
-Michael Zhang: 
+Michael Zhang:
 * Added display method for the Entity class, detect method shell.
 * Attempted to fix move method in player and was eventually fixed by Derek
 * Fixed makeGrid() code to make grid
 * Added move code for player, and created instance of player for usage
 
-Derek Lao: 
+Derek Lao:
 * Fixed problematic movement code for player by making up down left right booleans, and making move reference those booleans rather than reference the key calls
 * Fixed a bug that made it so that the player shape does not move by putting the move() call in draw() instead of setup()
 
 May 18th 2019:
 ===========================================================================================
-Derek Lao: 
+Derek Lao:
 * Added WASD key binding in player class, have not tested
 
 May 17th 2019:
 ===========================================================================================
-Michael Zhang: 
+Michael Zhang:
 * Added player class, updated setup method, added player class
