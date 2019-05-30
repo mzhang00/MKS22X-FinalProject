@@ -299,6 +299,7 @@ class Monster extends Entity implements Alive {
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(getXSpeed(), getYSpeed() * -1);
   }
+  
   void bounceWallRandom() {
     if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
       (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
@@ -665,24 +666,29 @@ void endScreen() {
 
 //KEYPRESSED
 void keyPressed() {
-  switch(key)
+  if (gameIsRunning)
   {
-  case 'w' : 
-    player.up = true;
-    break;
-  case 's' : 
-    player.down = true;
-    break;
-  case 'a' : 
-    player.left = true;
-    break;
-  case 'd' : 
-    player.right = true;
-    break;
-  case 'm' :
-    if (gameIsRunning)
+    switch(key)
+    {
+    case 'v' :
+      player.dodge = true;
+      break;
+    case 'w' : 
+      player.up = true;
+      break;
+    case 's' : 
+      player.down = true;
+      break;
+    case 'a' : 
+      player.left = true;
+      break;
+    case 'd' : 
+      player.right = true;
+      break;
+    case 'm' :
       gameMenu = true;
-    break;
+      break;
+    }
   }
 }
 
@@ -692,6 +698,9 @@ void keyReleased() {
   {
     switch(key)
     {
+    case 'v' :
+      player.dodge = false;
+      break;
     case 'w' : 
       player.up = false;
       break;
