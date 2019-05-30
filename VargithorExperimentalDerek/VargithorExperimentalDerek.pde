@@ -1,6 +1,7 @@
 //Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+boolean mainMenu, gameMenu, howToScreen;//to be implemented later
 Float mousex;
 Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
