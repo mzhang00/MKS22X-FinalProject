@@ -12,6 +12,10 @@ Derek Lao:
 
 May 29th 2019:
 =======================================================================================
+Michael Zhang:
+* Made the player movement much much smoother
+* Started working on a new type of shooting that is smoother and faster
+
 Derek Lao:
 * Created realAngleDifference() method to calculate angle difference between vectors with a sign
 * Created a vectorTangentLines() method to find the two tangent vectors
@@ -34,6 +38,7 @@ May 27th 2019:
 =======================================================================================
 Michael Zhang:
 * Added doors to rooms for the characters to progress through rooms/levels
+* Helped Derek with calculations for the circler enemy
 
 Derek Lao:
 * Created method that takes 3 paramters: x coordinate of external point, y coordinate of external point, and radius of circle, to calcualte the two slopes of an external point to a circle centered at the origin
