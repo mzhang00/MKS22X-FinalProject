@@ -15,6 +15,7 @@
 //Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+PFont gameMenuFont;
 boolean mainMenu, gameMenu, howToScreen;//to be implemented later
 boolean gameIsRunning = true;
 Float mousex;
@@ -27,8 +28,6 @@ Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float new
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
 Circler circler = new Circler(500.0, 350.0, 5, 5, 1, player);
-//Circler[] circlers = new Circler[10];
-//for(int i = 0; i < 361 ; i += 10)
 
 interface Alive {
   Integer getHealth();
@@ -180,14 +179,14 @@ void setup() {
   thingsToMove.add(chaser);
   thingsToMove.add(coward);
   thingsToMove.add(circler);
+  
+  gameMenuFont = createFont("GROBOLD.ttf", 30);
 }
 
 //DRAW
 void draw() {
-  //System.out.println(frameRate);
+  System.out.println(frameRate);
   //System.out.println(millis());
-  //System.out.println(bullets);
-  //System.out.println(mousex + " " + mousey);
   background(255);
   makeGrid();
   for (Entity e : thingsToDisplay)
@@ -210,14 +209,17 @@ void draw() {
       i--;
     }
   }
-
+  
   if (gameMenu)
   {
     fill(0, 128);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
+    textFont(gameMenuFont);
     String healthText = "Health: " + player.getHealth();
-    text(healthText, 300, 225, 100, 15);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
+    textSize(30);//12 is the smallest size to display on a height 15 textbox.
+    fill(0, 255, 0);   
+    text(healthText, 300, 225, 500, 100);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
     //text("hi", 300, 225);
   }
 }
