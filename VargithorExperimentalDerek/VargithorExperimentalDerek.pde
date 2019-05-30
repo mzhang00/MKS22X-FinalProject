@@ -27,8 +27,6 @@ Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float new
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
 Circler circler = new Circler(500.0, 350.0, 5, 5, 1, player);
-//Circler[] circlers = new Circler[10];
-//for(int i = 0; i < 361 ; i += 10)
 
 interface Alive {
   Integer getHealth();
@@ -213,7 +211,7 @@ void draw() {
 
   if (gameMenu)
   {
-    fill(255);
+    fill(0, 128);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
   }

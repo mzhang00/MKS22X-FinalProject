@@ -213,7 +213,7 @@ void draw() {
 
   if (gameMenu)
   {
-    fill(255);
+    fill(0, 128);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
   }
