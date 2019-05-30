@@ -1,6 +1,28 @@
-//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
+//TABLE OF CONTENTS
+//ROOM
+//ENTITY
+//PLAYER
+//MONSTER
+//CHASER
+//COWARD
+//CIRCLER
+//MYBULLET
+//MAKEGRID
+//ENDSCREEN
+//KEYPRESSED
+//KEYRELEASED
+//KEYTYPED
+//MOUSECLICKED
+//MOUSEDRAGGED
+//MOUSEMOVED
+//MOUSEPRESSED
+//MOUSERELEASED
+
+
+//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+boolean mainMenu, gameMenu, howToScreen;//to be implemented later
 Float mousex;
 Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
@@ -10,6 +32,10 @@ Player player = new Player(500.0, 350.0, 5, 5, 3);//Player(Float newx, Float new
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
+Circler circler = new Circler(500.0, 350.0, 5, 5, 1, player);
+//Circler[] circlers = new Circler[10];
+//for(int i = 0; i < 361 ; i += 10)
+
 
 interface Alive {
   Integer getHealth();
@@ -21,12 +47,14 @@ interface Alive {
   void setSpeed(Integer newspeed);
 }
 
+//ROOM
 class Room {
   Integer number = 1;
   //ArrayList<Monster> enemies;
   //loot
-}  
+}
 
+//ENTITY
 class Entity {
   PVector location, velocity;
   PShape model;
@@ -82,11 +110,11 @@ class Entity {
   }
 }
 
-
+//MYBULLET
 class myBullet extends Entity {
   Integer strength;
   Float speed;
-  
+
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;
@@ -95,17 +123,17 @@ class myBullet extends Entity {
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
   }
-  
+
   void display() {
     model = createShape(ELLIPSE, location.x, location.y, 3, 3);
     model.setFill(color(0, 0, 0));
     shape(model);
   }
-  
+
   void move() {
     location.add(velocity);
   }
-  
+
   boolean die() {
     if (location.x <= 0 || location.x >= 1000 || location.y <= 0 || location.y >= 700) {
       bullets.remove(this);
@@ -115,6 +143,7 @@ class myBullet extends Entity {
   }
 }
 
+//PLAYER
 class Player extends Entity implements Alive {
   Integer health, strength, speed;
   boolean up, down, left, right, dodge;
@@ -127,19 +156,18 @@ class Player extends Entity implements Alive {
     strength = str;
     speed = spd;
   }
-  
+
   void shoot() {
     if (mousex != null && mousey != null) {
       myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
       bullets.add(bullet);
-      //mousex = null;
-      //mousey = null;
     }
   }
-  
+
   void display() {
     rectMode(CENTER);
-    model = createShape(RECT, getX(), getY(), 10, 10);
+    //model = createShape(ELLIPSE, getX(), getY(), 200, 200);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
     if (health <= 0) {
@@ -150,15 +178,15 @@ class Player extends Entity implements Alive {
   Integer getHealth() {
     return health;
   }
-  
+
   Integer getStrength() {
     return strength;
   }
-  
+
   Integer getSpeed() {
     return speed;
   }
-  
+
   void setHealth(Integer newhealth) {
     health = newhealth;
   }
@@ -196,14 +224,14 @@ class Player extends Entity implements Alive {
     if (energy != 100) {
       energy++;
     }
-    System.out.println("energy" + energy);
   }
-  
+
   void die() {
     endScreen();
   }
 }
 
+//MONSTER
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
@@ -228,11 +256,11 @@ class Monster extends Entity implements Alive {
   Integer getHealth() {
     return health;
   }
-  
+
   Integer getStrength() {
     return strength;
   }
-  
+
   Integer getSpeed() {
     return speed;
   }
@@ -240,10 +268,11 @@ class Monster extends Entity implements Alive {
   void setHealth(Integer newhealth) {
     health = newhealth;
   }
+
   void setStrength(Integer newstrength) {
     strength = newstrength;
   }
-  
+
   void setSpeed(Integer newspeed) {
     speed = newspeed;
   }
@@ -267,7 +296,7 @@ class Monster extends Entity implements Alive {
     if (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10))
       velocity.set(getXSpeed(), getYSpeed() * -1);
   }
-  
+
   void bounceWallRandom() {
     if ((Math.abs(getX() + getXSpeed() - width/2) > (width/2 - 10)) || 
       (Math.abs(getY() + getYSpeed() - height/2) > (height/2 - 10)))
@@ -281,11 +310,32 @@ class Monster extends Entity implements Alive {
       //for both x and y between -2 and 2.
     }
   }
-  
+
   private void generateRandomDirection() {
     float angle = random(0, 360);
     velocity.rotate(angle);
     velocity.setMag(float(getSpeed()));
+  }
+
+  Float[] slopeTangentLines(Float xmonster, Float ymonster, Float xplayer, Float yplayer, Float radius) {
+    Float xcoor = xmonster - xplayer;
+    Float ycoor = ymonster - yplayer;
+    Float xcoorSquared = (float) Math.pow(xcoor, 2);
+    Float ycoorSquared = (float) Math.pow(ycoor, 2);
+    Float radiusSquared = (float) Math.pow(radius, 2);
+    Float[] answers = new Float[2];
+    Float slope1 = (float) ((xcoor * ycoor) + radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    Float slope2 = (float) ((xcoor * ycoor) - radius * Math.sqrt(xcoorSquared + ycoorSquared - radiusSquared))/(xcoorSquared - radiusSquared);
+    if (slope1 > slope2)
+    {
+      answers[0] = slope2;
+      answers[1] = slope1;
+    } else
+    {
+      answers[0] = slope1;
+      answers[1] = slope2;
+    }
+    return answers;
   }
 
   void move() {
@@ -344,7 +394,7 @@ class Monster extends Entity implements Alive {
 
   void followPlayer() {
     velocity.set(player.getX() - this.getX(), player.getY() - this.getY());
-    velocity.setMag(float(speed));
+    velocity.setMag(getSpeed());
 
     bounceWallRealistic();
     location.add(velocity);
@@ -352,12 +402,155 @@ class Monster extends Entity implements Alive {
 
   void runFromPlayer() {
     velocity.set(this.getX() - player.getX(), this.getY() - player.getY());
-    velocity.setMag(float(speed));
+    velocity.setMag(getSpeed());
     bounceWallRealistic();
     location.add(velocity);
   }
+
+  void circlePlayerClockwise(Float radius) {
+    //at every instant, the monster will calculate
+    Float xdistance = getX() - player.getX();
+    Float ydistance = getY() - player.getY();
+    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+    //boolean slope1InRange = (Math.abs(slopes[0]) < Float.POSITIVE_INFINITY);
+    boolean slope2InRange = (Math.abs(slopes[1]) < Float.POSITIVE_INFINITY);
+    if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+    {
+      if (getY() < player.getY() && getX() >= player.getX() - radius && getX() <= player.getX() + radius)
+      {
+        if (slope2InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(1, slopes[1]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        } else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      } else if (getX() < player.getX() - radius)
+      {
+        velocity.set(1, slopes[0]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      } else if (getX() > player.getX() + radius)
+      {
+        velocity.set(-1, -1 * slopes[0]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      } else
+      {
+        if (slope2InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(-1, -1 * slopes[1]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        } else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
+    } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
+    {
+      System.out.println("less than");
+      velocity.set(xdistance, ydistance);
+      velocity.setMag(getSpeed());
+      bounceWallRealistic();
+      location.add(velocity);
+    } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
+    {
+      System.out.println("equal to");
+      velocity.set(-1 * ydistance, xdistance);
+      velocity.setMag(getSpeed());
+      bounceWallRealistic();
+      location.add(velocity);
+    }
+  }
+
+  void circlePlayerCounterClockwise(Float radius) {
+    //at every instant, the monster will calculate
+    Float xdistance = getX() - player.getX();
+    Float ydistance = getY() - player.getY();
+    Float[] slopes = slopeTangentLines(getX(), getY(), player.getX(), player.getY(), radius);
+    boolean slope1InRange = (Math.abs(slopes[0]) < Float.POSITIVE_INFINITY);
+    //boolean slope2InRange = (Math.abs(slopes[1]) < Float.POSITIVE_INFINITY);
+    if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) > Math.pow(radius, 2))
+    {
+      if (getY() < player.getY() && getX() >= player.getX() - radius && getX() <= player.getX() + radius)
+      {
+        if (slope1InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(-1, -1 * slopes[0]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        } else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      } else if (getX() < player.getX() - radius)
+      {
+        velocity.set(1, slopes[1]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      } else if (getX() > player.getX() + radius)
+      {
+        velocity.set(-1, -1 * slopes[1]);
+        velocity.setMag(getSpeed());
+        bounceWallRealistic();
+        location.add(velocity);
+      } else
+      {
+        if (slope1InRange)
+        {
+          System.out.println("greater than");
+          velocity.set(1, slopes[0]);
+          velocity.setMag(getSpeed());
+          bounceWallRealistic();
+          location.add(velocity);
+        } else
+        {
+          velocity.set(0, getSpeed());
+          velocity.rotate(-1 * getSpeed() / radius);
+          bounceWallRealistic();
+          location.add(velocity);
+        }
+      }
+    } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
+    {
+      System.out.println("less than");
+      velocity.set(xdistance, ydistance);
+      velocity.setMag(getSpeed());
+      bounceWallRealistic();
+      location.add(velocity);
+    } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
+    {
+      System.out.println("equal to");
+      velocity.set(ydistance, -1 * xdistance);
+      velocity.setMag(getSpeed());
+      bounceWallRealistic();
+      location.add(velocity);
+    }
+  }
 }
 
+//CHASER
 class Chaser extends Monster {
   Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -395,15 +588,15 @@ class Chaser extends Monster {
   }
 }
 
+//COWARD
 class Coward extends Monster {
   Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
   }
 
   void display() {
-    ellipseMode(CENTER);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
-    model.setFill(color(255, 0, 0));
+    model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
+    model.setFill(color(255, 255, 0));
     shape(model);
   }
 
@@ -418,6 +611,7 @@ class Coward extends Monster {
   }
 }
 
+//CIRCLER
 class Circler extends Monster {
   Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -426,14 +620,16 @@ class Circler extends Monster {
   void display() {
     ellipseMode(CENTER);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
-    model.setFill(color(255, 0, 0));
+    model.setFill(color(255, 0, 255));
     shape(model);
   }
 
   void move() {
+    circlePlayerCounterClockwise(100.0);
   }
 }
 
+//MAKEGRID
 void makeGrid() {
   rectMode(CORNER);
   for (int i = 0; i < width/10; i++) {
@@ -456,6 +652,7 @@ void makeGrid() {
   }
 }
 
+//ENDSCREEN
 void endScreen() { 
   thingsToDisplay.clear();
   thingsToMove.clear();
@@ -464,6 +661,7 @@ void endScreen() {
   text("You Died!", 500, 350);
 }
 
+//KEYPRESSED
 void keyPressed() {
   switch(key)
   {
@@ -485,6 +683,7 @@ void keyPressed() {
   }
 }
 
+//KEYRELEASED
 void keyReleased() {
   switch(key)
   {
@@ -506,36 +705,41 @@ void keyReleased() {
   }
 }
 
-//void mouseClicked() {
-//  //if weapon is pistol
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
+//KEYTYPED
+void keyTyped() {
+}
+
+//MOUSECLICKED
+void mouseClicked() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}
+
+//MOUSEDRAGGED
+void mouseDragged() {
+}
+
+//MOUSEMOVED
+void mouseMoved() {
+}
+
+////MOUSEPRESSED
+//void mousePressed() {
+// mousex = (float) mouseX;
+// mousey = (float) mouseY;
+// }
+// void mouseDragged() {
+// mousex = (float) mouseX;
+// mousey = (float) mouseY;
 //}
 
-void mousePressed() {
-  //if (weapon is machinegun
-  if (millis() % 100 == 0){
-    mousex = (float) mouseX;
-    mousey = (float) mouseY;
-  }
-}
-
-void mouseDragged() {
-  //if (weapon is machinegun
-  if (millis() % 100 == 0){
-    mousex = (float) mouseX;
-    mousey = (float) mouseY;
-  }
-}
-
+//MOUSERELEASED
 void mouseReleased() {
-  //if (weapon is machinegun
-  if (millis() % 100 == 0){
-    mousex = null;
-    mousey = null;
-  }
+  mousex = null;
+  mousey = null;
 }
 
+//SETUP
 void setup() {
   size(1000, 700);
   makeGrid();
@@ -546,14 +750,19 @@ void setup() {
   thingsToDisplay.add(player);
   thingsToDisplay.add(monster);
   thingsToDisplay.add(chaser);
+  thingsToDisplay.add(coward);
+  thingsToDisplay.add(circler);
   thingsToMove.add(player);
   thingsToMove.add(monster);
   thingsToMove.add(chaser);
+  thingsToMove.add(coward);
+  thingsToMove.add(circler);
 }
 
+//DRAW
 void draw() {
-  System.out.println(frameRate);
-  System.out.println(millis());
+  //System.out.println(frameRate);
+  //System.out.println(millis());
   //System.out.println(bullets);
   //System.out.println(mousex + " " + mousey);
   background(255);
@@ -578,4 +787,8 @@ void draw() {
       i--;
     }
   }
+
+  mousex = null;
+  mousey = null;
+}
 }
