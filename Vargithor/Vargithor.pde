@@ -525,7 +525,7 @@ void makeGrid() {
         rect(i * 10, c * 10, 10, 10);
       } else {
         noFill();
-        stroke(0);
+        stroke(150);
         rect(i * 10, c * 10, 10, 10);
       }
     }
