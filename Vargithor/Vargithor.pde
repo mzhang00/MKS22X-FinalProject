@@ -1,3 +1,22 @@
+//TABLE OF CONTENTS
+//ROOM
+//ENTITY
+  //PLAYER
+  //MONSTER
+    //CHASER
+    //COWARD
+    //CIRCLER
+  //MYBULLET
+//KEYPRESSED
+//KEYRELEASED
+//KEYTYPED
+//MOUSECLICKED
+//MOUSEDRAGGED
+//MOUSEMOVED
+//MOUSEPRESSED
+//MOUSERELEASED
+
+
 //Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
@@ -25,13 +44,13 @@ interface Alive {
   void setStrength(Integer newstrength);
   void setSpeed(Integer newspeed);
 }
-
+//ROOM
 class Room {
   Integer number = 1;
   //ArrayList<Monster> enemies;
   //loot
 }  
-
+//ENTITY
 class Entity {
   PVector location, velocity;
   PShape model;
@@ -87,7 +106,7 @@ class Entity {
   }
 }
 
-
+//MYBULLET
 class myBullet extends Entity {
   Integer strength;
   Float speed;
@@ -115,7 +134,7 @@ class myBullet extends Entity {
     return false;
   }
 }
-
+//PLAYER
 class Player extends Entity implements Alive {
   Integer health, strength, speed;
   boolean up, down, left, right;
@@ -179,7 +198,7 @@ class Player extends Entity implements Alive {
     velocity.set(holder);
   }
 }
-
+//MONSTER
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
@@ -499,7 +518,7 @@ class Monster extends Entity implements Alive {
     else if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
     {
       System.out.println("equal to");
-      velocity.set(-1 * ydistance, xdistance);
+      velocity.set(ydistance, -1 * xdistance);
       velocity.setMag(getSpeed());
       bounceWallRealistic();
       location.add(velocity);
@@ -508,8 +527,7 @@ class Monster extends Entity implements Alive {
 
 }
 
-
-
+//CHASER
 class Chaser extends Monster {
   Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -547,6 +565,7 @@ class Chaser extends Monster {
   }
 }
 
+//COWARD
 class Coward extends Monster {
   Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -569,6 +588,7 @@ class Coward extends Monster {
   }
 }
 
+//CIRCLER
 class Circler extends Monster {
   Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
@@ -607,6 +627,7 @@ void makeGrid() {
   }
 }
 
+//KEYPRESSED
 void keyPressed() {
   switch(key)
   {
@@ -624,6 +645,8 @@ void keyPressed() {
     break;
   }
 }
+
+//KEYRELEASED
 void keyReleased() {
   switch(key)
   {
@@ -642,26 +665,38 @@ void keyReleased() {
   }
 }
 
+//KEYTYPED
+void keyTyped(){}
+
+//MOUSECLICKED
 void mouseClicked() {
   mousex = (float) mouseX;
   mousey = (float) mouseY;
 }
-/*
-void mousePressed() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }
- void mouseDragged() {
- mousex = (float) mouseX;
- mousey = (float) mouseY;
- }*/
 
+//MOUSEDRAGGED
+void mouseDragged(){}
+
+//MOUSEMOVED
+void mouseMoved(){}
+
+////MOUSEPRESSED
+//void mousePressed() {
+// mousex = (float) mouseX;
+// mousey = (float) mouseY;
+// }
+// void mouseDragged() {
+// mousex = (float) mouseX;
+// mousey = (float) mouseY;
+//}
+
+//MOUSERELEASED
 void mouseReleased() {
   mousex = null;
   mousey = null;
 }
 
-
+//SETUP
 void setup() {
   size(1000, 700);
   makeGrid();
@@ -681,6 +716,7 @@ void setup() {
   thingsToMove.add(circler);
 }
 
+//DRAW
 void draw() {
   //System.out.println(frameRate);
   //System.out.println(millis());
