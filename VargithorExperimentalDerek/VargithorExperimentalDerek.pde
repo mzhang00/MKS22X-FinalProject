@@ -134,14 +134,10 @@ class Player extends Entity implements Alive {
   }
   void display() {
     rectMode(CENTER);
-    model = createShape(ELLIPSE, getX(), getY(), 200, 200);
-    //model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    //model = createShape(ELLIPSE, getX(), getY(), 200, 200);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
-    
-    noFill();
-    ellipse(getX(), getY(), 100, 100);
-    fill(255,255,255);
   }
 
   Integer getHealth() {
