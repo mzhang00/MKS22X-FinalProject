@@ -1,9 +1,6 @@
-  
 PVector v;
 
 void setup() {
-  v = new PVector(10.0, 20.0);
-  println(v);  // Prints "[ 10.0, 20.0, 0.0 ]"
-  v.rotate(HALF_PI);
-  println(v);  // Prints "[ -20.0, 9.999999, 0.0 ]"
+  v = new PVector(-10.0, -0.00000000001);
+  println(v.heading());  // Prints "1.1071488"
 }
