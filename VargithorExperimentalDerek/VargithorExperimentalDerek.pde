@@ -15,6 +15,7 @@
 //Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);//Player player = new Player(width/2, height/2, 100, 10);
 //ArrayList<Room> rooms;
 
+PFont gameMenuFont;
 boolean mainMenu, gameMenu, howToScreen;//to be implemented later
 boolean gameIsRunning = true;
 Float mousex;
@@ -178,6 +179,8 @@ void setup() {
   thingsToMove.add(chaser);
   thingsToMove.add(coward);
   thingsToMove.add(circler);
+  
+  gameMenuFont = createFont("GROBOLD.ttf", 30);
 }
 
 //DRAW
@@ -214,6 +217,7 @@ void draw() {
     fill(0, 128);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
+    textFont(gameMenuFont);
     String healthText = "Health: " + player.getHealth();
     textSize(30);//12 is the smallest size to display on a height 15 textbox.
     fill(0, 255, 0);   
