@@ -8,6 +8,7 @@ Derek Lao:
 * Scrapped vector method, brought back slopes method because that was much closer to the final product
 * Implemented POSITIVE_INFINITY in calculations
 * Got circlePlayerClockwise() to work by considering all cases of monster relation to player where a direction flip in the necessary vector was necessary. Cases like when the monster is above the player and is to the left of the player more than a radius amount, less than a radius amount, to the right of the player less than a radius amount, and more than a radius amount, and all of those conditions for when the monster is below the player as well.
+* Successfully implemented circlePlayerCounterClockwise() by switching calls to slope1 to slope2 and vice versa from circlePlayerClockwise(). Tested to work.
 
 May 29th 2019:
 =======================================================================================
