@@ -239,7 +239,7 @@ void draw() {
     text(strengthText, 300, 285, 500, 40);
     
     String speedText = "Speed: " + player.getSpeed();
-    fill(255, 0, 0);
+    fill(0, 255, 255);
     text(speedText, 300, 330, 500, 40);
   }
 }
