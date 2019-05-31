@@ -216,10 +216,11 @@ void draw() {
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
     textFont(gameMenuFont);
+    
     String healthText = "Health: " + player.getHealth();
     textSize(30);//12 is the smallest size to display on a height 15 textbox.
     fill(0, 255, 0);   
-    text(healthText, 300, 225, 500, 100);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
+    text(healthText, 300, 225, 500, 40);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
     Float healthFraction = (float)player.getHealth() / (float)player.getMaxHealth();
     Float dividingLineDistance = 400.0 * (healthFraction);
     if(healthFraction > 0.3)
@@ -229,9 +230,14 @@ void draw() {
     else if(healthFraction <= 0.1)
       fill(255, 0, 0);
     rect(300, 260, dividingLineDistance, 10);
-    
     player.setHealth(46);
     fill(0);
     rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
+    
+    String strengthText = "Strength: " + player.getStrength();
+    fill(0, 0, 255);
+    text(strengthText, 300, 285, 500, 40);
+    
+    //String 
   }
 }
