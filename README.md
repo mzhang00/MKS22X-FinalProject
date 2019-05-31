@@ -14,6 +14,10 @@ Derek Lao:
 * Made text nontransparent, made it green, and displays health in the gameMenu
 * Implemented changing size for text
 * Added font for the gameMenu text
+* Added health bar in gameMenu
+* Added text for health, armor, strength, speed
+* Changed colors of each text
+* Added stroke for gameMenu, changed background to white
 
 May 29th 2019:
 =======================================================================================
