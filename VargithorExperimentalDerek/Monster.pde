@@ -41,7 +41,7 @@ class Monster extends Entity implements Alive {
     {
       System.out.println(frameOnEncounter);
       System.out.println(frameCount);
-      if(frameCount - frameOnEncounter % 10 == 0)
+      if((frameCount - frameOnEncounter) % 10 == 0)
       {
         myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
         bullets.add(bullet);
