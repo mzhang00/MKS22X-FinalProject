@@ -224,9 +224,18 @@ void draw() {
     textFont(gameMenuFont);
     
     String healthText = "Health: " + player.getHealth();
+    color healthTextColor = color(0, 255, 0);
+    String strengthText = "Strength: " + player.getStrength();
+    color strengthTextColor = color(0, 0, 255);
+    String speedText = "Speed: " + player.getSpeed();
+    color speedTextColor = color(0, 150, 150);
+    String armorText = "Armor: " + player.getArmor();
+    color armorTextColor = color(128);
+    
     textSize(30);//12 is the smallest size to display on a height 15 textbox.
-    fill(0, 255, 0);   
+    fill(healthTextColor);   
     text(healthText, 300, 225, 500, 40);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
+    
     Float healthFraction = (float)player.getHealth() / (float)player.getMaxHealth();
     Float dividingLineDistance = 400.0 * (healthFraction);
     if(healthFraction > 0.3)
@@ -240,12 +249,13 @@ void draw() {
     fill(0);
     rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
     
-    String strengthText = "Strength: " + player.getStrength();
-    fill(0, 0, 255);
-    text(strengthText, 300, 285, 500, 40);
+    fill(armorTextColor);
+    text(armorText, 300, 285, 500, 40);
     
-    String speedText = "Speed: " + player.getSpeed();
-    fill(0, 150, 150);
-    text(speedText, 300, 330, 500, 40);
+    fill(strengthTextColor);
+    text(strengthText, 300, 330, 500, 40);
+    
+    fill(speedTextColor);
+    text(speedText, 300, 375, 500, 40);
   }
 }
