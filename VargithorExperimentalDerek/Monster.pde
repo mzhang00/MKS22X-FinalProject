@@ -4,7 +4,7 @@ class Monster extends Entity implements Alive {
   PShape model;
   Player player;
   boolean playerDetected;
-  Float frameOnEncounter;
+  Integer frameOnEncounter;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy);    
@@ -27,7 +27,11 @@ class Monster extends Entity implements Alive {
     Float xdistance = player.getX() - getX();
     Float ydistance = player.getY() - getY();
     if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) <= Math.pow(range, 2))
+    {
       playerDetected = true;
+      frameOnEncounter = frameCount;
+    }
+    
   }
   
   void shoot() {
@@ -35,7 +39,9 @@ class Monster extends Entity implements Alive {
       detectPlayer(100.0);
     else
     {
-      if(frameCount % 10 == 0)
+      System.out.println(frameOnEncounter);
+      System.out.println(frameCount);
+      if(frameCount - frameOnEncounter % 10 == 0)
       {
         myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
         bullets.add(bullet);
@@ -198,7 +204,6 @@ class Monster extends Entity implements Alive {
       {
         if (slope2InRange)
         {
-          System.out.println("greater than");
           velocity.set(1, slopes[1]);
           velocity.setMag(getSpeed());
           bounceWallRealistic();
@@ -226,7 +231,6 @@ class Monster extends Entity implements Alive {
       {
         if (slope2InRange)
         {
-          System.out.println("greater than");
           velocity.set(-1, -1 * slopes[1]);
           velocity.setMag(getSpeed());
           bounceWallRealistic();
@@ -241,14 +245,12 @@ class Monster extends Entity implements Alive {
       }
     } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
     {
-      System.out.println("less than");
       velocity.set(xdistance, ydistance);
       velocity.setMag(getSpeed());
       bounceWallRealistic();
       location.add(velocity);
     } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
     {
-      System.out.println("equal to");
       velocity.set(-1 * ydistance, xdistance);
       velocity.setMag(getSpeed());
       bounceWallRealistic();
@@ -269,7 +271,6 @@ class Monster extends Entity implements Alive {
       {
         if (slope1InRange)
         {
-          System.out.println("greater than");
           velocity.set(-1, -1 * slopes[0]);
           velocity.setMag(getSpeed());
           bounceWallRealistic();
@@ -297,7 +298,6 @@ class Monster extends Entity implements Alive {
       {
         if (slope1InRange)
         {
-          System.out.println("greater than");
           velocity.set(1, slopes[0]);
           velocity.setMag(getSpeed());
           bounceWallRealistic();
@@ -312,14 +312,12 @@ class Monster extends Entity implements Alive {
       }
     } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) < Math.pow(radius, 2))
     {
-      System.out.println("less than");
       velocity.set(xdistance, ydistance);
       velocity.setMag(getSpeed());
       bounceWallRealistic();
       location.add(velocity);
     } else if (Math.pow(xdistance, 2) + Math.pow(ydistance, 2) == Math.pow(radius, 2))
     {
-      System.out.println("equal to");
       velocity.set(ydistance, -1 * xdistance);
       velocity.setMag(getSpeed());
       bounceWallRealistic();
