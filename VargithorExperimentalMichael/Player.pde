@@ -28,9 +28,10 @@ class Player extends Entity implements Alive {
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
-    if (health <= 0) {
+    if (getHealth() <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   Integer getMaxHealth() {
@@ -92,6 +93,20 @@ class Player extends Entity implements Alive {
   }
 
   void die() {
+    thingsToDisplay.remove(this);
+    thingsToMove.remove(this);
+    thingsToShoot.remove(this);
     endScreen();
+  }
+  
+  void takeDamage(){
+    for (int i = 0; i < bullets.size(); i++){
+      myBullet bullet = bullets.get(i);
+      if (Math.abs(bullet.getX() - this.getX()) < 3 && Math.abs(bullet.getY() - this.getY()) < 3){
+        this.setHealth(this.getHealth() - bullet.getStrength());
+        i--;
+        bullets.remove(bullet);
+      }  
+    }
   }
 }

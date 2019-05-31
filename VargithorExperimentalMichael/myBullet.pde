@@ -2,7 +2,7 @@ class myBullet extends Entity {
   Integer strength;
   Float speed;
   color bulletColor;
-  
+
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;
@@ -31,6 +31,14 @@ class myBullet extends Entity {
 
   void move() {
     location.add(velocity);
+  }
+
+  Integer getStrength() {
+    return strength;
+  }
+
+  Float getSpeed() {
+    return speed;
   }
 
   boolean die() {

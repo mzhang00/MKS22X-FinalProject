@@ -166,8 +166,8 @@ void setup() {
   size(1000, 700);
   makeGrid();
   frameRate(70);
-  //System.out.println(width/2);
-  //System.out.println(player.getX());
+  ////System.out.println(width/2);
+  ////System.out.println(player.getX());
   //player.display();
   thingsToDisplay.add(player);
   thingsToDisplay.add(monster);
@@ -187,8 +187,8 @@ void setup() {
 
 //DRAW
 void draw() {
-  System.out.println(frameRate);
-  //System.out.println(millis());
+  ////System.out.println(frameRate);
+  ////System.out.println(millis());
   background(255);
   if(gameIsRunning)
   {
@@ -206,7 +206,7 @@ void draw() {
       e.shoot();
     }
   
-  
+    System.out.println(player.getHealth());
     for (int i = 0; i < bullets.size(); i++) {
       myBullet bullet = bullets.get(i);
       bullet.display(); 
@@ -246,7 +246,7 @@ void draw() {
       else if(healthFraction <= 0.1)
         fill(255, 0, 0);
       rect(300, 260, dividingLineDistance, 10);
-      player.setHealth(46);
+      //player.setHealth(46);
       fill(0);
       rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
       
