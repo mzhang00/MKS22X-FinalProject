@@ -220,10 +220,17 @@ void draw() {
     textSize(30);//12 is the smallest size to display on a height 15 textbox.
     fill(0, 255, 0);   
     text(healthText, 300, 225, 500, 100);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
-    Float dividingLineDistance = 400.0 * ((float)player.getHealth() / (float)player.getMaxHealth());
+    Float healthFraction = (float)player.getHealth() / (float)player.getMaxHealth();
+    Float dividingLineDistance = 400.0 * (healthFraction);
+    if(healthFraction > 0.3)
+      fill(0, 255, 0);
+    else if(healthFraction <= 0.3 && healthFraction > 0.1)
+      fill(255, 150, 0);
+    else if(healthFraction <= 0.1)
+      fill(255, 0, 0);
     rect(300, 260, dividingLineDistance, 10);
     
-    player.setHealth(200);
+    player.setHealth(46);
     fill(0);
     rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
   }
