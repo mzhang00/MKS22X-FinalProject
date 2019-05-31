@@ -212,7 +212,7 @@ void draw() {
   
   if (gameMenu)
   {
-    fill(0, 128);
+    fill(0, 100);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
     textFont(gameMenuFont);
@@ -220,7 +220,11 @@ void draw() {
     textSize(30);//12 is the smallest size to display on a height 15 textbox.
     fill(0, 255, 0);   
     text(healthText, 300, 225, 500, 100);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
-    rect(300, 260, 400.0 * ((float)player.getHealth() / (float)player.getMaxHealth()), 10);
-    //rect(300, 260.0 + 
+    Float dividingLineDistance = 400.0 * ((float)player.getHealth() / (float)player.getMaxHealth());
+    rect(300, 260, dividingLineDistance, 10);
+    
+    player.setHealth(200);
+    fill(0);
+    rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
   }
 }
