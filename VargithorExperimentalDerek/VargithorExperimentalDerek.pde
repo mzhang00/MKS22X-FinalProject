@@ -212,7 +212,8 @@ void draw() {
   
   if (gameMenu)
   {
-    fill(0, 100);
+    fill(255, 100);
+    stroke(0);
     rectMode(CORNER);
     rect(250, 175, 500, 350, 25);
     textFont(gameMenuFont);
@@ -239,7 +240,7 @@ void draw() {
     text(strengthText, 300, 285, 500, 40);
     
     String speedText = "Speed: " + player.getSpeed();
-    fill(0, 255, 255);
+    fill(0, 150, 150);
     text(speedText, 300, 330, 500, 40);
   }
 }
