@@ -51,4 +51,7 @@ class Entity {
 
   void move() {
   }
+
+  void shoot() {
+  }
 }
