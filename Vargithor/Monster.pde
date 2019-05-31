@@ -3,6 +3,8 @@ class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
   Player player;
+  boolean playerDetected;
+  Float frameOnEncounter;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy);    
@@ -11,6 +13,7 @@ class Monster extends Entity implements Alive {
     speed = spd;
     generateRandomDirection();
     player = givenPlayer;
+    playerDetected = false;
   }
 
   void display() {
@@ -20,12 +23,23 @@ class Monster extends Entity implements Alive {
     shape(model);
   }
   
+  void detectPlayer(Float range) {
+    Float xdistance = player.getX() - getX();
+    Float ydistance = player.getY() - getY();
+    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) <= Math.pow(range, 2))
+      playerDetected = true;
+  }
+  
   void shoot() {
-    Integer encounterFrame = frameCount;
-    if(frameCount % 5 == 0)
+    if(!playerDetected)
+      detectPlayer(100.0);
+    else
     {
-      myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
-      bullets.add(bullet);
+      if(frameCount % 10 == 0)
+      {
+        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
+        bullets.add(bullet);
+      }
     }
   }
 
