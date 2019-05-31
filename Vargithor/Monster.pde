@@ -19,6 +19,12 @@ class Monster extends Entity implements Alive {
     model.setFill(color(255, 0, 0));
     shape(model);
   }
+  
+  void shoot() {
+    Integer encounterFrame = frameCount;
+    myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
+    bullets.add(bullet);
+  }
 
   Integer getHealth() {
     return health;
@@ -112,18 +118,6 @@ class Monster extends Entity implements Alive {
       runFromPlayer();
     else
       wanderRegular(60);
-
-    //if(inRange(50.0))
-    //  runFromPlayer();
-    //else
-    //  followPlayer();
-
-    //jitter();
-    //straightLine();
-    //wanderRegular(60);
-    //wanderSlow(60);
-    //followPlayer();
-    //runFromPlayer();
   }
 
   void jitter() {

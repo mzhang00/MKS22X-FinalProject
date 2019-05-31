@@ -23,6 +23,7 @@ Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
 ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
+ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
@@ -179,6 +180,8 @@ void setup() {
   thingsToMove.add(chaser);
   thingsToMove.add(coward);
   thingsToMove.add(circler);
+  thingsToShoot.add(player);
+  thingsToShoot.add(circler);
   
   gameMenuFont = createFont("GROBOLD.ttf", 30);
 }
@@ -197,9 +200,11 @@ void draw() {
   {
     e.move();
   }
+  for (Entity e : thingsToShoot)
+  {
+    e.shoot();
+  }
 
-  player.shoot();
-  //monster.shoot();
 
   for (int i = 0; i < bullets.size(); i++) {
     myBullet bullet = bullets.get(i);
