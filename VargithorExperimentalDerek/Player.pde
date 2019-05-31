@@ -1,14 +1,16 @@
 class Player extends Entity implements Alive {
-  Integer health, strength, speed;
+  Integer maxHealth, armor, health, strength, speed;
   boolean up, down, left, right, dodge;
   PShape model;
   int energy = 100;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
-    super(newx, newy);    
+    super(newx, newy);
+    maxHealth = h;
     health = h;
     strength = str;
     speed = spd;
+    armor = 0;
   }
 
   void shoot() {
@@ -31,6 +33,9 @@ class Player extends Entity implements Alive {
     }
   }
 
+  Integer getMaxHealth() {
+    return maxHealth;
+  }
   Integer getHealth() {
     return health;
   }
@@ -41,6 +46,10 @@ class Player extends Entity implements Alive {
 
   Integer getSpeed() {
     return speed;
+  }
+  
+  Integer getArmor() {
+    return armor;
   }
 
   void setHealth(Integer newhealth) {
