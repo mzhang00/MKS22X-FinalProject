@@ -16,7 +16,7 @@
 //ArrayList<Room> rooms;
 
 PFont gameMenuFont;
-boolean mainMenu, gameMenu, howToScreen;//to be implemented later
+boolean mainMenu, gameMenu, howToScreen, endScreen;//to be implemented later
 boolean gameIsRunning = true;
 Float mousex;
 Float mousey;
@@ -191,71 +191,81 @@ void draw() {
   System.out.println(frameRate);
   //System.out.println(millis());
   background(255);
-  makeGrid();
-  for (Entity e : thingsToDisplay)
+  if(gameIsRunning)
   {
-    e.display();
-  }
-  for (Entity e : thingsToMove)
-  {
-    e.move();
-  }
-  for (Entity e : thingsToShoot)
-  {
-    e.shoot();
-  }
-
-
-  for (int i = 0; i < bullets.size(); i++) {
-    myBullet bullet = bullets.get(i);
-    bullet.display(); 
-    bullet.move();
-    if (bullet.die()) {
-      i--;
+    makeGrid();
+    for (Entity e : thingsToDisplay)
+    {
+      e.display();
+    }
+    for (Entity e : thingsToMove)
+    {
+      e.move();
+    }
+    for (Entity e : thingsToShoot)
+    {
+      e.shoot();
+    }
+  
+  
+    for (int i = 0; i < bullets.size(); i++) {
+      myBullet bullet = bullets.get(i);
+      bullet.display(); 
+      bullet.move();
+      if (bullet.die()) {
+        i--;
+      }
+    }
+    
+    if (gameMenu)
+    {
+      fill(255, 100);
+      stroke(0);
+      rectMode(CORNER);
+      rect(250, 175, 500, 350, 25);
+      textFont(gameMenuFont);
+      
+      String healthText = "Health: " + player.getHealth();
+      color healthTextColor = color(0, 255, 0);
+      String strengthText = "Strength: " + player.getStrength();
+      color strengthTextColor = color(0, 0, 255);
+      String speedText = "Speed: " + player.getSpeed();
+      color speedTextColor = color(0, 150, 150);
+      String armorText = "Armor: " + player.getArmor();
+      color armorTextColor = color(128);
+      
+      textSize(30);//12 is the smallest size to display on a height 15 textbox.
+      fill(healthTextColor);   
+      text(healthText, 300, 225, 500, 40);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
+      
+      Float healthFraction = (float)player.getHealth() / (float)player.getMaxHealth();
+      Float dividingLineDistance = 400.0 * (healthFraction);
+      if(healthFraction > 0.3)
+        fill(0, 255, 0);
+      else if(healthFraction <= 0.3 && healthFraction > 0.1)
+        fill(255, 150, 0);
+      else if(healthFraction <= 0.1)
+        fill(255, 0, 0);
+      rect(300, 260, dividingLineDistance, 10);
+      player.setHealth(46);
+      fill(0);
+      rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
+      
+      fill(armorTextColor);
+      text(armorText, 300, 285, 500, 40);
+      
+      fill(strengthTextColor);
+      text(strengthText, 300, 330, 500, 40);
+      
+      fill(speedTextColor);
+      text(speedText, 300, 375, 500, 40);
     }
   }
-  
-  if (gameMenu)
+  else if(mainMenu)
   {
-    fill(255, 100);
-    stroke(0);
-    rectMode(CORNER);
-    rect(250, 175, 500, 350, 25);
-    textFont(gameMenuFont);
-    
-    String healthText = "Health: " + player.getHealth();
-    color healthTextColor = color(0, 255, 0);
-    String strengthText = "Strength: " + player.getStrength();
-    color strengthTextColor = color(0, 0, 255);
-    String speedText = "Speed: " + player.getSpeed();
-    color speedTextColor = color(0, 150, 150);
-    String armorText = "Armor: " + player.getArmor();
-    color armorTextColor = color(128);
-    
-    textSize(30);//12 is the smallest size to display on a height 15 textbox.
-    fill(healthTextColor);   
-    text(healthText, 300, 225, 500, 40);//smallest size is 15 for 1 line, 29 for 2 lines, 43 for 2 lines
-    
-    Float healthFraction = (float)player.getHealth() / (float)player.getMaxHealth();
-    Float dividingLineDistance = 400.0 * (healthFraction);
-    if(healthFraction > 0.3)
-      fill(0, 255, 0);
-    else if(healthFraction <= 0.3 && healthFraction > 0.1)
-      fill(255, 150, 0);
-    else if(healthFraction <= 0.1)
-      fill(255, 0, 0);
-    rect(300, 260, dividingLineDistance, 10);
-    player.setHealth(46);
-    fill(0);
-    rect(300 + dividingLineDistance, 260, 400.0 - dividingLineDistance, 10);
-    
-    fill(armorTextColor);
-    text(armorText, 300, 285, 500, 40);
-    
-    fill(strengthTextColor);
-    text(strengthText, 300, 330, 500, 40);
-    
-    fill(speedTextColor);
-    text(speedText, 300, 375, 500, 40);
+  }
+  else if(endScreen)
+  {
+    endScreen();
   }
 }
