@@ -25,10 +25,10 @@ ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
-Monster monster = new Monster(500.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Chaser chaser = new Chaser(500.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Coward coward = new Coward(500.0, 350.0, 5, 5, 1, player);
-Circler circler = new Circler(500.0, 350.0, 5, 5, 1, player);
+Monster monster = new Monster(400.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+Chaser chaser = new Chaser(300.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+Coward coward = new Coward(200.0, 350.0, 5, 5, 1, player);
+Circler circler = new Circler(100.0, 350.0, 5, 5, 1, player);
 
 interface Alive {
   Integer getHealth();

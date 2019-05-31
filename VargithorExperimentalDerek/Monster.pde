@@ -22,8 +22,11 @@ class Monster extends Entity implements Alive {
   
   void shoot() {
     Integer encounterFrame = frameCount;
-    myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
-    bullets.add(bullet);
+    if(frameCount % 5 == 0)
+    {
+      myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
+      bullets.add(bullet);
+    }
   }
 
   Integer getHealth() {
