@@ -228,6 +228,7 @@ void draw() {
       rect(250, 175, 500, 350, 25);
       textFont(gameMenuFont);
       
+      textAlign(LEFT, TOP);
       String healthText;
       if(player.getHealth() > 0)
         healthText = "Health: " + player.getHealth();
@@ -311,7 +312,7 @@ void draw() {
         mousey = null;
       }
       
-      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
+      else if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
       {
         mainMenu = false;
         loreScreen = true;
@@ -319,7 +320,7 @@ void draw() {
         mousey = null;
       }
       
-      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
+      else if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
       {
         mainMenu = false;
         howToScreen = true;
@@ -381,13 +382,19 @@ void draw() {
     background(200);
     fill(0);
     textFont(mainMenuFont);
-    textAlign(LEFT, CENTER);
-    String instructions = "Hi";
     rectMode(CORNERS);
     fill(0);
     textAlign(CENTER, CENTER);
-    text("How-To", 0, 0, 1000, 50);
-    text(instructions, 50, 50, 900, 525);
+    text("How-To", 50, 50, 1000, 100);
+    textAlign(LEFT, CENTER);
+    String instructions = 
+    "W - Up" + "\n" + 
+    "A - Left" + "\n" + 
+    "S - Down" + "\n" + 
+    "D - Right" + "\n" + 
+    "M - Open in-game menu" + "\n";
+    text(instructions, 100, 100, 900, 525);
+    
     
     fill(100);
     stroke(0);
