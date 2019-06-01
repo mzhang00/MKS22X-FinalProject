@@ -340,15 +340,16 @@ void draw() {
     "He took up drinking very hard, and asked every day that the plague would take his life as well. " + 
     "One night, he thought his request to die has been answered, when he opened the door of his home, " + 
     "and a blinding white light shone from within. " + 
-    "A dark, black hand reached out, and a ghostly voice cried \"Vargithor!\". " + 
+    "A dark, black hand reached out, and a ghostly voice cried \"Vargithor!\" " + 
     "Before Jack could figure out what was going on, the hand grabbed him and forcefully pulled him into the house. " + 
     "\"Vargithor... Vargithor...\" could be heard all around him. " + 
     "He screamed a blood-curdling scream, which made the voice louder and more frequent. " + 
     "\"Vargithor! Vargithor!\", it chanted. " + 
     "Jack's body was compressing into a flat circle. " + 
     "His skin seemed to rot, for, green patches grew over it, eventually covering it all. " + 
-    "Believing this was meant to be, Jack no longer cared about his past. He decided that from that moment on, " + 
-    "he would be Vargithor. He looked around, monsters in the form of triangles and other circles roamed around. " + 
+    "He did not know what was going on, but thought this was meant to be. " + 
+    "He decided that from that moment on, he would be Vargithor. " + 
+    "He looked around, monsters in the form of triangles and other circles roamed around. " + 
     "Some, moved towards him. Expressionless but determined, those monsters fired at Vargithor. " + 
     "Not knowing what to do, Vargithor panicked. He noticed a gun inside his pocket. " + 
     "He pulled it out and shot at the monster multiple times, until it died. " + 

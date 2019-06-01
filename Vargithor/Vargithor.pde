@@ -228,6 +228,7 @@ void draw() {
       rect(250, 175, 500, 350, 25);
       textFont(gameMenuFont);
       
+      textAlign(LEFT, TOP);
       String healthText;
       if(player.getHealth() > 0)
         healthText = "Health: " + player.getHealth();
@@ -271,12 +272,12 @@ void draw() {
   else if(mainMenu)
   {
     background(100);
+    
     fill(200);
     stroke(0);
     rectMode(CORNER);
     stroke(255, 0, 0);
     rect(375, 175, 250, 100);
-    
     fill(0, 0, 255);
     textFont(mainMenuFont);
     textAlign(CENTER, CENTER);
@@ -291,6 +292,16 @@ void draw() {
     textFont(mainMenuFont);
     textAlign(CENTER, CENTER);
     text("Lore", 375, 300, 250, 100);
+    
+    fill(200);
+    stroke(0);
+    rectMode(CORNER);
+    stroke(255, 0, 0);
+    rect(375, 425, 250, 100);
+    fill(0, 0, 255);
+    textFont(mainMenuFont);
+    textAlign(CENTER, CENTER);
+    text("How-To", 375, 425, 250, 100);
     if(mousex != null && mousey != null)
     {
       if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 175 && mousey <= 175 + 100)
@@ -301,10 +312,18 @@ void draw() {
         mousey = null;
       }
       
-      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
+      else if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
       {
         mainMenu = false;
         loreScreen = true;
+        mousex = null;
+        mousey = null;
+      }
+      
+      else if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
+      {
+        mainMenu = false;
+        howToScreen = true;
         mousex = null;
         mousey = null;
       }
@@ -321,15 +340,16 @@ void draw() {
     "He took up drinking very hard, and asked every day that the plague would take his life as well. " + 
     "One night, he thought his request to die has been answered, when he opened the door of his home, " + 
     "and a blinding white light shone from within. " + 
-    "A dark, black hand reached out, and a ghostly voice cried \"Vargithor!\". " + 
+    "A dark, black hand reached out, and a ghostly voice cried \"Vargithor!\" " + 
     "Before Jack could figure out what was going on, the hand grabbed him and forcefully pulled him into the house. " + 
     "\"Vargithor... Vargithor...\" could be heard all around him. " + 
     "He screamed a blood-curdling scream, which made the voice louder and more frequent. " + 
     "\"Vargithor! Vargithor!\", it chanted. " + 
     "Jack's body was compressing into a flat circle. " + 
     "His skin seemed to rot, for, green patches grew over it, eventually covering it all. " + 
-    "Believing this was meant to be, Jack no longer cared about his past. He decided that from that moment on, " + 
-    "he would be Vargithor. He looked around, monsters in the form of triangles and other circles roamed around. " + 
+    "He did not know what was going on, but thought this was meant to be. " + 
+    "He decided that from that moment on, he would be Vargithor. " + 
+    "He looked around, monsters in the form of triangles and other circles roamed around. " + 
     "Some, moved towards him. Expressionless but determined, those monsters fired at Vargithor. " + 
     "Not knowing what to do, Vargithor panicked. He noticed a gun inside his pocket. " + 
     "He pulled it out and shot at the monster multiple times, until it died. " + 
@@ -342,7 +362,6 @@ void draw() {
     rectMode(CORNER);
     stroke(255, 0, 0);
     rect(375, 575, 250, 100);
-    
     textFont(mainMenuFont);
     fill(0);
     textAlign(CENTER, CENTER);
@@ -354,6 +373,46 @@ void draw() {
       {
         mainMenu = true;
         loreScreen = false;
+        mousex = null;
+        mousey = null;
+      }
+    }
+  }
+  else if(howToScreen)
+  {
+    background(200);
+    fill(0);
+    textFont(mainMenuFont);
+    rectMode(CORNERS);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text("How-To", 50, 50, 1000, 100);
+    textAlign(LEFT, CENTER);
+    String instructions = 
+    "W - Up" + "\n" + 
+    "A - Left" + "\n" + 
+    "S - Down" + "\n" + 
+    "D - Right" + "\n" + 
+    "M - Open in-game menu" + "\n";
+    text(instructions, 100, 100, 900, 525);
+    
+    
+    fill(100);
+    stroke(0);
+    rectMode(CORNER);
+    stroke(255, 0, 0);
+    rect(375, 575, 250, 100);
+    textFont(mainMenuFont);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text("Back", 375, 575, 250, 100);
+    
+    if(mousex != null && mousey != null)
+    {
+      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
+      {
+        mainMenu = true;
+        howToScreen = false;
         mousex = null;
         mousey = null;
       }
