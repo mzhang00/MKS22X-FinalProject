@@ -271,12 +271,12 @@ void draw() {
   else if(mainMenu)
   {
     background(100);
+    
     fill(200);
     stroke(0);
     rectMode(CORNER);
     stroke(255, 0, 0);
     rect(375, 175, 250, 100);
-    
     fill(0, 0, 255);
     textFont(mainMenuFont);
     textAlign(CENTER, CENTER);
@@ -291,6 +291,16 @@ void draw() {
     textFont(mainMenuFont);
     textAlign(CENTER, CENTER);
     text("Lore", 375, 300, 250, 100);
+    
+    fill(200);
+    stroke(0);
+    rectMode(CORNER);
+    stroke(255, 0, 0);
+    rect(375, 425, 250, 100);
+    fill(0, 0, 255);
+    textFont(mainMenuFont);
+    textAlign(CENTER, CENTER);
+    text("How-To", 375, 425, 250, 100);
     if(mousex != null && mousey != null)
     {
       if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 175 && mousey <= 175 + 100)
@@ -305,6 +315,14 @@ void draw() {
       {
         mainMenu = false;
         loreScreen = true;
+        mousex = null;
+        mousey = null;
+      }
+      
+      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
+      {
+        mainMenu = false;
+        howToScreen = true;
         mousex = null;
         mousey = null;
       }
@@ -342,7 +360,6 @@ void draw() {
     rectMode(CORNER);
     stroke(255, 0, 0);
     rect(375, 575, 250, 100);
-    
     textFont(mainMenuFont);
     fill(0);
     textAlign(CENTER, CENTER);
@@ -354,6 +371,40 @@ void draw() {
       {
         mainMenu = true;
         loreScreen = false;
+        mousex = null;
+        mousey = null;
+      }
+    }
+  }
+  else if(howToScreen)
+  {
+    background(200);
+    fill(0);
+    textFont(mainMenuFont);
+    textAlign(LEFT, CENTER);
+    String instructions = "Hi";
+    rectMode(CORNERS);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text("How-To", 0, 0, 1000, 50);
+    text(instructions, 50, 50, 900, 525);
+    
+    fill(100);
+    stroke(0);
+    rectMode(CORNER);
+    stroke(255, 0, 0);
+    rect(375, 575, 250, 100);
+    textFont(mainMenuFont);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text("Back", 375, 575, 250, 100);
+    
+    if(mousex != null && mousey != null)
+    {
+      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
+      {
+        mainMenu = true;
+        howToScreen = false;
         mousex = null;
         mousey = null;
       }
