@@ -18,6 +18,8 @@ Derek Lao:
 * Added text for health, armor, strength, speed
 * Changed colors of each text
 * Added stroke for gameMenu, changed background to white
+* Added mainMenu to have a box to click to start the game, it works.
+* Fixed bug where enemy would not stop shooting if it were out of the player's detection range
 
 May 29th 2019:
 =======================================================================================
