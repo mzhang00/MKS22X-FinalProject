@@ -2,6 +2,25 @@
 AP CS Final Project
 Development log:
 
+June 1st 2019:
+=======================================================================================
+Derek Lao:
+* Completed main menu
+* Added lore story for fun, added option to click on it and also return to main menu.
+* Proofread and fixed some grammar mistakes in lore
+* Added option to return to mainMenu from gameMenu
+* Fixed null pointer exceptions in mainMenu by replacing if statements to else-if statements
+
+May 31st 2019:
+=======================================================================================
+Derek Lao:
+* Took out redundant code in detectPlayer()
+* Added preliminary code for mainMenu
+
+Michael Zhang:
+* Added bullet collision, bullets now die on collision with player
+* Made bullets do damage to player, tested it, it works.
+
 May 30th 2019:
 =======================================================================================
 Derek Lao:
