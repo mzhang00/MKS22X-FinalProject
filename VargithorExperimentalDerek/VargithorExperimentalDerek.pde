@@ -16,8 +16,10 @@
 //ArrayList<Room> rooms;
 
 PFont gameMenuFont;
-boolean mainMenu, gameMenu, howToScreen, endScreen;//to be implemented later
-boolean gameIsRunning = true;
+PFont mainMenuFont;
+boolean gameMenu, howToScreen, endScreen;//to be implemented later
+boolean gameIsRunning = false;
+boolean mainMenu = true;
 Float mousex;
 Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
@@ -166,7 +168,7 @@ void mouseReleased() {
 void setup() {
   size(1000, 700);
   makeGrid();
-  frameRate(70);
+  frameRate(100);
   //System.out.println(width/2);
   //System.out.println(player.getX());
   //player.display();
@@ -184,6 +186,7 @@ void setup() {
   thingsToShoot.add(circler);
   
   gameMenuFont = createFont("GROBOLD.ttf", 30);
+  mainMenuFont = createFont("GROBOLD.ttf", 20);
 }
 
 //DRAW
@@ -271,7 +274,23 @@ void draw() {
     fill(255, 100);
     stroke(0);
     rectMode(CORNER);
+    stroke(255, 0, 0);
     rect(375, 175, 250, 100);
+    
+    fill(0, 0, 255);
+    textFont(mainMenuFont);
+    textAlign(CENTER, CENTER);
+    text("Press here to start", 375, 175, 250, 100);
+    if(mousex != null && mousey != null)
+    {
+      if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 175 && mousey <= 175 + 100)
+      {
+        mainMenu = false;
+        gameIsRunning = true;
+        mousex = null;
+        mousey = null;
+      }
+    }
   }
   else if(endScreen)
   {
