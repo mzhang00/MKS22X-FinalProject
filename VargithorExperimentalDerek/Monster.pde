@@ -41,21 +41,7 @@ class Monster extends Entity implements Alive {
     }
   }
   
-  void shoot() {
-    if(!playerDetected)
-      detectPlayer(100.0);
-    else
-    {
-      //System.out.println(frameOnEncounter);
-      //System.out.println(frameCount);
-      if((frameCount - frameOnEncounter) % 10 == 0)
-      {
-        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
-        bullets.add(bullet);
-      }
-      detectPlayer(100.0);
-    }
-  }
+
 
   Integer getHealth() {
     return health;
@@ -92,6 +78,31 @@ class Monster extends Entity implements Alive {
       return true;
     else
       return false;
+  }
+  
+  void shoot() {
+    if(!playerDetected)
+      detectPlayer(100.0);
+    else
+    {
+      //System.out.println(frameOnEncounter);
+      //System.out.println(frameCount);
+      if((frameCount - frameOnEncounter) % 10 == 0)
+      {
+        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
+        bullets.add(bullet);
+      }
+      detectPlayer(100.0);
+    }
+  }
+  
+  void move() {
+    if (inRange(50.0, 100.0))
+      followPlayer();
+    else if (inRange(50.0))
+      runFromPlayer();
+    else
+      wanderRegular(60);
   }
 
   void bounceWallRealistic() {
@@ -142,14 +153,7 @@ class Monster extends Entity implements Alive {
     return answers;
   }
 
-  void move() {
-    if (inRange(50.0, 100.0))
-      followPlayer();
-    else if (inRange(50.0))
-      runFromPlayer();
-    else
-      wanderRegular(60);
-  }
+  
 
   void jitter() {
     generateRandomDirection();
