@@ -267,6 +267,11 @@ void draw() {
   }
   else if(mainMenu)
   {
+    background(100);
+    fill(255, 100);
+    stroke(0);
+    rectMode(CORNER);
+    rect(375, 175, 250, 100);
   }
   else if(endScreen)
   {
