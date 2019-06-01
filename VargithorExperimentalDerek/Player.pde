@@ -14,12 +14,15 @@ class Player extends Entity implements Alive {
   }
 
   void shoot() {
-    if (mousex != null && mousey != null) {
-      color bulletColor = color(0, 0, 0);
-      myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor);
-      bullets.add(bullet);
-      mousex = null;
-      mousey = null;
+    if(gameIsRunning && !gameMenu)
+    {
+      if (mousex != null && mousey != null) {
+        color bulletColor = color(0, 0, 0);
+        myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor);
+        bullets.add(bullet);
+        mousex = null;
+        mousey = null;
+      }
     }
   }
 

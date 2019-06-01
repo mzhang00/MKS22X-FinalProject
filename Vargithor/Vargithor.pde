@@ -16,7 +16,7 @@
 //ArrayList<Room> rooms;
 
 PFont gameMenuFont, mainMenuFont, loreScreenFont;
-boolean gameMenu, howToScreen, endScreen, loreScreen;//to be implemented later
+boolean gameMenu, howToScreen, endScreen, loreScreen;
 boolean gameIsRunning = false;
 boolean mainMenu = true;
 Float mousex;
@@ -28,8 +28,8 @@ ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
 Player player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
 Monster monster = new Monster(400.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Chaser chaser = new Chaser(300.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Coward coward = new Coward(200.0, 350.0, 5, 5, 1, player);
-Circler circler = new Circler(100.0, 350.0, 5, 5, 1, player);
+Coward coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+Circler circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 
 interface Alive {
   Integer getHealth();
@@ -225,7 +225,7 @@ void draw() {
       fill(255, 100);
       stroke(0);
       rectMode(CORNER);
-      rect(250, 175, 500, 350, 25);
+      rect(250, 175, 500, 360, 25);
       textFont(gameMenuFont);
       
       textAlign(LEFT, TOP);
@@ -267,6 +267,27 @@ void draw() {
       
       fill(speedTextColor);
       text(speedText, 300, 375, 500, 40);
+      
+      fill(200);
+      stroke(0);
+      rectMode(CORNER);
+      rect(375, 420, 250, 100);
+      fill(255, 0, 0);
+      textFont(mainMenuFont);
+      textAlign(CENTER, CENTER);
+      text("Return to Main Menu", 375, 420, 250, 100);
+      
+      if(mousex != null && mousey != null)
+      {
+        if(mousex >= 375 && mousex <= 375 + 250 && mousey >= 420 && mousey <= 420 + 100)
+        {
+          mainMenu = true;
+          mousex = null;
+          mousey = null;
+          gameMenu = false;
+          gameIsRunning = false;
+        }
+      }
     }
   }
   else if(mainMenu)
