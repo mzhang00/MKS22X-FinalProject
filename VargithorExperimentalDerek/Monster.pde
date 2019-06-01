@@ -24,17 +24,20 @@ class Monster extends Entity implements Alive {
   }
   
   void detectPlayer(Float range) {
-    if(inRange(range))
+    if(!playerDetected)
     {
-      playerDetected = true;
-      frameOnEncounter = frameCount;
+      if(inRange(range))
+      {
+        playerDetected = true;
+        frameOnEncounter = frameCount;
+      }
     }
-  }
-  
-  void undetectPlayer(Float range) {
-    if(!inRange(range))
+    else
     {
-      playerDetected = false;
+      if(!inRange(range))
+      {
+        playerDetected = false;
+      }
     }
   }
   
@@ -50,7 +53,7 @@ class Monster extends Entity implements Alive {
         myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
         bullets.add(bullet);
       }
-      undetectPlayer(100.0);
+      detectPlayer(100.0);
     }
   }
 
