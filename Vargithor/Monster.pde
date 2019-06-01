@@ -24,9 +24,7 @@ class Monster extends Entity implements Alive {
   }
   
   void detectPlayer(Float range) {
-    Float xdistance = player.getX() - getX();
-    Float ydistance = player.getY() - getY();
-    if(Math.pow(xdistance, 2) + Math.pow(ydistance, 2) <= Math.pow(range, 2))
+    if(inRange(range))
     {
       playerDetected = true;
       frameOnEncounter = frameCount;
@@ -73,12 +71,12 @@ class Monster extends Entity implements Alive {
     speed = newspeed;
   }
 
-  boolean inRange(float range) {
+  boolean inRange(Float range) {
     //equation of circle around player is (x - player.getX()) ^ 2 + (y - getY()) ^ 2 = radius ^2;
-    return inRange(0, range);
+    return inRange(0.0, range);
   }
 
-  boolean inRange(float rangeMin, float rangeMax) {
+  boolean inRange(Float rangeMin, Float rangeMax) {
     if (Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) < Math.pow(rangeMax, 2) && 
       Math.pow(this.getX() - player.getX(), 2.0) + Math.pow(this.getY() - player.getY(), 2.0) >= Math.pow(rangeMin, 2))
       return true;
