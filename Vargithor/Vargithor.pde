@@ -42,7 +42,7 @@ interface Alive {
 }
 
 //MAKEGRID
-void makeGrid() {
+void makeGrid() {//33 and 36 for vertical, 47 and 52 for horizontal
   stroke(200);
   for (int i = 0; i < width/10; i++) {
     line(i * 10, 0, i * 10, height);
