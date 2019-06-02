@@ -80,6 +80,9 @@ void keyPressed() {
   {
     switch(key)
     {
+    //case + SHIFT :
+    //  gameMenu = true;
+    //  break;
     case 'v' :
       player.dodge = true;
       break;
@@ -95,7 +98,7 @@ void keyPressed() {
     case 'd' : 
       player.right = true;
       break;
-    case 'm' :
+    case ' ' :
       gameMenu = true;
       break;
     }
@@ -108,6 +111,9 @@ void keyReleased() {
   {
     switch(key)
     {
+    //case + SHIFT :
+    //  gameMenu = false;
+    //  break;
     case 'v' :
       player.dodge = false;
       break;
@@ -123,7 +129,7 @@ void keyReleased() {
     case 'd' : 
       player.right = false;
       break;
-    case 'm' :
+    case ' ' :
       gameMenu = false;
       break;
     }
@@ -419,7 +425,8 @@ void draw() {
     "A - Left" + "\n" + 
     "S - Down" + "\n" + 
     "D - Right" + "\n" + 
-    "M - Open in-game menu" + "\n";
+    "SPACE - Dodge (whatever that means, ask Michael Zhang)" + 
+    "R - Open in-game menu" + "\n";
     text(instructions, 100, 100, 900, 525);
     
     
