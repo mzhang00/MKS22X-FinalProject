@@ -3,6 +3,14 @@ class myBullet extends Entity {
   Float speed;
   color bulletColor;
   
+  Integer getStrength() {
+    return strength;
+  }
+
+  Float getSpeed() {
+    return speed;
+  }
+  
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;

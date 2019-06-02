@@ -478,6 +478,6 @@ class StationaryShooter extends Monster {
   
   void shoot() {
     //shootAtPlayer(200.0);
-    leadPlayer(200.0, 10.0);
+    leadPlayer(200.0, 4.0);
   }
 }
