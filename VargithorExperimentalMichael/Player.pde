@@ -99,10 +99,17 @@ class Player extends Entity implements Alive {
     endScreen();
   }
   
+  boolean isColliding(Entity other){
+    if (Math.sqrt(other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY()) <= 5.5){
+      return true;
+    }
+    return false;
+  }
+  
   void takeDamage(){
     for (int i = 0; i < bullets.size(); i++){
       myBullet bullet = bullets.get(i);
-      if (Math.abs(bullet.getX() - this.getX()) < 3 && Math.abs(bullet.getY() - this.getY()) < 3){
+      if (isColliding(bullet)){
         this.setHealth(this.getHealth() - bullet.getStrength());
         i--;
         bullets.remove(bullet);
