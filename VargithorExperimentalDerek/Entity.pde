@@ -44,8 +44,6 @@ class Entity {
   }
 
   void isTouching(Entity other) {
-    Float xdistance = other.getX() - getX();
-    Float ydistance = other.getY() - getY();
     if (other.getX() == this.getX() && other.getY() == this.getY()) {
       //
     }

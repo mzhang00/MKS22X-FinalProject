@@ -35,6 +35,7 @@ class Player extends Entity implements Alive {
     if (health <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   Integer getMaxHealth() {
@@ -96,6 +97,28 @@ class Player extends Entity implements Alive {
   }
 
   void die() {
+    thingsToDisplay.remove(this);
+    thingsToMove.remove(this);
+    thingsToShoot.remove(this);
+    gameIsRunning = false;
     endScreen();
+  }
+  
+  boolean isColliding(Entity other){
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5){
+      return true;
+    }
+    return false;
+  }
+  
+  void takeDamage(){
+    for (int i = 0; i < bullets.size(); i++){
+      myBullet bullet = bullets.get(i);
+      if (isColliding(bullet)){
+        this.setHealth(this.getHealth() - bullet.getStrength());
+        i--;
+        bullets.remove(bullet);
+      }  
+    }
   }
 }
