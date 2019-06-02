@@ -103,7 +103,7 @@ class Monster extends Entity implements Alive {
       detectPlayer(range);
     else
     {
-      if((frameCount - frameOnEncounter) % 10 == 0)
+      if((frameCount - frameOnEncounter) % 1 == 0)
       { 
         Float playerVelocity = (float) player.getSpeed();
         Float xdistance = player.getX() - getX();
@@ -114,9 +114,16 @@ class Monster extends Entity implements Alive {
         Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(monsterPlayerVelocity, 2) - Math.pow(bulletSpeed, 2)) / (-2.0 * monsterPlayerVelocity * bulletSpeed));
         boolean counterClockwiseDirection = player.getY() < getY() && player.getXSpeed() < 0 || player.getY() >= getY() && player.getXSpeed() > 0 ||
                                             player.getX() > getX() && player.getYSpeed() < 0 || player.getX() <= getX() && player.getYSpeed() > 0;
-        if(counterClockwiseDirection)
-          theta *= -1;
+        //if(counterClockwiseDirection)
+        //  theta *= -1;
+        
         PVector monsterToPlayer = new PVector(xdistance, ydistance);
+        
+        PVector playerLocation = new PVector(player.getX(), player.getY());
+        PVector newLocation = playerLocation.add(player.velocity);
+        PVector predictedTemporaryMonsterToPlayer = new PVector(newLocation.x - getX(), newLocation.y - getY());
+        if(predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0)
+          theta *= -1;
         monsterToPlayer.setMag(bulletSpeed);
         monsterToPlayer.rotate(theta);
         myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
@@ -478,6 +485,6 @@ class StationaryShooter extends Monster {
   
   void shoot() {
     //shootAtPlayer(200.0);
-    leadPlayer(200.0, 4.0);
+    leadPlayer(1000.0, 10.0);
   }
 }
