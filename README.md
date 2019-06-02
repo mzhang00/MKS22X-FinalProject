@@ -14,13 +14,13 @@ Derek Lao:
 
 May 31st 2019:
 =======================================================================================
-Derek Lao:
-* Took out redundant code in detectPlayer()
-* Added preliminary code for mainMenu
-
 Michael Zhang:
 * Added bullet collision, bullets now die on collision with player
 * Made bullets do damage to player, tested it, it works.
+
+Derek Lao:
+* Took out redundant code in detectPlayer()
+* Added preliminary code for mainMenu
 
 May 30th 2019:
 =======================================================================================
