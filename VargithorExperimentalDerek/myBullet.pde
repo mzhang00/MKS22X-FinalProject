@@ -2,15 +2,8 @@ class myBullet extends Entity {
   Integer strength;
   Float speed;
   color bulletColor;
-  
-  Integer getStrength() {
-    return strength;
-  }
+  String type = "enemy"; 
 
-  Float getSpeed() {
-    return speed;
-  }
-  
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp) {
     super(origin.getX(), origin.getY());
     strength = s;
@@ -30,6 +23,17 @@ class myBullet extends Entity {
     velocity.setMag(speed);
     bulletColor = input;
   }
+  
+  myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp, color input, String allied) {
+    super(origin.getX(), origin.getY());
+    strength = s;
+    speed = sp;
+    location.set(origin.getX(), origin.getY());
+    velocity.set(targetx - origin.getX(), targety - origin.getY());
+    velocity.setMag(speed);
+    bulletColor = input;
+    type = "allied";
+  }
 
   void display() {
     model = createShape(ELLIPSE, location.x, location.y, 3, 3);
@@ -39,6 +43,18 @@ class myBullet extends Entity {
 
   void move() {
     location.add(velocity);
+  }
+
+  String getType() {
+    return type;
+  }
+
+  Integer getStrength() {
+    return strength;
+  }
+
+  Float getSpeed() {
+    return speed;
   }
 
   boolean die() {
