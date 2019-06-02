@@ -10,6 +10,7 @@ Derek Lao:
 * Proofread and fixed some grammar mistakes in lore
 * Added option to return to mainMenu from gameMenu
 * Fixed null pointer exceptions in mainMenu by replacing if statements to else-if statements
+* Remade makeGrid() method to display lines, deleted original makeGrid.
 
 May 31st 2019:
 =======================================================================================
