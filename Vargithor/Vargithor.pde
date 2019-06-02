@@ -43,25 +43,25 @@ interface Alive {
 
 //MAKEGRID
 void makeGrid() {
-  rectMode(CORNER);
+  stroke(200);
   for (int i = 0; i < width/10; i++) {
-    for (int c = 0; c < height/10; c++) {
-      if (i == 0 || i == width/10 - 1 || c * 10 == 0 || c== height/10 - 1) {
-        if (c >= 33 && c <= 36 || i >= 47 && i <= 52) {
-          stroke(200);
-          noFill();
-        } else {
-          noStroke();
-          fill(0, 0, 0);
-        }
-        rect(i * 10, c * 10, 10, 10);
-      } else {
-        noFill();
-        stroke(200);
-        rect(i * 10, c * 10, 10, 10);
-      }
-    }
+    line(i * 10, 0, i * 10, height);
   }
+  for (int c = 0; c < height/10; c++) {
+    line(0, c * 10, width, c * 10);
+  }
+  
+  noStroke();
+  fill(0);
+  rectMode(CORNERS);
+  rect(0, 0, 47 * 10, 10);
+  rect(52 * 10, 0, width - 10, 10);
+  rect(width - 10, 0, width, 33 * 10);
+  rect(width - 10, 36 * 10, width, height);
+  rect(52 * 10, height - 10, width - 10, height);
+  rect(10, height - 10, 47 * 10, height);
+  rect(0, 36 * 10, 10, height);
+  rect(0, 10, 10, 33 * 10);
 }
 
 //ENDSCREEN
@@ -166,8 +166,7 @@ void mouseReleased() {
 //SETUP
 void setup() {
   size(1000, 700);
-  makeGrid();
-  frameRate(100);
+  frameRate(60);
   //System.out.println(width/2);
   //System.out.println(player.getX());
   //player.display();
