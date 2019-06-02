@@ -35,10 +35,15 @@ class Player extends Entity implements Alive {
     }
     takeDamage();
   }
+  
+  Integer getEnergy() {
+    return energy;
+  }
 
   Integer getMaxHealth() {
     return maxHealth;
   }
+  
   Integer getHealth() {
     return health;
   }
