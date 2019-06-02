@@ -146,18 +146,14 @@ void mouseMoved() {
 
 ////MOUSEPRESSED
 void mousePressed() {
-  if (millis() % 10 == 1) {
-    mousex = (float) mouseX;
-    mousey = (float) mouseY;
-  }
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
 }
 
 //MOUSEDRAGGED
 void mouseDragged() {
-  if (millis() % 10 == 1) {
-    mousex = (float) mouseX;
-    mousey = (float) mouseY;
-  }
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
 }
 
 //MOUSERELEASED

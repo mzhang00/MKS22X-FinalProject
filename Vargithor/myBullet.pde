@@ -23,7 +23,7 @@ class myBullet extends Entity {
     velocity.setMag(speed);
     bulletColor = input;
   }
-  
+
   myBullet(Integer s, Entity origin, Float targetx, Float targety, Float sp, color input, String allied) {
     super(origin.getX(), origin.getY());
     strength = s;

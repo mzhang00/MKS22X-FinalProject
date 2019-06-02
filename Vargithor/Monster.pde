@@ -22,25 +22,24 @@ class Monster extends Entity implements Alive {
     model.setFill(color(255, 0, 0));
     shape(model);
   }
-  
+
   void detectPlayer(Float range) {
-    if(!playerDetected)
+    if (!playerDetected)
     {
-      if(inRange(range))
+      if (inRange(range))
       {
         playerDetected = true;
         frameOnEncounter = frameCount;
       }
-    }
-    else
+    } else
     {
-      if(!inRange(range))
+      if (!inRange(range))
       {
         playerDetected = false;
       }
     }
   }
-  
+
 
 
   Integer getHealth() {
@@ -79,17 +78,17 @@ class Monster extends Entity implements Alive {
     else
       return false;
   }
-  
+
   void shoot() {
     shootAtPlayer(100.0);
   }
-  
+
   void shootAtPlayer(Float range) {
-    if(!playerDetected)
+    if (!playerDetected)
       detectPlayer(range);
     else
     {
-      if((frameCount - frameOnEncounter) % 10 == 0)
+      if ((frameCount - frameOnEncounter) % 10 == 0)
       {
         myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
         bullets.add(bullet);
@@ -97,13 +96,13 @@ class Monster extends Entity implements Alive {
       detectPlayer(range);
     }
   }
-  
+
   void leadPlayer(Float range, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
-    if(!playerDetected)
+    if (!playerDetected)
       detectPlayer(range);
     else
     {
-      if((frameCount - frameOnEncounter) % 1 == 0)
+      if ((frameCount - frameOnEncounter) % 1 == 0)
       { 
         Float playerVelocity = (float) player.getSpeed();
         Float xdistance = player.getX() - getX();
@@ -113,16 +112,16 @@ class Monster extends Entity implements Alive {
         Float monsterPlayerVelocity = (float) (playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity)) + (float) Math.sqrt(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
         Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(monsterPlayerVelocity, 2) - Math.pow(bulletSpeed, 2)) / (-2.0 * monsterPlayerVelocity * bulletSpeed));
         boolean counterClockwiseDirection = player.getY() < getY() && player.getXSpeed() < 0 || player.getY() >= getY() && player.getXSpeed() > 0 ||
-                                            player.getX() > getX() && player.getYSpeed() < 0 || player.getX() <= getX() && player.getYSpeed() > 0;
+          player.getX() > getX() && player.getYSpeed() < 0 || player.getX() <= getX() && player.getYSpeed() > 0;
         //if(counterClockwiseDirection)
         //  theta *= -1;
-        
+
         PVector monsterToPlayer = new PVector(xdistance, ydistance);
-        
+
         PVector playerLocation = new PVector(player.getX(), player.getY());
         PVector newLocation = playerLocation.add(player.velocity);
         PVector predictedTemporaryMonsterToPlayer = new PVector(newLocation.x - getX(), newLocation.y - getY());
-        if(predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0)
+        if (predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0)
           theta *= -1;
         monsterToPlayer.setMag(bulletSpeed);
         monsterToPlayer.rotate(theta);
@@ -132,7 +131,7 @@ class Monster extends Entity implements Alive {
       detectPlayer(range);
     }
   }
-  
+
   void move() {
     if (inRange(50.0, 100.0))
       followPlayer();
@@ -190,7 +189,7 @@ class Monster extends Entity implements Alive {
     return answers;
   }
 
-  
+
 
   void jitter() {
     generateRandomDirection();
@@ -411,7 +410,7 @@ class Chaser extends Monster {
     else
       followPlayer();
   }
-  
+
   void shoot() {
     super.shoot();
   }
@@ -438,7 +437,7 @@ class Coward extends Monster {
       wanderRegular(60);
     }
   }
-  
+
   void shoot() {
     super.shoot();
   }
@@ -460,7 +459,7 @@ class Circler extends Monster {
   void move() {
     circlePlayerCounterClockwise(100.0);
   }
-  
+
   void shoot() {
     super.shoot();
   }
@@ -482,7 +481,7 @@ class StationaryShooter extends Monster {
 
   void move() {
   }
-  
+
   void shoot() {
     //shootAtPlayer(200.0);
     leadPlayer(1000.0, 10.0);
