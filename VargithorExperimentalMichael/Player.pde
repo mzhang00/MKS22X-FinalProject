@@ -14,11 +14,15 @@ class Player extends Entity implements Alive {
   }
 
   void shoot() {
-    if (mousex != null && mousey != null) {
-      myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0);
-      bullets.add(bullet);
-      mousex = null;
-      mousey = null;
+    if(gameIsRunning && !gameMenu)
+    {
+      if (mousex != null && mousey != null) {
+        color bulletColor = color(0, 0, 0);
+        myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor, "allied");
+        bullets.add(bullet);
+        mousex = null;
+        mousey = null;
+      }
     }
   }
 
@@ -28,7 +32,7 @@ class Player extends Entity implements Alive {
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(0, 255, 0));
     shape(model);
-    if (getHealth() <= 0) {
+    if (health <= 0) {
       this.die();
     }
     takeDamage();
@@ -96,11 +100,12 @@ class Player extends Entity implements Alive {
     thingsToDisplay.remove(this);
     thingsToMove.remove(this);
     thingsToShoot.remove(this);
+    gameIsRunning = false;
     endScreen();
   }
   
   boolean isColliding(Entity other){
-    if (Math.sqrt(other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY()) <= 5.5){
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5){
       return true;
     }
     return false;
@@ -110,9 +115,11 @@ class Player extends Entity implements Alive {
     for (int i = 0; i < bullets.size(); i++){
       myBullet bullet = bullets.get(i);
       if (isColliding(bullet)){
-        this.setHealth(this.getHealth() - bullet.getStrength());
-        i--;
-        bullets.remove(bullet);
+        if (bullet.getType().equals("enemy")){
+          this.setHealth(this.getHealth() - 100 * bullet.getStrength());
+          i--;
+          bullets.remove(bullet);
+        }
       }  
     }
   }
