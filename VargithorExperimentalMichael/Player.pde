@@ -19,9 +19,7 @@ class Player extends Entity implements Alive {
       if (mousex != null && mousey != null) {
         color bulletColor = color(0, 0, 0);
         myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor, "allied");
-        bullets.add(bullet);
-        mousex = null;
-        mousey = null;
+        bullets.add(bullet);  
       }
     }
   }
@@ -97,11 +95,10 @@ class Player extends Entity implements Alive {
   }
 
   void die() {
-    thingsToDisplay.remove(this);
-    thingsToMove.remove(this);
-    thingsToShoot.remove(this);
-    gameIsRunning = false;
-    endScreen();
+    //thingsToDisplay.remove(this);
+    //thingsToMove.remove(this);
+    //thingsToShoot.remove(this);
+    gameOver = true;
   }
   
   boolean isColliding(Entity other){
