@@ -19,6 +19,7 @@ PFont gameMenuFont, mainMenuFont, loreScreenFont;
 boolean gameMenu, howToScreen, endScreen, loreScreen;
 boolean gameIsRunning = false;
 boolean mainMenu = true;
+boolean gameOver = false;
 Float mousex;
 Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
