@@ -10,6 +10,9 @@ Derek Lao:
 
 June 1st 2019:
 =======================================================================================
+Michael Zhang:
+* Did nothing, had SAT
+
 Derek Lao:
 * Completed main menu
 * Added lore story for fun, added option to click on it and also return to main menu.
@@ -30,6 +33,10 @@ Derek Lao:
 
 May 30th 2019:
 =======================================================================================
+Michael Zhang:
+* Added a death screen for when the enemy dies
+* Updated player's health to decrease with bullet damage
+
 Derek Lao:
 * Scrapped vector method, brought back slopes method because that was much closer to the final product
 * Implemented POSITIVE_INFINITY in calculations
