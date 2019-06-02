@@ -98,17 +98,20 @@ class Monster extends Entity implements Alive {
     }
   }
   
-  void leadPlayer(Float range) {//find the intersections of the ray the player is moving on, and the circle. the monster will fire at the point of intersection closer to the player's origin;
+  void leadPlayer(Float range) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
     if(!playerDetected)
       detectPlayer(range);
     else
     {
       if((frameCount - frameOnEncounter) % 10 == 0)
-      {
-        PVector currentLocation = player.location;
-        PVector playerVelocity = player.velocity;
-        PVector predictedLocation;
+      { 
         myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
+        PVector currentLocation = player.location;
+        Float playerVelocity = player.velocity.mag();
+        Float bulletVelocity = bullet.velocity.mag();
+        Float bulletToPlayerVelocityDifference = bullet.velocity.sub(player.velocity).mag();
+        Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(bulletToPlayerVelocityDifference, 2) - Math.pow(bulletVelocity, 2)) / (-2.0 * bulletToPlayerVelocityDifference * bulletVelocity));
+        PVector predictedLocation;
         bullets.add(bullet);
       }
       detectPlayer(range);
