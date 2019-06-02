@@ -98,20 +98,28 @@ class Monster extends Entity implements Alive {
     }
   }
   
-  void leadPlayer(Float range) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+  void leadPlayer(Float range, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
     if(!playerDetected)
       detectPlayer(range);
     else
     {
       if((frameCount - frameOnEncounter) % 10 == 0)
       { 
-        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
-        PVector currentLocation = player.location;
-        Float playerVelocity = player.velocity.mag();
-        Float bulletVelocity = bullet.velocity.mag();
-        Float bulletToPlayerVelocityDifference = bullet.velocity.sub(player.velocity).mag();
-        Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(bulletToPlayerVelocityDifference, 2) - Math.pow(bulletVelocity, 2)) / (-2.0 * bulletToPlayerVelocityDifference * bulletVelocity));
-        PVector predictedLocation;
+        Float playerVelocity = (float) player.getSpeed();
+        Float xdistance = player.getX() - getX();
+        Float ydistance = player.getY() - getY();
+        PVector playerToMonsterDistance = new PVector(-1 * xdistance, -1 * ydistance);
+        Float angleBetweenMonsterPlayerVelocityAndPlayerVelocity = PVector.angleBetween(playerToMonsterDistance, player.velocity);
+        Float monsterPlayerVelocity = (float) (playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity)) + (float) Math.sqrt(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
+        Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(monsterPlayerVelocity, 2) - Math.pow(bulletSpeed, 2)) / (-2.0 * monsterPlayerVelocity * bulletSpeed));
+        boolean counterClockwiseDirection = player.getY() < getY() && player.getXSpeed() < 0 || player.getY() >= getY() && player.getXSpeed() > 0 ||
+                                            player.getX() > getX() && player.getYSpeed() < 0 || player.getX() <= getX() && player.getYSpeed() > 0;
+        if(counterClockwiseDirection)
+          theta *= -1;
+        PVector monsterToPlayer = new PVector(xdistance, ydistance);
+        monsterToPlayer.setMag(bulletSpeed);
+        monsterToPlayer.rotate(theta);
+        myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
         bullets.add(bullet);
       }
       detectPlayer(range);
@@ -469,6 +477,7 @@ class StationaryShooter extends Monster {
   }
   
   void shoot() {
-    shootAtPlayer(200.0);
+    //shootAtPlayer(200.0);
+    leadPlayer(200.0, 10.0);
   }
 }
