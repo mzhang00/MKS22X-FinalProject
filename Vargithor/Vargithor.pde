@@ -30,6 +30,7 @@ Monster monster = new Monster(400.0, 350.0, 5, 5, 1, player);//Monster(Float new
 Chaser chaser = new Chaser(300.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Coward coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
 Circler circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+StationaryShooter stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
 
 interface Alive {
   Integer getHealth();
@@ -175,13 +176,18 @@ void setup() {
   thingsToDisplay.add(chaser);
   thingsToDisplay.add(coward);
   thingsToDisplay.add(circler);
+  thingsToDisplay.add(stationaryShooter);
+  
   thingsToMove.add(player);
   thingsToMove.add(monster);
   thingsToMove.add(chaser);
   thingsToMove.add(coward);
   thingsToMove.add(circler);
+  thingsToMove.add(stationaryShooter);
+  
   thingsToShoot.add(player);
-  thingsToShoot.add(circler);
+  //thingsToShoot.add(circler);
+  thingsToShoot.add(stationaryShooter);
   
   gameMenuFont = createFont("GROBOLD.ttf", 30);
   mainMenuFont = createFont("GROBOLD.ttf", 20);

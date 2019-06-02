@@ -41,21 +41,7 @@ class Monster extends Entity implements Alive {
     }
   }
   
-  void shoot() {
-    if(!playerDetected)
-      detectPlayer(100.0);
-    else
-    {
-      //System.out.println(frameOnEncounter);
-      //System.out.println(frameCount);
-      if((frameCount - frameOnEncounter) % 10 == 0)
-      {
-        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
-        bullets.add(bullet);
-      }
-      detectPlayer(100.0);
-    }
-  }
+
 
   Integer getHealth() {
     return health;
@@ -92,6 +78,35 @@ class Monster extends Entity implements Alive {
       return true;
     else
       return false;
+  }
+  
+  void shoot() {
+    shootAtPlayer(100.0);
+  }
+  
+  void shootAtPlayer(Float range) {
+    if(!playerDetected)
+      detectPlayer(range);
+    else
+    {
+      //System.out.println(frameOnEncounter);
+      //System.out.println(frameCount);
+      if((frameCount - frameOnEncounter) % 10 == 0)
+      {
+        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), 2.0);
+        bullets.add(bullet);
+      }
+      detectPlayer(range);
+    }
+  }
+  
+  void move() {
+    if (inRange(50.0, 100.0))
+      followPlayer();
+    else if (inRange(50.0))
+      runFromPlayer();
+    else
+      wanderRegular(60);
   }
 
   void bounceWallRealistic() {
@@ -142,14 +157,7 @@ class Monster extends Entity implements Alive {
     return answers;
   }
 
-  void move() {
-    if (inRange(50.0, 100.0))
-      followPlayer();
-    else if (inRange(50.0))
-      runFromPlayer();
-    else
-      wanderRegular(60);
-  }
+  
 
   void jitter() {
     generateRandomDirection();
@@ -370,6 +378,10 @@ class Chaser extends Monster {
     else
       followPlayer();
   }
+  
+  void shoot() {
+    super.shoot();
+  }
 }
 
 //COWARD
@@ -393,6 +405,10 @@ class Coward extends Monster {
       wanderRegular(60);
     }
   }
+  
+  void shoot() {
+    super.shoot();
+  }
 }
 
 //CIRCLER
@@ -410,5 +426,31 @@ class Circler extends Monster {
 
   void move() {
     circlePlayerCounterClockwise(100.0);
+  }
+  
+  void shoot() {
+    super.shoot();
+  }
+}
+
+//STATIONARYSHOOTER
+class StationaryShooter extends Monster {
+  StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
+    super(newx, newy, h, str, spd, givenPlayer);
+  }
+
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(0));
+    model.setStroke(color(255, 0, 0));
+    shape(model);
+  }
+
+  void move() {
+  }
+  
+  void shoot() {
+    shootAtPlayer(200.0);
   }
 }
