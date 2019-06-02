@@ -18,7 +18,7 @@ class Player extends Entity implements Alive {
     {
       if (mousex != null && mousey != null) {
         color bulletColor = color(0, 0, 0);
-        myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor);
+        myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor, "allied");
         bullets.add(bullet);
         mousex = null;
         mousey = null;
@@ -115,9 +115,11 @@ class Player extends Entity implements Alive {
     for (int i = 0; i < bullets.size(); i++){
       myBullet bullet = bullets.get(i);
       if (isColliding(bullet)){
-        this.setHealth(this.getHealth() - bullet.getStrength());
-        i--;
-        bullets.remove(bullet);
+        if (bullet.getType().equals("enemy")){
+          this.setHealth(this.getHealth() - bullet.getStrength());
+          i--;
+          bullets.remove(bullet);
+        }
       }  
     }
   }
