@@ -15,7 +15,7 @@
 //ArrayList<Room> rooms;
 
 PFont gameMenuFont, mainMenuFont, loreScreenFont;
-boolean gameMenu, howToScreen, loreScreen;
+boolean gameMenu, howToScreen, loreScreen, gamePaused;
 boolean gameIsRunning = false;
 boolean mainMenu = true;
 boolean gameOver = false;
@@ -88,7 +88,6 @@ void endScreen() {
       mainMenu = true;
       gameIsRunning = false;
       gameMenu = false;
-      gameOver = false;
       mousex = null;
       mousey = null;
     }
@@ -132,7 +131,17 @@ void clearEntities() {
 
 //KEYPRESSED
 void keyPressed() {
-  if (gameIsRunning)
+  if (gamePaused)
+  {
+    switch(key)
+    {
+    case 'p' :
+      gamePaused = false;
+      gameIsRunning = true;
+      break;
+    }
+  }
+  else if (gameIsRunning)
   {
     switch(key)
     {
@@ -153,6 +162,11 @@ void keyPressed() {
       break;
     case ' ' :
       gameMenu = true;
+      break;
+    case 'p' :
+      gamePaused = true;
+      gameIsRunning = false;
+      gameMenu = false;
       break;
     }
   }
@@ -335,6 +349,37 @@ void draw() {
   {
     endScreen();
   }
+  else if (gamePaused)
+  {
+    background(100, 100);
+    fill(200);
+    textFont(mainMenuFont);
+    textAlign(CENTER);
+    text("Game Paused", 375, 175, 250, 100);
+    
+    fill(200);
+    stroke(0);
+    rectMode(CORNER);
+    stroke(255, 0, 0);
+    rect(375, 575, 250, 100);
+    textFont(mainMenuFont);
+    fill(255, 0, 0);
+    textAlign(CENTER, CENTER);
+    text("Return To Main Menu", 375, 575, 250, 100);
+    
+    if (mousex != null && mousey != null)
+    {
+      if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
+      {
+        mainMenu = true;
+        gameIsRunning = false;
+        gameMenu = false;
+        gamePaused = false;
+        mousex = null;
+        mousey = null;
+      }
+    }
+  }
   else if (mainMenu)
   {
     background(100);
@@ -384,6 +429,7 @@ void draw() {
       {
         mainMenu = false;
         gameIsRunning = true;
+        gameOver = false;
         mousex = null;
         mousey = null;
         clearEntities();
