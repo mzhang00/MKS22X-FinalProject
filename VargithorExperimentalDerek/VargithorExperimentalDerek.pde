@@ -27,12 +27,13 @@ ArrayList<myBullet> bullets = new ArrayList<myBullet>();
 ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
-Player player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
-Monster monster = new Monster(400.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Chaser chaser = new Chaser(300.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Coward coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-Circler circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-StationaryShooter stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
+Player player;
+Monster monster;
+Chaser chaser;
+Coward coward;
+Circler circler;
+StationaryShooter stationaryShooter;
+FirstBoss firstBoss;
 
 interface Alive {
   Integer getHealth();
@@ -105,6 +106,7 @@ void loadGame() {
   coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
+  firstBoss = new FirstBoss(250.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
 
   thingsToDisplay.add(player);
   thingsToDisplay.add(monster);
@@ -112,6 +114,7 @@ void loadGame() {
   thingsToDisplay.add(coward);
   thingsToDisplay.add(circler);
   thingsToDisplay.add(stationaryShooter);
+  thingsToDisplay.add(firstBoss);
 
   thingsToMove.add(player);
   thingsToMove.add(monster);
@@ -119,10 +122,12 @@ void loadGame() {
   thingsToMove.add(coward);
   thingsToMove.add(circler);
   thingsToMove.add(stationaryShooter);
+  thingsToMove.add(firstBoss);
 
   thingsToShoot.add(player);
   //thingsToShoot.add(circler);
-  thingsToShoot.add(stationaryShooter);
+  //thingsToShoot.add(stationaryShooter);
+  thingsToShoot.add(firstBoss);
 }
 
 //CLEARENTITIES

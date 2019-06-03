@@ -1,13 +1,14 @@
 //MONSTER
 class Monster extends Entity implements Alive {
-  Integer health, strength, speed;
+  Integer health, strength, speed, maxHealth;
   PShape model;
   Player player;
   boolean playerDetected;
   Integer frameOnEncounter;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
-    super(newx, newy);    
+    super(newx, newy);
+    maxHealth = h;
     health = h;
     strength = str;
     speed = spd;
@@ -145,87 +146,50 @@ class Monster extends Entity implements Alive {
   }
 
   void shoot() {
-    shootAtPlayer(100.0, 2.0, 10);
   }
 
-  void shootAtPlayer(Float range, Float bulletSpeed, Integer frameFireDifference) {
-    if (!playerDetected)
-      detectPlayer(range);
-    else
+  void shootAtPlayer(Float bulletSpeed) {
+    myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), bulletSpeed);
+    bullets.add(bullet);
+  }
+
+  void leadPlayerShoot(Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+    PVector monsterToPlayer = leadPlayer(bulletSpeed);
+    myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+    bullets.add(bullet);
+  }
+
+  void circleShootAtPlayer(Float bulletSpeed, Integer numberOfBullets) {
+    PVector monsterToPlayer = aimAtPlayer();
+    float fixedHeading = monsterToPlayer.heading();
+    float heading = monsterToPlayer.heading();
+    float headingDifference;
+    Integer i = 0;
+    while (i < numberOfBullets)
     {
-      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
-      {
-        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), bulletSpeed);
-        bullets.add(bullet);
-      }
-      detectPlayer(range);
+      headingDifference = (i * 2 * PI) / numberOfBullets;
+      heading = fixedHeading + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      bullets.add(bullet);
+      i ++;
     }
   }
 
-  void leadPlayerShoot(Float range, Float bulletSpeed, Integer frameFireDifference) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
-    if (!playerDetected)
-      detectPlayer(range);
-    else
+  void circleLeadPlayerShoot(Float bulletSpeed, Integer numberOfBullets) {
+    PVector monsterToPlayer = leadPlayer(bulletSpeed);
+    float fixedHeading = monsterToPlayer.heading();
+    float heading = monsterToPlayer.heading();
+    float headingDifference;
+    Integer i = 0;
+    while (i < numberOfBullets)
     {
-      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
-      { 
-        PVector monsterToPlayer = leadPlayer(bulletSpeed);
-        myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-        bullets.add(bullet);
-      }
-      detectPlayer(range);
-    }
-  }
-
-  void circleShootAtPlayer(Float range, Float bulletSpeed, Integer frameFireDifference, Integer numberOfBullets) {
-    if (!playerDetected)
-      detectPlayer(range);
-    else
-    {
-      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
-      {
-        PVector monsterToPlayer = aimAtPlayer();
-        float fixedHeading = monsterToPlayer.heading();
-        float heading = monsterToPlayer.heading();
-        float headingDifference;
-        Integer i = 0;
-        while (i < numberOfBullets)
-        {
-          headingDifference = (i * 2 * PI) / numberOfBullets;
-          heading = fixedHeading + headingDifference;
-          monsterToPlayer = PVector.fromAngle(heading);
-          myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-          bullets.add(bullet);
-          i ++;
-        }
-      }
-      detectPlayer(range);
-    }
-  }
-
-  void circleLeadPlayerShoot(Float range, Float bulletSpeed, Integer frameFireDifference, Integer numberOfBullets) {
-    if (!playerDetected)
-      detectPlayer(range);
-    else
-    {
-      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
-      {
-        PVector monsterToPlayer = leadPlayer(bulletSpeed);
-        float fixedHeading = monsterToPlayer.heading();
-        float heading = monsterToPlayer.heading();
-        float headingDifference;
-        Integer i = 0;
-        while (i < numberOfBullets)
-        {
-          headingDifference = (i * 2 * PI) / numberOfBullets;
-          heading = fixedHeading + headingDifference;
-          monsterToPlayer = PVector.fromAngle(heading);
-          myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-          bullets.add(bullet);
-          i ++;
-        }
-      }
-      detectPlayer(range);
+      headingDifference = (i * 2 * PI) / numberOfBullets;
+      heading = fixedHeading + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      bullets.add(bullet);
+      i ++;
     }
   }
 
@@ -594,9 +558,53 @@ class StationaryShooter extends Monster {
   }
 
   void shoot() {
-    //shootAtPlayer(200.0, 2.0, 10);//shootAtPlayer(range, bulletSpeed, frameFireDifference);
-    //leadPlayerShoot(1000.0, 10.0, 10);//leadPlayerShoot(range, bulletSpeed, frameFireDifference);
-    //circleShootAtPlayer(200.0, 5.0, 10, 5);//circleShootAtPlayer(range, bulletSpeed, frameFireDifference, numberOfBullets);
-    circleLeadPlayerShoot(1000.0, 10.0, 1, 10);//circleLeadPlayerShoot(range, bulletSpeed, frameFireDifference, numberOfBullets);
+    if(!playerDetected)
+      detectPlayer(1000.0);
+    else
+    {
+      if((frameCount - frameOnEncounter) % 10 == 0)
+      {
+        //shootAtPlayer(2.0);//shootAtPlayer(bulletSpeed);
+        //leadPlayerShoot(10.0);//leadPlayerShoot(bulletSpeed);
+        //circleShootAtPlayer(5.0, 5);//circleShootAtPlayer(bulletSpeed, numberOfBullets);
+        circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+      }
+      detectPlayer(1000.0);
+    }
+  }
+}
+
+class FirstBoss extends Monster {
+  boolean phase1, phase2, phase3, phase4;
+  FirstBoss(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
+    super(newx, newy, h, str, spd, givenPlayer);
+  }
+
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(200));
+    model.setStroke(color(0, 0, 0));
+    shape(model);
+    if (health <= 0) {
+      this.die();
+    }
+    takeDamage();
+  }
+
+  void move() {
+  }
+
+  void shoot() {
+    if(!playerDetected)
+      detectPlayer(1000.0);
+    else
+    {
+      if((frameCount - frameOnEncounter) % 1 == 0)
+      {
+        circleLeadPlayerShoot(10.0, 1000);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+      }
+      detectPlayer(1000.0);
+    }
   }
 }
