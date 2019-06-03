@@ -39,14 +39,12 @@ class Entity {
     velocity.set(velocity.x, input);
   }
 
-  void display() {
-    ellipse(getX(), getY(), 10, 10);
+  Integer getHealth() {
+    return 0;
   }
 
-  void isTouching(Entity other) {
-    if (other.getX() == this.getX() && other.getY() == this.getY()) {
-      //
-    }
+  void display() {
+    ellipse(getX(), getY(), 10, 10);
   }
 
   void move() {

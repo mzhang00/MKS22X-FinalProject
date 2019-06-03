@@ -1,4 +1,4 @@
-class Player extends Entity implements Alive {
+class Player extends Entity implements Alive {class Player extends Entity implements Alive {
   Integer maxHealth, armor, health, strength, speed;
   boolean up, down, left, right, dodge;
   PShape model;
