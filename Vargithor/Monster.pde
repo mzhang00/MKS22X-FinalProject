@@ -102,7 +102,7 @@ class Monster extends Entity implements Alive {
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
     System.out.println(theta);
-    if(theta == Float.NaN)
+    if (theta == Float.NaN)
       return aimAtPlayer();
     else
       return monsterToPlayer;
@@ -166,7 +166,7 @@ class Monster extends Entity implements Alive {
       detectPlayer(range);
     }
   }
-  
+
   void circleLeadPlayerShoot(Float range, Float bulletSpeed, Integer frameFireDifference, Integer numberOfBullets) {
     if (!playerDetected)
       detectPlayer(range);
