@@ -101,7 +101,11 @@ class Monster extends Entity implements Alive {
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
-    return monsterToPlayer;
+    System.out.println(theta);
+    if(theta == Float.NaN)
+      return aimAtPlayer();
+    else
+      return monsterToPlayer;
   }
 
   void shoot() {
@@ -154,7 +158,6 @@ class Monster extends Entity implements Alive {
           headingDifference = (i * 2 * PI) / numberOfBullets;
           heading = fixedHeading + headingDifference;
           monsterToPlayer = PVector.fromAngle(heading);
-          System.out.println("" + i + " " + monsterToPlayer.heading());
           myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
           bullets.add(bullet);
           i ++;
@@ -181,7 +184,6 @@ class Monster extends Entity implements Alive {
           headingDifference = (i * 2 * PI) / numberOfBullets;
           heading = fixedHeading + headingDifference;
           monsterToPlayer = PVector.fromAngle(heading);
-          System.out.println("" + i + " " + monsterToPlayer.heading());
           myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
           bullets.add(bullet);
           i ++;
@@ -545,6 +547,6 @@ class StationaryShooter extends Monster {
     //shootAtPlayer(200.0, 2.0, 10);//shootAtPlayer(range, bulletSpeed, frameFireDifference);
     //leadPlayerShoot(1000.0, 10.0, 10);//leadPlayerShoot(range, bulletSpeed, frameFireDifference);
     //circleShootAtPlayer(200.0, 5.0, 10, 5);//circleShootAtPlayer(range, bulletSpeed, frameFireDifference, numberOfBullets);
-    circleLeadPlayerShoot(200.0, 5.0, 10, 5);//circleLeadPlayerShoot(range, bulletSpeed, frameFireDifference, numberOfBullets);
+    circleLeadPlayerShoot(1000.0, 1.0, 10, 5);//circleLeadPlayerShoot(range, bulletSpeed, frameFireDifference, numberOfBullets);
   }
 }

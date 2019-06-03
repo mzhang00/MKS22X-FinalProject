@@ -253,7 +253,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  System.out.println(frameRate);
+  //System.out.println(frameRate);
   //System.out.println(millis());
   background(255);
   if (gameIsRunning)
