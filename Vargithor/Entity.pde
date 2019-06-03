@@ -47,12 +47,6 @@ class Entity {
     ellipse(getX(), getY(), 10, 10);
   }
 
-  void isTouching(Entity other) {
-    if (other.getX() == this.getX() && other.getY() == this.getY()) {
-      //
-    }
-  }
-
   void move() {
   }
 

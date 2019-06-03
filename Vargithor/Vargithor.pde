@@ -1,12 +1,14 @@
 //MAKEGRID
 //ENDSCREEN
+//LOADGAME
+//CLEARENTITIES
 //KEYPRESSED
 //KEYRELEASED
 //KEYTYPED
 //MOUSECLICKED
-//MOUSEDRAGGED
 //MOUSEMOVED
 //MOUSEPRESSED
+//MOUSEDRAGGED
 //MOUSERELEASED
 //SETUP
 //DRAW
@@ -534,7 +536,6 @@ void draw() {
       "SPACE - Open in-game menu" + "\n";
 
     text(instructions, 100, 100, 900, 525);
-
 
     fill(100);
     stroke(0);
