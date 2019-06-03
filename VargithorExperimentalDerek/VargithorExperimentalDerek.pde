@@ -528,7 +528,7 @@ void draw() {
       "D - Right" + "\n" +  
       "V - Dodge (whatever that means)" + "\n" +
       "P - Pause game" + "\n" +
-      "SPACE - Open in-game menu + \n";
+      "SPACE - Open in-game menu" + "\n";
       
     text(instructions, 100, 100, 900, 525);
 
