@@ -21,6 +21,9 @@ class Monster extends Entity implements Alive {
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
   }
 
   void detectPlayer(Float range) {
@@ -40,7 +43,11 @@ class Monster extends Entity implements Alive {
     }
   }
 
-
+  void die(){
+    thingsToDisplay.remove(this);
+    thingsToMove.remove(this);
+    thingsToShoot.remove(this);
+  }
 
   Integer getHealth() {
     return health;
@@ -450,6 +457,9 @@ class Chaser extends Monster {
     model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
     model.setFill(color(255, 0, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
   }
 
   void move() {
@@ -487,6 +497,9 @@ class Coward extends Monster {
     model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
     model.setFill(color(255, 255, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
   }
 
   void move() {
@@ -515,6 +528,9 @@ class Circler extends Monster {
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 255));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
   }
 
   void move() {
@@ -538,6 +554,9 @@ class StationaryShooter extends Monster {
     model.setFill(color(0));
     model.setStroke(color(255, 0, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
   }
 
   void move() {
