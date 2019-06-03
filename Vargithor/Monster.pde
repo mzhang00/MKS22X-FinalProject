@@ -18,6 +18,7 @@ class Monster extends Entity implements Alive {
 
   void display() {
     ellipseMode(CENTER);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
@@ -474,14 +475,11 @@ class Chaser extends Monster {
     super(newx, newy, h, str, spd, givenPlayer);
   }
 
-  void display() {//equilateral triangle, or triangle with height = player height and base = player height?
-    //PVector point2 = new PVector(-2,1);
-    //PVector point3 = new PVector(2,1);
-    //point2.setMag(5);
-    //point3.setMag(5);
-    //model = createShape(TRIANGLE, getX(), getY() - 5, getX() + point2.x, getY() + point2.y, getX() + point3.x, getY() + point3.y);
-    model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
-    model.setFill(color(255, 0, 0));
+  void display() {
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setFill(color(255, 150, 0));
+    model.setStroke(color(0));
     shape(model);
     if (health <= 0) {
       this.die();
@@ -521,8 +519,10 @@ class Coward extends Monster {
   }
 
   void display() {
-    model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
+    ellipseMode(CENTER);
+    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 255, 0));
+    model.setStroke(color(0));
     shape(model);
     if (health <= 0) {
       this.die();
@@ -555,6 +555,7 @@ class Circler extends Monster {
     ellipseMode(CENTER);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 255));
+    model.setStroke(color(0));
     shape(model);
     if (health <= 0) {
       this.die();
