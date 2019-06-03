@@ -127,6 +127,7 @@ class Monster extends Entity implements Alive {
     PVector playerToMonsterDistance = new PVector(-1 * xdistance, -1 * ydistance);
     Float angleBetweenMonsterPlayerVelocityAndPlayerVelocity = PVector.angleBetween(playerToMonsterDistance, player.velocity);
     Float monsterPlayerVelocity = (float) (playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity)) + (float) Math.sqrt(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
+    System.out.println(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
     Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(monsterPlayerVelocity, 2) - Math.pow(bulletSpeed, 2)) / (-2.0 * monsterPlayerVelocity * bulletSpeed));
     PVector monsterToPlayer = new PVector(xdistance, ydistance);
     PVector playerLocation = new PVector(player.getX(), player.getY());
@@ -138,8 +139,8 @@ class Monster extends Entity implements Alive {
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
-    System.out.println(theta);
-    if (theta == Float.NaN)
+    //System.out.println(theta);
+    if (Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2) < 0)
       return aimAtPlayer();
     else
       return monsterToPlayer;
@@ -441,6 +442,7 @@ class Chaser extends Monster {
 
   void display() {
     ellipseMode(CENTER);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 150, 0));
     model.setStroke(color(0));
@@ -484,6 +486,7 @@ class Coward extends Monster {
 
   void display() {
     ellipseMode(CENTER);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 255, 0));
     model.setStroke(color(0));
@@ -517,6 +520,7 @@ class Circler extends Monster {
 
   void display() {
     ellipseMode(CENTER);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 255));
     model.setStroke(color(0));
@@ -544,6 +548,7 @@ class StationaryShooter extends Monster {
 
   void display() {
     ellipseMode(CENTER);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(0));
     model.setStroke(color(255, 0, 0));
@@ -567,7 +572,7 @@ class StationaryShooter extends Monster {
         //shootAtPlayer(2.0);//shootAtPlayer(bulletSpeed);
         //leadPlayerShoot(10.0);//leadPlayerShoot(bulletSpeed);
         //circleShootAtPlayer(5.0, 5);//circleShootAtPlayer(bulletSpeed, numberOfBullets);
-        circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+        //circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
       }
       detectPlayer(1000.0);
     }
@@ -585,6 +590,7 @@ class FirstBoss extends Monster {
 
   void display() {
     ellipseMode(CENTER);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(200));
     model.setStroke(color(0, 0, 0));
@@ -612,23 +618,37 @@ class FirstBoss extends Monster {
   }
 
   void move() {
+    if (phase1)
+    {
+      circlePlayerClockwise(100.0);
+    } else if (phase2)
+    {
+      jitter();
+    } else if (phase3)
+    {
+    } else if (phase4)
+    {
+    }
   }
 
   void shoot() {
-    if(phase1)
+    if (phase1)
     {
       if (!playerDetected)
-      detectPlayer(1000.0);
+        detectPlayer(1000.0);
       else
       {
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+          circleLeadPlayerShoot(10.0, 5);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
         }
         detectPlayer(1000.0);
       }
-    }
-    else if(phase2)
+    } else if (phase2)
+    {
+    } else if (phase3)
+    {
+    } else if (phase4)
     {
     }
   }
