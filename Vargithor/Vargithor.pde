@@ -211,32 +211,32 @@ void keyTyped() {
 }
 
 //MOUSECLICKED
-//void mouseClicked() {
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
-//}
+void mouseClicked() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}
 
 //MOUSEMOVED
 void mouseMoved() {
 }
 
 ////MOUSEPRESSED
-void mousePressed() {
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
-}
+//void mousePressed() {
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
 
 //MOUSEDRAGGED
-void mouseDragged() {
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
-}
+//void mouseDragged() {
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
 
 //MOUSERELEASED
-void mouseReleased() {
-  mousex = null;
-  mousey = null;
-}
+//void mouseReleased() {
+//  mousex = null;
+//  mousey = null;
+//}
 
 //SETUP
 void setup() {
