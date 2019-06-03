@@ -128,6 +128,7 @@ void clearEntities() {
   thingsToDisplay.clear();
   thingsToMove.clear();
   thingsToShoot.clear();
+  bullets.clear();
 }
 
 //KEYPRESSED
