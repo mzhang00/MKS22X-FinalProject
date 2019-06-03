@@ -597,6 +597,6 @@ class StationaryShooter extends Monster {
     //shootAtPlayer(200.0, 2.0, 10);//shootAtPlayer(range, bulletSpeed, frameFireDifference);
     //leadPlayerShoot(1000.0, 10.0, 10);//leadPlayerShoot(range, bulletSpeed, frameFireDifference);
     //circleShootAtPlayer(200.0, 5.0, 10, 5);//circleShootAtPlayer(range, bulletSpeed, frameFireDifference, numberOfBullets);
-    circleLeadPlayerShoot(1000.0, 1.0, 10, 5);//circleLeadPlayerShoot(range, bulletSpeed, frameFireDifference, numberOfBullets);
+    circleLeadPlayerShoot(1000.0, 10.0, 1, 10);//circleLeadPlayerShoot(range, bulletSpeed, frameFireDifference, numberOfBullets);
   }
 }
