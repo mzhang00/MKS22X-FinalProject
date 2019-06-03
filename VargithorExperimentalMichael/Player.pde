@@ -20,6 +20,8 @@ class Player extends Entity implements Alive {
         color bulletColor = color(0, 0, 0);
         myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor, "allied");
         bullets.add(bullet);
+        mousex = null;
+        mousey = null;
       }
     }
   }

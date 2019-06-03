@@ -1,4 +1,4 @@
-
+//MONSTER
 class Monster extends Entity implements Alive {
   Integer health, strength, speed;
   PShape model;
@@ -101,15 +101,37 @@ class Monster extends Entity implements Alive {
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
-    return monsterToPlayer;
+    System.out.println(theta);
+    if (theta == Float.NaN)
+      return aimAtPlayer();
+    else
+      return monsterToPlayer;
   }
 
-  void leadPlayerShoot(Float range, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+  void shoot() {
+    shootAtPlayer(100.0, 2.0, 10);
+  }
+
+  void shootAtPlayer(Float range, Float bulletSpeed, Integer frameFireDifference) {
     if (!playerDetected)
       detectPlayer(range);
     else
     {
-      if ((frameCount - frameOnEncounter) % 1 == 0)
+      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
+      {
+        myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), bulletSpeed);
+        bullets.add(bullet);
+      }
+      detectPlayer(range);
+    }
+  }
+
+  void leadPlayerShoot(Float range, Float bulletSpeed, Integer frameFireDifference) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+    if (!playerDetected)
+      detectPlayer(range);
+    else
+    {
+      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
       { 
         PVector monsterToPlayer = leadPlayer(bulletSpeed);
         myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
@@ -119,24 +141,50 @@ class Monster extends Entity implements Alive {
     }
   }
 
-
-
-  void circleShootAtPlayer(Float range, Float bulletSpeed, Integer numberOfBullets) {
+  void circleShootAtPlayer(Float range, Float bulletSpeed, Integer frameFireDifference, Integer numberOfBullets) {
     if (!playerDetected)
       detectPlayer(range);
     else
     {
-      if ((frameCount - frameOnEncounter) % 10 == 0)
+      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
       {
         PVector monsterToPlayer = aimAtPlayer();
+        float fixedHeading = monsterToPlayer.heading();
         float heading = monsterToPlayer.heading();
-        PVector temporaryBulletPath = new PVector(1, 0);
+        float headingDifference;
         Integer i = 0;
         while (i < numberOfBullets)
         {
-          heading += (i * 2 * PI) / numberOfBullets;
-          temporaryBulletPath.rotate(heading);
-          myBullet bullet = new myBullet(1, this, temporaryBulletPath.x, temporaryBulletPath.y, bulletSpeed);
+          headingDifference = (i * 2 * PI) / numberOfBullets;
+          heading = fixedHeading + headingDifference;
+          monsterToPlayer = PVector.fromAngle(heading);
+          myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+          bullets.add(bullet);
+          i ++;
+        }
+      }
+      detectPlayer(range);
+    }
+  }
+
+  void circleLeadPlayerShoot(Float range, Float bulletSpeed, Integer frameFireDifference, Integer numberOfBullets) {
+    if (!playerDetected)
+      detectPlayer(range);
+    else
+    {
+      if ((frameCount - frameOnEncounter) % frameFireDifference == 0)
+      {
+        PVector monsterToPlayer = leadPlayer(bulletSpeed);
+        float fixedHeading = monsterToPlayer.heading();
+        float heading = monsterToPlayer.heading();
+        float headingDifference;
+        Integer i = 0;
+        while (i < numberOfBullets)
+        {
+          headingDifference = (i * 2 * PI) / numberOfBullets;
+          heading = fixedHeading + headingDifference;
+          monsterToPlayer = PVector.fromAngle(heading);
+          myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
           bullets.add(bullet);
           i ++;
         }
@@ -496,7 +544,9 @@ class StationaryShooter extends Monster {
   }
 
   void shoot() {
-    //shootAtPlayer(200.0, 2.0);
-    leadPlayerShoot(1000.0, 10.0);
+    //shootAtPlayer(200.0, 2.0, 10);//shootAtPlayer(range, bulletSpeed, frameFireDifference);
+    //leadPlayerShoot(1000.0, 10.0, 10);//leadPlayerShoot(range, bulletSpeed, frameFireDifference);
+    //circleShootAtPlayer(200.0, 5.0, 10, 5);//circleShootAtPlayer(range, bulletSpeed, frameFireDifference, numberOfBullets);
+    circleLeadPlayerShoot(1000.0, 1.0, 10, 5);//circleLeadPlayerShoot(range, bulletSpeed, frameFireDifference, numberOfBullets);
   }
 }
