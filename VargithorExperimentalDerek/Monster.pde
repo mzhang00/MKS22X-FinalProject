@@ -567,7 +567,7 @@ class StationaryShooter extends Monster {
         //shootAtPlayer(2.0);//shootAtPlayer(bulletSpeed);
         //leadPlayerShoot(10.0);//leadPlayerShoot(bulletSpeed);
         //circleShootAtPlayer(5.0, 5);//circleShootAtPlayer(bulletSpeed, numberOfBullets);
-        circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+        //circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
       }
       detectPlayer(1000.0);
     }
@@ -623,7 +623,7 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          circleLeadPlayerShoot(10.0, 1000);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+          circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
         }
         detectPlayer(1000.0);
       }

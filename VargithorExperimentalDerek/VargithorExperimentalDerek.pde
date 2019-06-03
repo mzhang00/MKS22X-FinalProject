@@ -43,7 +43,7 @@ void loadGame() {
   coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
-  firstBoss = new FirstBoss(250.0, 350.0, 100, 5, 1, player);
+  firstBoss = new FirstBoss(250.0, 350.0, 100, 5, 1, player);//firstBoss(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
 
   thingsToDisplay.add(player);
   thingsToDisplay.add(monster);
