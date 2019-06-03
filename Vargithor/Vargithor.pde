@@ -87,6 +87,7 @@ void endScreen() {
     {
       mainMenu = true;
       gameIsRunning = false;
+      gameOver = false;
       gameMenu = false;
       mousex = null;
       mousey = null;
@@ -296,6 +297,8 @@ void draw() {
       color speedTextColor = color(0, 150, 150);
       String armorText = "Armor: " + player.getArmor();
       color armorTextColor = color(128);
+      String energyText = "Energy: " + player.getEnergy();
+      color energyTextColor = color(225, 225, 0);
 
       textSize(30);//12 is the smallest size to display on a height 15 textbox.
       fill(healthTextColor);   
@@ -322,6 +325,9 @@ void draw() {
 
       fill(speedTextColor);
       text(speedText, 300, 375, 500, 40);
+      
+      fill(energyTextColor);
+      text(energyText, 300, 420, 500, 40);
     }
   }
   else if (gameOver)
