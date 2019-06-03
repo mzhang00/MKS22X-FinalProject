@@ -3,7 +3,7 @@
 //KEYPRESSED
 //KEYRELEASED
 //KEYTYPED
-//MOUSEasdfasdfaCLICKED
+//MOUSECLICKED
 //MOUSEDRAGGED
 //MOUSEMOVED
 //MOUSEPRESSED
@@ -51,7 +51,7 @@ void makeGrid() {//33 and 36 for vertical, 47 and 52 for horizontal
   for (int c = 0; c < height/10; c++) {
     line(0, c * 10, width, c * 10);
   }
-
+  
   noStroke();
   fill(0);
   rectMode(CORNERS);

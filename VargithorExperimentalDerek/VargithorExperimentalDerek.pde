@@ -134,7 +134,7 @@ void keyReleased() {
 void keyTyped() {
 }
 
-////MOUSECLICKED
+//MOUSECLICKED
 //void mouseClicked() {
 //  mousex = (float) mouseX;
 //  mousey = (float) mouseY;
@@ -298,7 +298,7 @@ void draw() {
     } else if (mainMenu)
     {
       background(100);
-  
+      
       fill(200);
       stroke(0);
       rectMode(CORNER);
@@ -308,7 +308,7 @@ void draw() {
       textFont(mainMenuFont);
       textAlign(CENTER, CENTER);
       text("Press here to start", 375, 175, 250, 100);
-  
+
       fill(200);
       stroke(0);
       rectMode(CORNER);
@@ -318,7 +318,7 @@ void draw() {
       textFont(mainMenuFont);
       textAlign(CENTER, CENTER);
       text("Lore", 375, 300, 250, 100);
-  
+
       fill(200);
       stroke(0);
       rectMode(CORNER);
@@ -377,7 +377,7 @@ void draw() {
         "He found he could still move around, and avoid the monster's bullets. More monsters appeared on the horizon. " + 
         "He did not know where he was, his purpose for being there, but he can not think about it now... He must defend himself...";
       text(loreText, 250, 100, 500, 500);
-  
+
       fill(100);
       stroke(0);
       rectMode(CORNER);
@@ -387,7 +387,7 @@ void draw() {
       fill(0);
       textAlign(CENTER, CENTER);
       text("Back", 375, 575, 250, 100);
-  
+
       if (mousex != null && mousey != null)
       {
         if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
@@ -413,11 +413,11 @@ void draw() {
         "A - Left" + "\n" + 
         "S - Down" + "\n" + 
         "D - Right" + "\n" + 
-        "SPACE - Dodge (whatever that means, ask Michael Zhang)" + 
-        "R - Open in-game menu" + "\n";
+        "SPACE - Open in-game menu + \n" + 
+        "V - Dodge (whatever that means)";
       text(instructions, 100, 100, 900, 525);
-  
-  
+
+
       fill(100);
       stroke(0);
       rectMode(CORNER);
@@ -427,7 +427,7 @@ void draw() {
       fill(0);
       textAlign(CENTER, CENTER);
       text("Back", 375, 575, 250, 100);
-  
+
       if (mousex != null && mousey != null)
       {
         if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
