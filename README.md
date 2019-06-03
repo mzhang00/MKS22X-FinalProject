@@ -2,8 +2,19 @@
 AP CS Final Project
 Development log:
 
+June 3rd 2019:
+=======================================================================================
+Michael Zhang:
+* Update tmrw
+
+Derek Lao:
+
 June 2nd 2019:
 =======================================================================================
+Michael Zhang:
+* Did lots of stuff, will update tomorrow
+* FOR DEREK: MAKE SURE TO UPDATE CHASER ENEMY TO BE A CIRCLE SHAPE, NOT A TRIANGLE SHAPE
+
 Derek Lao:
 * Using law of cosines, calculated the magnitude of the vector difference of bullet velocity and player velocity by using the angle between the player velocity and the displacement velocity between the player and the bullet. Then using law of cosines, calculated the angle between the bulletplayer velocity difference vector, and the bullet velocity vector. Then fire the bullet. Took me an hour to code, seems to only work when player travels clockwise.
 * It seems when the player travels counterclockwise, the angle of leading needs to be negative. Added boolean check for player traveling counterclockwise, and if that boolean is fulfilled, the bullet will lead in the opposite angle direction.
