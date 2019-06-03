@@ -146,7 +146,7 @@ void keyPressed() {
   {
     switch(key)
     {
-    case 'v' :
+    case 'r' :
       player.dodge = true;
       break;
     case 'w' : 
@@ -184,7 +184,7 @@ void keyReleased() {
   {
     switch(key)
     {
-    case 'v' :
+    case 'r' :
       player.dodge = false;
       break;
     case 'w' : 
@@ -526,7 +526,7 @@ void draw() {
       "A - Left" + "\n" + 
       "S - Down" + "\n" + 
       "D - Right" + "\n" +  
-      "V - Dodge (whatever that means)" + "\n" +
+      "R - Dash forward" + "\n" +
       "P - Pause game" + "\n" +
       "SPACE - Open in-game menu + \n";
       
