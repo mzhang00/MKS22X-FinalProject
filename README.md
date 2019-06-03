@@ -13,6 +13,8 @@ Derek Lao:
 * Added option to continue game or start new game from main menu
 * Added energy text to gameMenu, removed option to return to main menu from gameMenu
 * Added gamePaused, press p to pause game, press p to unpause or click the button to unpause, and added option to return to main menu from pause screen
+* Fixed typo in howToScreen
+* For leadPlayer() in monster, fixed edge case where the monster would lead opposite the player's movement if the playerToMonster heading were the opposite sign of predictedPlayerToMonster heading and the player's x coordinate were less than the monster's x coordinate
 
 June 1st 2019:
 =======================================================================================
