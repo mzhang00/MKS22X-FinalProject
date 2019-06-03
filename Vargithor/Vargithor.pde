@@ -168,6 +168,11 @@ void keyPressed() {
       gamePaused = true;
       gameIsRunning = false;
       gameMenu = false;
+      player.dodge = false;
+      player.up = false;
+      player.down = false;
+      player.left = false;
+      player.right = false;
       break;
     }
   }
