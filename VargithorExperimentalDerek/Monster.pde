@@ -95,7 +95,9 @@ class Monster extends Entity implements Alive {
     PVector playerLocation = new PVector(player.getX(), player.getY());
     PVector newLocation = playerLocation.add(player.velocity);
     PVector predictedTemporaryMonsterToPlayer = new PVector(newLocation.x - getX(), newLocation.y - getY());
-    if(predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0)
+    if(predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0 &&
+    !(predictedTemporaryMonsterToPlayer.heading() <= 0 && monsterToPlayer.heading() > 0 && player.getX() < getX()) ||
+    predictedTemporaryMonsterToPlayer.heading() > 0 && monsterToPlayer.heading() <= 0 && player.getX() < getX())
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
