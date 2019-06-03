@@ -104,6 +104,7 @@ class Player extends Entity implements Alive {
     //thingsToMove.remove(this);
     //thingsToShoot.remove(this);
     gameOver = true;
+    gameIsRunning = false;
   }
 
   boolean isColliding(Entity other) {
