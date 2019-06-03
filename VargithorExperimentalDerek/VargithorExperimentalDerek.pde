@@ -146,7 +146,7 @@ void keyPressed() {
   {
     switch(key)
     {
-    case 'v' :
+    case 'r' :
       player.dodge = true;
       break;
     case 'w' : 
@@ -184,7 +184,7 @@ void keyReleased() {
   {
     switch(key)
     {
-    case 'v' :
+    case 'r' :
       player.dodge = false;
       break;
     case 'w' : 
@@ -211,32 +211,32 @@ void keyTyped() {
 }
 
 //MOUSECLICKED
-//void mouseClicked() {
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
-//}
+void mouseClicked() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}
 
 //MOUSEMOVED
 void mouseMoved() {
 }
 
 ////MOUSEPRESSED
-void mousePressed() {
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
-}
+//void mousePressed() {
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
 
 //MOUSEDRAGGED
-void mouseDragged() {
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
-}
+//void mouseDragged() {
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
 
 //MOUSERELEASED
-void mouseReleased() {
-  mousex = null;
-  mousey = null;
-}
+//void mouseReleased() {
+//  mousex = null;
+//  mousey = null;
+//}
 
 //SETUP
 void setup() {
@@ -253,7 +253,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  //System.out.println(frameRate);
+  System.out.println(frameRate);
   //System.out.println(millis());
   background(255);
   if (gameIsRunning)
@@ -520,7 +520,7 @@ void draw() {
       "A - Left" + "\n" + 
       "S - Down" + "\n" + 
       "D - Right" + "\n" +  
-      "V - Dodge (whatever that means)" + "\n" +
+      "R - Dash forward" + "\n" +
       "P - Pause game" + "\n" +
       "SPACE - Open in-game menu" + "\n";
 
