@@ -24,6 +24,7 @@ class Monster extends Entity implements Alive {
     if (health <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   void detectPlayer(Float range) {
@@ -42,7 +43,7 @@ class Monster extends Entity implements Alive {
       }
     }
   }
-  
+
   boolean isColliding(Entity other) {
     if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5) {
       return true;
@@ -70,7 +71,7 @@ class Monster extends Entity implements Alive {
     }
   }
 
-  void die(){
+  void die() {
     thingsToDisplay.remove(this);
     thingsToMove.remove(this);
     thingsToShoot.remove(this);
@@ -485,6 +486,7 @@ class Chaser extends Monster {
     if (health <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   void move() {
@@ -525,6 +527,7 @@ class Coward extends Monster {
     if (health <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   void move() {
@@ -556,6 +559,7 @@ class Circler extends Monster {
     if (health <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   void move() {
@@ -582,6 +586,7 @@ class StationaryShooter extends Monster {
     if (health <= 0) {
       this.die();
     }
+    takeDamage();
   }
 
   void move() {

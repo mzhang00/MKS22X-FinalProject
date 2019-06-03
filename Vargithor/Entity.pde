@@ -39,6 +39,10 @@ class Entity {
     velocity.set(velocity.x, input);
   }
 
+  Integer getHealth() {
+    return 0;
+  }
+
   void display() {
     ellipse(getX(), getY(), 10, 10);
   }
