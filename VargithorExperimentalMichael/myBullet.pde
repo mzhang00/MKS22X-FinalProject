@@ -60,7 +60,7 @@ class myBullet extends Entity {
   Integer getStrength() {
     return strength;
   }
-  
+
   Integer getLifetime() {
     return lifetime;
   }
@@ -68,11 +68,11 @@ class myBullet extends Entity {
   Float getSpeed() {
     return speed;
   }
-  
+
   Float getOriginalX() {
     return originalx;
   }
-  
+
   Float getOriginalY() {
     return originaly;
   }
