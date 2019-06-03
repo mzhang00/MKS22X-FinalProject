@@ -322,27 +322,6 @@ void draw() {
 
       fill(speedTextColor);
       text(speedText, 300, 375, 500, 40);
-
-      fill(200);
-      stroke(0);
-      rectMode(CORNER);
-      rect(375, 420, 250, 100);
-      fill(255, 0, 0);
-      textFont(mainMenuFont);
-      textAlign(CENTER, CENTER);
-      text("Return to Main Menu", 375, 420, 250, 100);
-
-      if (mousex != null && mousey != null)
-      {
-        if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 420 && mousey <= 420 + 100)
-        {
-          mainMenu = true;
-          mousex = null;
-          mousey = null;
-          gameMenu = false;
-          gameIsRunning = false;
-        }
-      }
     }
   }
   else if (gameOver)
@@ -361,6 +340,16 @@ void draw() {
     stroke(0);
     rectMode(CORNER);
     stroke(255, 0, 0);
+    rect(375, 450, 250, 100);
+    textFont(mainMenuFont);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text("Unpause (P)", 375, 450, 250, 100);
+    
+    fill(200);
+    stroke(0);
+    rectMode(CORNER);
+    stroke(255, 0, 0);
     rect(375, 575, 250, 100);
     textFont(mainMenuFont);
     fill(255, 0, 0);
@@ -369,7 +358,14 @@ void draw() {
     
     if (mousex != null && mousey != null)
     {
-      if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
+      if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 450 && mousey <= 450 + 100)
+      {
+        gameIsRunning = true;
+        gamePaused = false;
+        mousex = null;
+        mousey = null;
+      }
+      else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
       {
         mainMenu = true;
         gameIsRunning = false;
@@ -492,7 +488,7 @@ void draw() {
     textFont(mainMenuFont);
     fill(0);
     textAlign(CENTER, CENTER);
-    text("Back", 375, 575, 250, 100);
+    text("Return To Main Menu", 375, 575, 250, 100);
 
     if (mousex != null && mousey != null)
     {
@@ -518,9 +514,11 @@ void draw() {
       "W - Up" + "\n" + 
       "A - Left" + "\n" + 
       "S - Down" + "\n" + 
-      "D - Right" + "\n" + 
-      "SPACE - Open in-game menu + \n" + 
-      "V - Dodge (whatever that means)";
+      "D - Right" + "\n" +  
+      "V - Dodge (whatever that means)" + "\n" +
+      "P - Pause game" + "\n" +
+      "SPACE - Open in-game menu + \n";
+      
     text(instructions, 100, 100, 900, 525);
 
 
@@ -532,7 +530,7 @@ void draw() {
     textFont(mainMenuFont);
     fill(0);
     textAlign(CENTER, CENTER);
-    text("Back", 375, 575, 250, 100);
+    text("Return To Main Menu", 375, 575, 250, 100);
 
     if (mousex != null && mousey != null)
     {
