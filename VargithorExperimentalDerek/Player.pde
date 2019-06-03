@@ -14,14 +14,12 @@ class Player extends Entity implements Alive {
   }
 
   void shoot() {
-    if(gameIsRunning && !gameMenu)
+    if (gameIsRunning && !gameMenu)
     {
       if (mousex != null && mousey != null) {
         color bulletColor = color(0, 0, 0);
         myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor, "allied");
         bullets.add(bullet);
-        mousex = null;
-        mousey = null;
       }
     }
   }
@@ -38,9 +36,14 @@ class Player extends Entity implements Alive {
     takeDamage();
   }
 
+  Integer getEnergy() {
+    return energy;
+  }
+
   Integer getMaxHealth() {
     return maxHealth;
   }
+
   Integer getHealth() {
     return health;
   }
@@ -52,7 +55,7 @@ class Player extends Entity implements Alive {
   Integer getSpeed() {
     return speed;
   }
-  
+
   Integer getArmor() {
     return armor;
   }
@@ -97,30 +100,29 @@ class Player extends Entity implements Alive {
   }
 
   void die() {
-    thingsToDisplay.remove(this);
-    thingsToMove.remove(this);
-    thingsToShoot.remove(this);
-    gameIsRunning = false;
-    endScreen();
+    //thingsToDisplay.remove(this);
+    //thingsToMove.remove(this);
+    //thingsToShoot.remove(this);
+    gameOver = true;
   }
-  
-  boolean isColliding(Entity other){
-    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5){
+
+  boolean isColliding(Entity other) {
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5) {
       return true;
     }
     return false;
   }
-  
-  void takeDamage(){
-    for (int i = 0; i < bullets.size(); i++){
+
+  void takeDamage() {
+    for (int i = 0; i < bullets.size(); i++) {
       myBullet bullet = bullets.get(i);
-      if (isColliding(bullet)){
-        if (bullet.getType().equals("enemy")){
+      if (isColliding(bullet)) {
+        if (bullet.getType().equals("enemy")) {
           this.setHealth(this.getHealth() - bullet.getStrength());
           i--;
           bullets.remove(bullet);
         }
-      }  
+      }
     }
   }
 }
