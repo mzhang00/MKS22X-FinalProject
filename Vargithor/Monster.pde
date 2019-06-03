@@ -42,6 +42,33 @@ class Monster extends Entity implements Alive {
       }
     }
   }
+  
+  boolean isColliding(Entity other) {
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5) {
+      return true;
+    }
+    return false;
+  }
+
+  boolean isColliding(myBullet other, int life) {
+    if (life <= 1 && Math.sqrt((other.getOriginalX() - this.getX()) * (other.getOriginalX() - this.getX()) + (other.getOriginalY() - this.getY()) * (other.getOriginalY() - this.getY())) <= 5.5) {
+      return true;
+    }
+    return false;
+  }
+
+  void takeDamage() {
+    for (int i = 0; i < bullets.size(); i++) {
+      myBullet bullet = bullets.get(i);
+      if (isColliding(bullet) || isColliding(bullet, bullet.getLifetime())) {
+        if (bullet.getType().equals("allied")) {
+          this.setHealth(this.getHealth() - bullet.getStrength());
+          i--;
+          bullets.remove(bullet);
+        }
+      }
+    }
+  }
 
   void die(){
     thingsToDisplay.remove(this);
@@ -256,8 +283,6 @@ class Monster extends Entity implements Alive {
     }
     return answers;
   }
-
-
 
   void jitter() {
     generateRandomDirection();
