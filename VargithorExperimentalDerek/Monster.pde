@@ -558,11 +558,11 @@ class StationaryShooter extends Monster {
   }
 
   void shoot() {
-    if(!playerDetected)
+    if (!playerDetected)
       detectPlayer(1000.0);
     else
     {
-      if((frameCount - frameOnEncounter) % 10 == 0)
+      if ((frameCount - frameOnEncounter) % 10 == 0)
       {
         //shootAtPlayer(2.0);//shootAtPlayer(bulletSpeed);
         //leadPlayerShoot(10.0);//leadPlayerShoot(bulletSpeed);
@@ -575,7 +575,10 @@ class StationaryShooter extends Monster {
 }
 
 class FirstBoss extends Monster {
-  boolean phase1, phase2, phase3, phase4;
+  boolean phase1 = false;
+  boolean phase2 = false;
+  boolean phase3 = false;
+  boolean phase4 = false;
   FirstBoss(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
   }
@@ -586,7 +589,23 @@ class FirstBoss extends Monster {
     model.setFill(color(200));
     model.setStroke(color(0, 0, 0));
     shape(model);
-    if (health <= 0) {
+    if ((float)health / (float)maxHealth > 0.75)
+    {
+      phase1 = true;
+    } else if ((float)health / (float)maxHealth > 0.50)
+    {
+      phase1 = false;
+      phase2 = true;
+    } else if ((float)health / (float)maxHealth > 0.25)
+    {
+      phase2 = false;
+      phase3 = true;
+    } else if ((float)health / (float)maxHealth > 0.0)
+    {
+      phase3 = false;
+      phase4 = true;
+    } else if (health <= 0) {
+      phase4 = false;
       this.die();
     }
     takeDamage();
@@ -596,15 +615,21 @@ class FirstBoss extends Monster {
   }
 
   void shoot() {
-    if(!playerDetected)
-      detectPlayer(1000.0);
-    else
+    if(phase1)
     {
-      if((frameCount - frameOnEncounter) % 1 == 0)
-      {
-        circleLeadPlayerShoot(10.0, 1000);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
-      }
+      if (!playerDetected)
       detectPlayer(1000.0);
+      else
+      {
+        if ((frameCount - frameOnEncounter) % 10 == 0)
+        {
+          circleLeadPlayerShoot(10.0, 1000);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+        }
+        detectPlayer(1000.0);
+      }
+    }
+    else if(phase2)
+    {
     }
   }
 }
