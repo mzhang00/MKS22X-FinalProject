@@ -78,12 +78,12 @@ class Monster extends Entity implements Alive {
     else
       return false;
   }
-  
-  PVector aimAtPlayer(){
+
+  PVector aimAtPlayer() {
     return new PVector(player.getX() - getX(), player.getY() - getY());
   }
-  
-  PVector leadPlayer(Float bulletSpeed){
+
+  PVector leadPlayer(Float bulletSpeed) {
     Float playerVelocity = (float) player.getSpeed();
     Float xdistance = player.getX() - getX();
     Float ydistance = player.getY() - getY();
@@ -95,21 +95,21 @@ class Monster extends Entity implements Alive {
     PVector playerLocation = new PVector(player.getX(), player.getY());
     PVector newLocation = playerLocation.add(player.velocity);
     PVector predictedTemporaryMonsterToPlayer = new PVector(newLocation.x - getX(), newLocation.y - getY());
-    if(predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0 &&
-    !(predictedTemporaryMonsterToPlayer.heading() <= 0 && monsterToPlayer.heading() > 0 && player.getX() < getX()) ||
-    predictedTemporaryMonsterToPlayer.heading() > 0 && monsterToPlayer.heading() <= 0 && player.getX() < getX())
+    if (predictedTemporaryMonsterToPlayer.heading() - monsterToPlayer.heading() < 0 &&
+      !(predictedTemporaryMonsterToPlayer.heading() <= 0 && monsterToPlayer.heading() > 0 && player.getX() < getX()) ||
+      predictedTemporaryMonsterToPlayer.heading() > 0 && monsterToPlayer.heading() <= 0 && player.getX() < getX())
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
     return monsterToPlayer;
   }
-  
+
   void shoot() {
     shootAtPlayer(100.0, 2.0);
   }
-  
+
   void shootAtPlayer(Float range, Float bulletSpeed) {
-    if(!playerDetected)
+    if (!playerDetected)
       detectPlayer(range);
     else
     {
@@ -121,9 +121,9 @@ class Monster extends Entity implements Alive {
       detectPlayer(range);
     }
   }
-  
+
   void leadPlayerShoot(Float range, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
-    if(!playerDetected)
+    if (!playerDetected)
       detectPlayer(range);
     else
     {
@@ -135,27 +135,23 @@ class Monster extends Entity implements Alive {
       }
       detectPlayer(range);
     }
-    
   }
-  
 
-  
   void circleShootAtPlayer(Float range, Float bulletSpeed, Integer numberOfBullets) {
-    if(!playerDetected)
+    if (!playerDetected)
       detectPlayer(range);
     else
     {
-      if((frameCount - frameOnEncounter) % 10 == 0)
+      if ((frameCount - frameOnEncounter) % 10 == 0)
       {
         PVector monsterToPlayer = aimAtPlayer();
         float heading = monsterToPlayer.heading();
-        PVector temporaryBulletPath = new PVector(1, 0);
         Integer i = 0;
-        while(i < numberOfBullets)
+        while (i < numberOfBullets)
         {
           heading += (i * 2 * PI) / numberOfBullets;
-          temporaryBulletPath.rotate(heading);
-          myBullet bullet = new myBullet(1, this, temporaryBulletPath.x, temporaryBulletPath.y, bulletSpeed);
+          monsterToPlayer.rotate(heading);
+          myBullet bullet = new myBullet(1, this, monsterToPlayer.x, monsterToPlayer.y, bulletSpeed);
           bullets.add(bullet);
           i ++;
         }
@@ -516,6 +512,7 @@ class StationaryShooter extends Monster {
 
   void shoot() {
     //shootAtPlayer(200.0, 2.0);
-    leadPlayerShoot(1000.0, 10.0);
+    //leadPlayerShoot(1000.0, 10.0);
+    circleShootAtPlayer(200.0, 2.0, 5);
   }
 }

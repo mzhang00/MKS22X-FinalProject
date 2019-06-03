@@ -70,7 +70,7 @@ void endScreen() {
   background(0); 
   fill(255);
   text("You Died!", 500, 350);
-  
+
   fill(100);
   stroke(0);
   rectMode(CORNER);
@@ -103,7 +103,7 @@ void loadGame() {
   coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
-  
+
   thingsToDisplay.add(player);
   thingsToDisplay.add(monster);
   thingsToDisplay.add(chaser);
@@ -141,8 +141,7 @@ void keyPressed() {
       gameIsRunning = true;
       break;
     }
-  }
-  else if (gameIsRunning)
+  } else if (gameIsRunning)
   {
     switch(key)
     {
@@ -245,7 +244,7 @@ void setup() {
   //System.out.println(width/2);
   //System.out.println(player.getX());
   //player.display();
-  
+
   gameMenuFont = createFont("GROBOLD.ttf", 30);
   mainMenuFont = createFont("GROBOLD.ttf", 20);
   loreScreenFont = createFont("atwriter.ttf", 12);
@@ -330,23 +329,21 @@ void draw() {
 
       fill(speedTextColor);
       text(speedText, 300, 375, 500, 40);
-      
+
       fill(energyTextColor);
       text(energyText, 300, 420, 500, 40);
     }
-  }
-  else if (gameOver)
+  } else if (gameOver)
   {
     endScreen();
-  }
-  else if (gamePaused)
+  } else if (gamePaused)
   {
     background(100, 100);
     fill(200);
     textFont(mainMenuFont);
     textAlign(CENTER);
     text("Game Paused", 375, 175, 250, 100);
-    
+
     fill(200);
     stroke(0);
     rectMode(CORNER);
@@ -356,7 +353,7 @@ void draw() {
     fill(0);
     textAlign(CENTER, CENTER);
     text("Unpause (P)", 375, 450, 250, 100);
-    
+
     fill(200);
     stroke(0);
     rectMode(CORNER);
@@ -366,7 +363,7 @@ void draw() {
     fill(255, 0, 0);
     textAlign(CENTER, CENTER);
     text("Return To Main Menu", 375, 575, 250, 100);
-    
+
     if (mousex != null && mousey != null)
     {
       if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 450 && mousey <= 450 + 100)
@@ -375,8 +372,7 @@ void draw() {
         gamePaused = false;
         mousex = null;
         mousey = null;
-      }
-      else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
+      } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 575 && mousey <= 575 + 100)
       {
         mainMenu = true;
         gameIsRunning = false;
@@ -386,11 +382,10 @@ void draw() {
         mousey = null;
       }
     }
-  }
-  else if (mainMenu)
+  } else if (mainMenu)
   {
     background(100);
-    
+
     fill(200);
     stroke(0);
     rectMode(CORNER);
@@ -400,7 +395,7 @@ void draw() {
     textFont(mainMenuFont);
     textAlign(CENTER, CENTER);
     text("Start New Game", 375, 175, 250, 100);
-    
+
     fill(200);
     stroke(0);
     rectMode(CORNER);
@@ -441,15 +436,13 @@ void draw() {
         mousey = null;
         clearEntities();
         loadGame();
-      } 
-      else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
+      } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
       {
         mainMenu = false;
         gameIsRunning = true;
         mousex = null;
         mousey = null;
-      }
-      else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
+      } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
       {
         mainMenu = false;
         loreScreen = true;
@@ -529,7 +522,7 @@ void draw() {
       "V - Dodge (whatever that means)" + "\n" +
       "P - Pause game" + "\n" +
       "SPACE - Open in-game menu" + "\n";
-      
+
     text(instructions, 100, 100, 900, 525);
 
 
