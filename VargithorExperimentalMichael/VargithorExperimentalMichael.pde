@@ -80,7 +80,7 @@ void keyPressed() {
   {
     switch(key)
     {
-    case 'v' :
+    case 'r' :
       player.dodge = true;
       break;
     case 'w' : 
@@ -108,7 +108,7 @@ void keyReleased() {
   {
     switch(key)
     {
-    case 'v' :
+    case 'r' :
       player.dodge = false;
       break;
     case 'w' : 
