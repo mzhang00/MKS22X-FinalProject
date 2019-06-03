@@ -1,12 +1,14 @@
 //MAKEGRID
 //ENDSCREEN
+//LOADGAME
+//CLEARENTITIES
 //KEYPRESSED
 //KEYRELEASED
 //KEYTYPED
 //MOUSECLICKED
-//MOUSEDRAGGED
 //MOUSEMOVED
 //MOUSEPRESSED
+//MOUSEDRAGGED
 //MOUSERELEASED
 //SETUP
 //DRAW
@@ -253,15 +255,24 @@ void setup() {
 
 //DRAW
 void draw() {
-  //System.out.println(frameRate);
+  System.out.println(frameRate);
   //System.out.println(millis());
+  //System.out.println(thingsToDisplay);
+  //System.out.println(thingsToMove);
   background(255);
   if (gameIsRunning)
   {
     makeGrid();
-    for (Entity e : thingsToDisplay)
-    {
-      e.display();
+    for (int i = 0; i < thingsToDisplay.size(); i++) {
+      Entity e = thingsToDisplay.get(i);
+      if (e.getHealth() > 0) {
+        e.display();
+      } else {
+        thingsToDisplay.remove(e);
+        thingsToMove.remove(e);
+        thingsToShoot.remove(e);
+        i--;
+      }
     }
     for (Entity e : thingsToMove)
     {
@@ -525,7 +536,6 @@ void draw() {
       "SPACE - Open in-game menu" + "\n";
 
     text(instructions, 100, 100, 900, 525);
-
 
     fill(100);
     stroke(0);

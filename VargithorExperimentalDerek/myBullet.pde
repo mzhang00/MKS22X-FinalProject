@@ -44,6 +44,11 @@ class myBullet extends Entity {
 
   void display() {
     model = createShape(ELLIPSE, location.x, location.y, 3, 3);
+    if (type.equals("enemy")) {
+      bulletColor = color(139, 0, 0);
+    } else {
+      bulletColor = color(0, 139, 0);
+    }
     model.setFill(bulletColor);
     shape(model);
     lifetime++;

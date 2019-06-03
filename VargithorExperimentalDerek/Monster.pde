@@ -21,6 +21,10 @@ class Monster extends Entity implements Alive {
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
+    takeDamage();
   }
 
   void detectPlayer(Float range) {
@@ -40,7 +44,38 @@ class Monster extends Entity implements Alive {
     }
   }
 
+  boolean isColliding(Entity other) {
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5) {
+      return true;
+    }
+    return false;
+  }
 
+  boolean isColliding(myBullet other, int life) {
+    if (life <= 1 && Math.sqrt((other.getOriginalX() - this.getX()) * (other.getOriginalX() - this.getX()) + (other.getOriginalY() - this.getY()) * (other.getOriginalY() - this.getY())) <= 5.5) {
+      return true;
+    }
+    return false;
+  }
+
+  void takeDamage() {
+    for (int i = 0; i < bullets.size(); i++) {
+      myBullet bullet = bullets.get(i);
+      if (isColliding(bullet) || isColliding(bullet, bullet.getLifetime())) {
+        if (bullet.getType().equals("allied")) {
+          this.setHealth(this.getHealth() - bullet.getStrength());
+          i--;
+          bullets.remove(bullet);
+        }
+      }
+    }
+  }
+
+  void die() {
+    thingsToDisplay.remove(this);
+    thingsToMove.remove(this);
+    thingsToShoot.remove(this);
+  }
 
   Integer getHealth() {
     return health;
@@ -102,7 +137,7 @@ class Monster extends Entity implements Alive {
     monsterToPlayer.setMag(bulletSpeed);
     monsterToPlayer.rotate(theta);
     System.out.println(theta);
-    if(theta == Float.NaN)
+    if (theta == Float.NaN)
       return aimAtPlayer();
     else
       return monsterToPlayer;
@@ -166,7 +201,7 @@ class Monster extends Entity implements Alive {
       detectPlayer(range);
     }
   }
-  
+
   void circleLeadPlayerShoot(Float range, Float bulletSpeed, Integer frameFireDifference, Integer numberOfBullets) {
     if (!playerDetected)
       detectPlayer(range);
@@ -249,8 +284,6 @@ class Monster extends Entity implements Alive {
     }
     return answers;
   }
-
-
 
   void jitter() {
     generateRandomDirection();
@@ -450,6 +483,10 @@ class Chaser extends Monster {
     model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
     model.setFill(color(255, 0, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
+    takeDamage();
   }
 
   void move() {
@@ -487,6 +524,10 @@ class Coward extends Monster {
     model = createShape(TRIANGLE, getX(), getY() - 5, getX() - 5, getY() + 5, getX() + 5, getY() + 5);
     model.setFill(color(255, 255, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
+    takeDamage();
   }
 
   void move() {
@@ -515,6 +556,10 @@ class Circler extends Monster {
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setFill(color(255, 0, 255));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
+    takeDamage();
   }
 
   void move() {
@@ -538,6 +583,10 @@ class StationaryShooter extends Monster {
     model.setFill(color(0));
     model.setStroke(color(255, 0, 0));
     shape(model);
+    if (health <= 0) {
+      this.die();
+    }
+    takeDamage();
   }
 
   void move() {
