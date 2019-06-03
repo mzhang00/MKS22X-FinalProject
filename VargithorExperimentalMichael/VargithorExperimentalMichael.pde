@@ -1,4 +1,4 @@
-//MAKEGRID
+//MAKEGRID//MAKEGRID
 //ENDSCREEN
 //KEYPRESSED
 //KEYRELEASED
@@ -528,7 +528,7 @@ void draw() {
       "D - Right" + "\n" +  
       "R - Dash forward" + "\n" +
       "P - Pause game" + "\n" +
-      "SPACE - Open in-game menu + \n";
+      "SPACE - Open in-game menu" + "\n";
       
     text(instructions, 100, 100, 900, 525);
 

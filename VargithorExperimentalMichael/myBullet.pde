@@ -1,6 +1,6 @@
 class myBullet extends Entity {
   Integer strength;
-  Float speed;
+  Float speed, originalx, originaly;
   color bulletColor;
   String type = "enemy"; 
 
@@ -8,6 +8,8 @@ class myBullet extends Entity {
     super(origin.getX(), origin.getY());
     strength = s;
     speed = sp;
+    originalx = origin.getX();
+    originaly = origin.getY();
     location.set(origin.getX(), origin.getY());
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
@@ -18,6 +20,8 @@ class myBullet extends Entity {
     super(origin.getX(), origin.getY());
     strength = s;
     speed = sp;
+    originalx = origin.getX();
+    originaly = origin.getY();
     location.set(origin.getX(), origin.getY());
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
@@ -28,6 +32,8 @@ class myBullet extends Entity {
     super(origin.getX(), origin.getY());
     strength = s;
     speed = sp;
+    originalx = origin.getX();
+    originaly = origin.getY();
     location.set(origin.getX(), origin.getY());
     velocity.set(targetx - origin.getX(), targety - origin.getY());
     velocity.setMag(speed);
