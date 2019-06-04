@@ -115,6 +115,11 @@ class Monster extends Entity implements Alive {
     else
       return false;
   }
+  
+  PVector randomAim() {
+    float heading = random(-PI, PI);
+    return PVector.fromAngle(heading);
+  }
 
   PVector aimAtPlayer() {
     return new PVector(player.getX() - getX(), player.getY() - getY());
@@ -147,20 +152,15 @@ class Monster extends Entity implements Alive {
 
   void shoot() {
   }
-
-  void shootAtPlayer(Integer bulletStrength, Float bulletSpeed) {
-    myBullet bullet = new myBullet(bulletStrength, this, player.getX(), player.getY(), bulletSpeed);
-    bullets.add(bullet);
-  }
-
-  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
-    PVector monsterToPlayer = leadPlayer(bulletSpeed);
+  
+  void singleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed) {
+    PVector monsterToPlayer = direction;
     myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
     bullets.add(bullet);
   }
-
-  void circleShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
-    PVector monsterToPlayer = aimAtPlayer();
+  
+  void circleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
+    PVector monsterToPlayer = direction;
     float fixedHeading = monsterToPlayer.heading();
     float heading = monsterToPlayer.heading();
     float headingDifference;
@@ -174,57 +174,59 @@ class Monster extends Entity implements Alive {
       bullets.add(bullet);
       i ++;
     }
+  }
+  
+  void spreadShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Float angleOfSpread, Integer numberOfBullets) {
+    PVector monsterToPlayer = direction;
+    float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
+    float heading = fixedHeadingStart;
+    Float fullAngle = Math.abs(angleOfSpread * 2);
+    Integer i = 0;
+    while(i < numberOfBullets)
+    {
+      Float headingDifference = ((float) i * fullAngle / ((float) numberOfBullets - 1));
+      heading = fixedHeadingStart + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      bullets.add(bullet);
+      i ++;
+    }
+  }
+  
+  void randomAimShoot(Integer bulletStrength, Float bulletSpeed) {
+    singleShoot(randomAim(), bulletStrength, bulletSpeed);
+  }
+
+  void shootAtPlayer(Integer bulletStrength, Float bulletSpeed) {
+    singleShoot(aimAtPlayer(), bulletStrength, bulletSpeed);
+  }
+
+  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+   singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed);
+  }
+  
+  void circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
+    circleShoot(randomAim(), bulletStrength, bulletSpeed, numberOfBullets);
+  }
+
+  void circleShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
+    circleShoot(aimAtPlayer(), bulletStrength, bulletSpeed, numberOfBullets);
   }
 
   void circleLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
-    PVector monsterToPlayer = leadPlayer(bulletSpeed);
-    float fixedHeading = monsterToPlayer.heading();
-    float heading = monsterToPlayer.heading();
-    float headingDifference;
-    Integer i = 0;
-    while (i < numberOfBullets)
-    {
-      headingDifference = (i * 2 * PI) / numberOfBullets;
-      heading = fixedHeading + headingDifference;
-      monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-      bullets.add(bullet);
-      i ++;
-    }
+    circleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, numberOfBullets);
+  }
+  
+  void spreadRandomShoot(Integer bulletStrength, Float bulletSpeed, Float angleOfSpread, Integer numberOfBullets) {
+    spreadShoot(randomAim(), bulletStrength, bulletSpeed, angleOfSpread, numberOfBullets);
   }
   
   void spreadShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Float angleOfSpread, Integer numberOfBullets) {
-    PVector monsterToPlayer = aimAtPlayer();
-    float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
-    float heading = fixedHeadingStart;
-    Float fullAngle = Math.abs(angleOfSpread * 2);
-    Integer i = 0;
-    while(i < numberOfBullets)
-    {
-      Float headingDifference = ((float) i * fullAngle / ((float) numberOfBullets - 1));
-      heading = fixedHeadingStart + headingDifference;
-      monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-      bullets.add(bullet);
-      i ++;
-    }
+    spreadShoot(aimAtPlayer(), bulletStrength, bulletSpeed, angleOfSpread, numberOfBullets);
   }
   
   void spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Float angleOfSpread, Integer numberOfBullets) {
-    PVector monsterToPlayer = leadPlayer(bulletSpeed);
-    float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
-    float heading = fixedHeadingStart;
-    Float fullAngle = Math.abs(angleOfSpread * 2);
-    Integer i = 0;
-    while(i < numberOfBullets)
-    {
-      Float headingDifference = ((float) i * fullAngle / ((float) numberOfBullets - 1));
-      heading = fixedHeadingStart + headingDifference;
-      monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-      bullets.add(bullet);
-      i ++;
-    }
+    spreadShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, angleOfSpread, numberOfBullets);
   }
 
   void move() {
