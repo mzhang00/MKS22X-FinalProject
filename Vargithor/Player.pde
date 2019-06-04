@@ -4,6 +4,7 @@ class Player extends Entity implements Alive {
   PShape model;
   int energy = 100;
   int timeAfterShot = 0;
+  int roomCurrent = 1;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);
@@ -39,6 +40,14 @@ class Player extends Entity implements Alive {
     }
     takeDamage();
     timeAfterShot++;
+  }
+  
+  void progressRoom(){
+    roomCurrent++;
+  }
+
+  Integer getRoomCurrent() {
+    return roomCurrent;
   }
 
   Integer getEnergy() {
