@@ -28,6 +28,7 @@ ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
 Player player;
+Monster monster;
 Chaser chaser;
 Coward coward;
 Circler circler;
@@ -37,13 +38,15 @@ FirstBoss firstBoss;
 //LOADGAME
 void loadGame() {
   player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
+  monster = new Monster(400.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   chaser = new Chaser(300.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
-  firstBoss = new FirstBoss(250.0, 350.0, 100, 5, 1, player);//firstBoss(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
+  firstBoss = new FirstBoss(250.0, 350.0, 100, 5, 1, player);
 
   thingsToDisplay.add(player);
+  thingsToDisplay.add(monster);
   thingsToDisplay.add(chaser);
   thingsToDisplay.add(coward);
   thingsToDisplay.add(circler);
@@ -51,6 +54,7 @@ void loadGame() {
   thingsToDisplay.add(firstBoss);
 
   thingsToMove.add(player);
+  thingsToMove.add(monster);
   thingsToMove.add(chaser);
   thingsToMove.add(coward);
   thingsToMove.add(circler);
@@ -216,32 +220,32 @@ void keyTyped() {
 }
 
 //MOUSECLICKED
-void mouseClicked() {
-  mousex = (float) mouseX;
-  mousey = (float) mouseY;
-}
+//void mouseClicked() {
+//  mousex = (float) mouseX;
+//  mousey = (float) mouseY;
+//}
 
 //MOUSEMOVED
 void mouseMoved() {
 }
 
 ////MOUSEPRESSED
-//void mousePressed() {
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
-//}
+void mousePressed() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}
 
 //MOUSEDRAGGED
-//void mouseDragged() {
-//  mousex = (float) mouseX;
-//  mousey = (float) mouseY;
-//}
+void mouseDragged() {
+  mousex = (float) mouseX;
+  mousey = (float) mouseY;
+}
 
 //MOUSERELEASED
-//void mouseReleased() {
-//  mousex = null;
-//  mousey = null;
-//}
+void mouseReleased() {
+  mousex = null;
+  mousey = null;
+}
 
 //SETUP
 void setup() {
@@ -258,7 +262,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  //System.out.println(frameRate);
+  System.out.println(frameRate);
   //System.out.println(millis());
   //System.out.println(thingsToDisplay);
   //System.out.println(thingsToMove);
