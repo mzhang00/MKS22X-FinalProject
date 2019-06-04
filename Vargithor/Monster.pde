@@ -127,7 +127,6 @@ class Monster extends Entity implements Alive {
     PVector playerToMonsterDistance = new PVector(-1 * xdistance, -1 * ydistance);
     Float angleBetweenMonsterPlayerVelocityAndPlayerVelocity = PVector.angleBetween(playerToMonsterDistance, player.velocity);
     Float monsterPlayerVelocity = (float) (playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity)) + (float) Math.sqrt(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
-    System.out.println(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
     Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(monsterPlayerVelocity, 2) - Math.pow(bulletSpeed, 2)) / (-2.0 * monsterPlayerVelocity * bulletSpeed));
     PVector monsterToPlayer = new PVector(xdistance, ydistance);
     PVector playerLocation = new PVector(player.getX(), player.getY());
@@ -138,9 +137,18 @@ class Monster extends Entity implements Alive {
       predictedTemporaryMonsterToPlayer.heading() > 0 && monsterToPlayer.heading() <= 0 && player.getX() < getX())
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
-    monsterToPlayer.rotate(theta);
-    //System.out.println(theta);
-    if (Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2) < 0)
+    Float discriminant = (float)(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
+    //if (discriminant < 0)
+    //{
+    //  theta = player.velocity.heading();
+    //  monsterToPlayer = PVector.fromAngle(theta);
+    //}
+    //else
+    //{
+    //  monsterToPlayer.rotate(theta);
+    //}
+    //return monsterToPlayer;
+    if (discriminant < 0)
       return aimAtPlayer();
     else
       return monsterToPlayer;
@@ -149,18 +157,18 @@ class Monster extends Entity implements Alive {
   void shoot() {
   }
 
-  void shootAtPlayer(Float bulletSpeed) {
-    myBullet bullet = new myBullet(1, this, player.getX(), player.getY(), bulletSpeed);
+  void shootAtPlayer(Integer bulletStrength, Float bulletSpeed) {
+    myBullet bullet = new myBullet(bulletStrength, this, player.getX(), player.getY(), bulletSpeed);
     bullets.add(bullet);
   }
 
-  void leadPlayerShoot(Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
     PVector monsterToPlayer = leadPlayer(bulletSpeed);
-    myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+    myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
     bullets.add(bullet);
   }
 
-  void circleShootAtPlayer(Float bulletSpeed, Integer numberOfBullets) {
+  void circleShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
     PVector monsterToPlayer = aimAtPlayer();
     float fixedHeading = monsterToPlayer.heading();
     float heading = monsterToPlayer.heading();
@@ -171,13 +179,13 @@ class Monster extends Entity implements Alive {
       headingDifference = (i * 2 * PI) / numberOfBullets;
       heading = fixedHeading + headingDifference;
       monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
       bullets.add(bullet);
       i ++;
     }
   }
 
-  void circleLeadPlayerShoot(Float bulletSpeed, Integer numberOfBullets) {
+  void circleLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer numberOfBullets) {
     PVector monsterToPlayer = leadPlayer(bulletSpeed);
     float fixedHeading = monsterToPlayer.heading();
     float heading = monsterToPlayer.heading();
@@ -188,7 +196,24 @@ class Monster extends Entity implements Alive {
       headingDifference = (i * 2 * PI) / numberOfBullets;
       heading = fixedHeading + headingDifference;
       monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(1, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      bullets.add(bullet);
+      i ++;
+    }
+  }
+  
+  void spreadShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Float angleOfSpread, Integer numberOfBullets) {
+    PVector monsterToPlayer = aimAtPlayer();
+    float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
+    float heading = fixedHeadingStart;
+    Float fullAngle = Math.abs(angleOfSpread * 2);
+    Integer i = 0;
+    while(i < numberOfBullets)
+    {
+      Float headingDifference = ((float) i * fullAngle / ((float) numberOfBullets - 1));
+      heading = fixedHeadingStart + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
       bullets.add(bullet);
       i ++;
     }
@@ -569,10 +594,11 @@ class StationaryShooter extends Monster {
     {
       if ((frameCount - frameOnEncounter) % 10 == 0)
       {
-        //shootAtPlayer(2.0);//shootAtPlayer(bulletSpeed);
-        //leadPlayerShoot(10.0);//leadPlayerShoot(bulletSpeed);
-        //circleShootAtPlayer(5.0, 5);//circleShootAtPlayer(bulletSpeed, numberOfBullets);
-        //circleLeadPlayerShoot(10.0, 10);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+        //shootAtPlayer(1, 2.0);
+        //leadPlayerShoot(1, 10.0);
+        //circleShootAtPlayer(1, 5.0, 5);
+        //circleLeadPlayerShoot(1, 1.0, 10);
+        spreadShootAtPlayer(1, 10.0, PI/4, 7);
       }
       detectPlayer(1000.0);
     }
@@ -640,11 +666,11 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          circleLeadPlayerShoot(10.0, 5);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+          circleLeadPlayerShoot(1, 10.0, 5);
         }
         else if((frameCount - frameOnEncounter) % 20 == 10)
         {
-          circleShootAtPlayer(10.0, 5);
+          circleShootAtPlayer(1, 10.0, 5);
         }
         detectPlayer(1000.0);
       }
