@@ -711,7 +711,7 @@ class FirstBoss extends Monster {
         }
         if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          ringOfRingsShoot(1, 4.0, 10, 20, 280.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
+          ringOfRingsShoot(20, 4.0, 10, 20, 280.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
         }
         detectPlayer(10000.0);
       }
@@ -723,8 +723,7 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          circleRandomAimShoot(1, 1.0, 5, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
-          ringOfRingsShoot(1, 2.0, 10, 20, 140.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
+          circleLeadPlayerShoot(5, 9.0, 20, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
         }
         detectPlayer(10000.0);
       }
