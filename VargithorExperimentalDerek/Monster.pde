@@ -205,36 +205,19 @@ class Monster extends Entity implements Alive {
   
   void ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing) {
     int i = 0;
-    ArrayList<StationaryShooter> stationaryShooterLocations = new ArrayList<StationaryShooter>(numberOfRings);
     while(i < numberOfRings)
     {
       Float ringHeading = (PI * i * 2) / numberOfRings;
       PVector ringDirection = PVector.fromAngle(ringHeading);
       ringDirection.setMag(rangeBigRing);
       StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
-      stationaryShooterLocations.add(stationaryShooter);
+      stationaryShooter.circleShoot(ringDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, bulletsPerRing);
       i ++;
-    }
-    for(i = 0 ; i < stationaryShooterLocations.size() ; i ++)
-    {
-      int m = 0;
-      while(m < bulletsPerRing)
-      {
-        Float bulletHeading = (PI * m * 2) / bulletsPerRing;
-        PVector bulletDirection = PVector.fromAngle(bulletHeading);
-        StationaryShooter theShooter = stationaryShooterLocations.get(i);
-        myBullet bullet = new myBullet(bulletStrength, theShooter, theShooter.getX() + bulletDirection.x, theShooter.getY() + bulletDirection.y, bulletSpeed);
-        bullet.size = bulletSize;
-        bullet.lifeSpan = bulletLife;
-        bullets.add(bullet);
-        m ++;
-      }
     }
   }
   
   void rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity) {
     int i = 0;
-    ArrayList<StationaryShooter> stationaryShooterLocations = new ArrayList<StationaryShooter>(numberOfRings);
     while(i < numberOfRings)
     {
       Float angleVelocityChange = frameCount * angularVelocity;
@@ -242,23 +225,8 @@ class Monster extends Entity implements Alive {
       PVector ringDirection = PVector.fromAngle(ringHeading);
       ringDirection.setMag(rangeBigRing);
       StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
-      stationaryShooterLocations.add(stationaryShooter);
+      stationaryShooter.circleShoot(ringDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, bulletsPerRing);
       i ++;
-    }
-    for(i = 0 ; i < stationaryShooterLocations.size() ; i ++)
-    {
-      int m = 0;
-      while(m < bulletsPerRing)
-      {
-        Float bulletHeading = (PI * m * 2) / bulletsPerRing;
-        PVector bulletDirection = PVector.fromAngle(bulletHeading);
-        StationaryShooter theShooter = stationaryShooterLocations.get(i);
-        myBullet bullet = new myBullet(bulletStrength, theShooter, theShooter.getX() + bulletDirection.x, theShooter.getY() + bulletDirection.y, bulletSpeed);
-        bullet.size = bulletSize;
-        bullet.lifeSpan = bulletLife;
-        bullets.add(bullet);
-        m ++;
-      }
     }
   }
   
