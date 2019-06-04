@@ -31,8 +31,9 @@ class Player extends Entity implements Alive {
 
   void display() {
     rectMode(CENTER);
-    //model = createShape(ELLIPSE, getX(), getY(), 200, 200);
+    stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model.setStroke(color(0));
     model.setFill(color(0, 255, 0));
     shape(model);
     if (health <= 0) {
@@ -121,15 +122,15 @@ class Player extends Entity implements Alive {
     gameIsRunning = false;
   }
 
-  boolean isColliding(Entity other) {
-    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5) {
+  boolean isColliding(myBullet other) {
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5 + other.getSize()) {
       return true;
     }
     return false;
   }
 
   boolean isColliding(myBullet other, int life) {
-    if (life <= 1 && Math.sqrt((other.getOriginalX() - this.getX()) * (other.getOriginalX() - this.getX()) + (other.getOriginalY() - this.getY()) * (other.getOriginalY() - this.getY())) <= 5.5) {
+    if (life <= 1 && Math.sqrt((other.getOriginalX() - this.getX()) * (other.getOriginalX() - this.getX()) + (other.getOriginalY() - this.getY()) * (other.getOriginalY() - this.getY())) <= 5 + other.getSize()) {
       return true;
     }
     return false;

@@ -1,7 +1,7 @@
 class myBullet extends Entity {
   Integer strength, size;
-  Integer lifetime = 1000000000;
-  Integer lifeSpan;
+  Integer lifetime = 0;
+  Integer lifeSpan = 1000000000;
   Float speed, originalx, originaly;
   color bulletColor;
   String type = "enemy"; 

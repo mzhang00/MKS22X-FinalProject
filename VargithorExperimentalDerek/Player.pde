@@ -124,7 +124,6 @@ class Player extends Entity implements Alive {
 
   boolean isColliding(myBullet other) {
     if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5 + other.getSize()) {
-      System.out.println(other.getSize());
       return true;
     }
     return false;

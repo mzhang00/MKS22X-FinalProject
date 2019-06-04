@@ -153,14 +153,15 @@ class Monster extends Entity implements Alive {
   void shoot() {
   }
   
-  void singleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize) {
+  void singleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
     PVector monsterToPlayer = direction;
     myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
     bullet.size = bulletSize;
+    bullet.lifeSpan = bulletLife;
     bullets.add(bullet);
   }
   
-  void circleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer numberOfBullets) {
+  void circleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
     PVector monsterToPlayer = direction;
     float fixedHeading = monsterToPlayer.heading();
     float heading = monsterToPlayer.heading();
@@ -173,12 +174,13 @@ class Monster extends Entity implements Alive {
       monsterToPlayer = PVector.fromAngle(heading);
       myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
       bullet.size = bulletSize;
+      bullet.lifeSpan = bulletLife;
       bullets.add(bullet);
       i ++;
     }
   }
   
-  void spreadShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Float angleOfSpread, Integer numberOfBullets) {
+  void spreadShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
     PVector monsterToPlayer = direction;
     float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
     float heading = fixedHeadingStart;
@@ -191,45 +193,46 @@ class Monster extends Entity implements Alive {
       monsterToPlayer = PVector.fromAngle(heading);
       myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
       bullet.size = bulletSize;
+      bullet.lifeSpan = bulletLife;
       bullets.add(bullet);
       i ++;
     }
   }
   
-  void randomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize) {
-    singleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize);
+  void randomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
+    singleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
 
-  void shootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer bulletSize) {
-    singleShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize);
+  void shootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
+    singleShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
 
-  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
-   singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize);
+  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+   singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
   
-  void circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer numberOfBullets) {
-    circleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, numberOfBullets);
+  void circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    circleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
   }
 
-  void circleShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer numberOfBullets) {
-    circleShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, numberOfBullets);
+  void circleShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    circleShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
   }
 
-  void circleLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer numberOfBullets) {
-    circleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, numberOfBullets);
+  void circleLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    circleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
   }
   
-  void spreadRandomShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Float angleOfSpread, Integer numberOfBullets) {
-    spreadShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, angleOfSpread, numberOfBullets);
+  void spreadRandomShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
+    spreadShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBullets);
   }
   
-  void spreadShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Float angleOfSpread, Integer numberOfBullets) {
-    spreadShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, angleOfSpread, numberOfBullets);
+  void spreadShootAtPlayer(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
+    spreadShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBullets);
   }
   
-  void spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Float angleOfSpread, Integer numberOfBullets) {
-    spreadShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, angleOfSpread, numberOfBullets);
+  void spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
+    spreadShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBullets);
   }
 
   void move() {
@@ -675,7 +678,7 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 5 == 0)
         {
-          circleRandomAimShoot(1, 2.0, 10, 10);
+          circleRandomAimShoot(1, 2.0, 10, 60, 10);//circleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
         }
         detectPlayer(1000.0);
       }
