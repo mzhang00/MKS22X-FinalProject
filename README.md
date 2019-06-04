@@ -11,6 +11,7 @@ Derek lao:
 * Improved player bullet collision for larger bullets by fixing the equation
 * Made bullet die() true if the lifeTime is greater than or equal to lifeSpan
 * Nullpointer exception fixed, bug caused by accidental switching of initialization between lifeTime and lifeSpan
+* Edited dance phase to give player more room to dodge
 
 June 3rd 2019:
 =======================================================================================
