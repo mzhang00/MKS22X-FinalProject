@@ -5,6 +5,7 @@ Development log:
 June 4th 2019:
 =======================================================================================
 Derek lao:
+* Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
 * Added ringOfRingsShoot, where the monster would create a ring of entities (not visible) and those entities would shoot circular
 
 June 3rd 2019:
@@ -14,8 +15,13 @@ Michael Zhang:
 
 Derek Lao:
 * Updated chaser enemy to be a circle shape, not a triangle shape
-* Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
+* Added spreadShooting, there is a bug that does not let the bullets fire the full scope.
+* Fixed by making the angle difference equal to 2pi divided by (number of bullets minus 1)
 * Added singleShoot, circleShoot, and spreadShoot shell methods for monster shooting
+* Added randomShoot(), implemented it in randomAimShoot(), circleRandomAimShoot(), and spreadRandomAimShoot()
+* Figured out the nature of NaN for theta when it is impossible for the bullet to lead the player: it's in the discriminant of my first calculation in the method, the calculation of monsterToPlayerVelocity
+* Decided that leadShoot() would be more realistic if the monster shot parallel to player movement if it were impossible for the bullet to lead and hit the player
+* Reverted to previous leadShoot() case where the monster would just simply shoot at the player if it were impossible for the monster bullet to hit the player
 
 
 June 2nd 2019:
