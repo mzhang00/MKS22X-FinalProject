@@ -133,6 +133,9 @@ class Monster extends Entity implements Alive {
     Float angleBetweenMonsterPlayerVelocityAndPlayerVelocity = PVector.angleBetween(playerToMonsterDistance, player.velocity);
     Float monsterPlayerVelocity = (float) (playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity)) + (float) Math.sqrt(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
     Float theta = acos((float)(Math.pow(playerVelocity, 2) - Math.pow(monsterPlayerVelocity, 2) - Math.pow(bulletSpeed, 2)) / (-2.0 * monsterPlayerVelocity * bulletSpeed));
+    //System.out.println("monsterPlayerVelocity: " + monsterPlayerVelocity);
+    //System.out.println("bulletSpeed: " + bulletSpeed);
+    //System.out.println("-2 times that: " + (-2.0 * monsterPlayerVelocity * bulletSpeed));
     PVector monsterToPlayer = new PVector(xdistance, ydistance);
     PVector playerLocation = new PVector(player.getX(), player.getY());
     PVector newLocation = playerLocation.add(player.velocity);
@@ -144,7 +147,8 @@ class Monster extends Entity implements Alive {
     monsterToPlayer.setMag(bulletSpeed);
     Float discriminant = (float)(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
     monsterToPlayer.rotate(theta);
-    if (discriminant <= 0)
+    //System.out.println(discriminant);
+    if (discriminant < 0 || monsterPlayerVelocity <= 0)
       return aimAtPlayer();
     else
       return monsterToPlayer;
@@ -639,7 +643,7 @@ class StationaryShooter extends Monster {
     {
       if ((frameCount - frameOnEncounter) % 10 == 0)
       {
-
+        circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
       }
       detectPlayer(1000.0);
     }
@@ -729,6 +733,16 @@ class FirstBoss extends Monster {
       }
     } else if (phase3)
     {
+      if (!playerDetected)
+        detectPlayer(10000.0);
+      else
+      {
+        if ((frameCount - frameOnEncounter) % 5 == 0)
+        {
+          circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+        }
+        detectPlayer(10000.0);
+      }
     } else if (phase4)
     {
     }
