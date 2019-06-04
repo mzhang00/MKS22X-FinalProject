@@ -610,6 +610,7 @@ class StationaryShooter extends Monster {
         //circleLeadPlayerShoot(1, 1.0, 10);
         //spreadShootAtPlayer(1, 9.0, PI/4, 7);
         //spreadLeadPlayerShoot(1, 9.0, PI/4, 6);
+        //circleRandomAimShoot(1, 5.0, 10);
       }
       detectPlayer(1000.0);
     }
@@ -675,13 +676,9 @@ class FirstBoss extends Monster {
         detectPlayer(1000.0);
       else
       {
-        if ((frameCount - frameOnEncounter) % 10 == 0)
+        if ((frameCount - frameOnEncounter) % 5 == 0)
         {
-          circleLeadPlayerShoot(1, 2.0, 5);
-        }
-        else if((frameCount - frameOnEncounter) % 10 == 5)
-        {
-          circleShootAtPlayer(1, 2.0, 5);
+          circleRandomAimShoot(1, 5.0, 10);
         }
         detectPlayer(1000.0);
       }
