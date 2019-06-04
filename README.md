@@ -12,6 +12,7 @@ Derek lao:
 * Made bullet die() true if the lifeTime is greater than or equal to lifeSpan
 * Nullpointer exception fixed, bug caused by accidental switching of initialization between lifeTime and lifeSpan
 * Edited dance phase to give player more room to dodge
+* Fixed leadPlayerShoot by using discriminant or using the monsterPlayerVelocity
 
 June 3rd 2019:
 =======================================================================================
