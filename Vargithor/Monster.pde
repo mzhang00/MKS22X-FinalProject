@@ -638,9 +638,13 @@ class FirstBoss extends Monster {
         detectPlayer(1000.0);
       else
       {
-        if ((frameCount - frameOnEncounter) % 10 == 0)
+        if ((frameCount - frameOnEncounter) % 20 == 0)
         {
           circleLeadPlayerShoot(10.0, 5);//circleLeadPlayerShoot(bulletSpeed, numberOfBullets);
+        }
+        else if((frameCount - frameOnEncounter) % 20 == 10)
+        {
+          circleShootAtPlayer(10.0, 5);
         }
         detectPlayer(1000.0);
       }
