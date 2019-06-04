@@ -2,18 +2,26 @@
 AP CS Final Project
 Development log:
 
+June 4th 2019:
+=======================================================================================
+Derek lao:
+* Added ringOfRingsShoot, where the monster would create a ring of entities (not visible) and those entities would shoot circular
+
 June 3rd 2019:
 =======================================================================================
 Michael Zhang:
 * Update tmrw
 
 Derek Lao:
+* Updated chaser enemy to be a circle shape, not a triangle shape
+* Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
+* Added singleShoot, circleShoot, and spreadShoot shell methods for monster shooting
+
 
 June 2nd 2019:
 =======================================================================================
 Michael Zhang:
 * Did lots of stuff, will update tomorrow
-* FOR DEREK: MAKE SURE TO UPDATE CHASER ENEMY TO BE A CIRCLE SHAPE, NOT A TRIANGLE SHAPE
 
 Derek Lao:
 * Using law of cosines, calculated the magnitude of the vector difference of bullet velocity and player velocity by using the angle between the player velocity and the displacement velocity between the player and the bullet. Then using law of cosines, calculated the angle between the bulletplayer velocity difference vector, and the bullet velocity vector. Then fire the bullet. Took me an hour to code, seems to only work when player travels clockwise.
