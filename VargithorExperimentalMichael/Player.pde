@@ -1,8 +1,10 @@
-class Player extends Entity implements Alive {class Player extends Entity implements Alive {
+class Player extends Entity implements Alive {
   Integer maxHealth, armor, health, strength, speed;
   boolean up, down, left, right, dodge;
   PShape model;
   int energy = 100;
+  int timeAfterShot = 0;
+  int roomCurrent = 1;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);
@@ -17,11 +19,12 @@ class Player extends Entity implements Alive {class Player extends Entity implem
     if (gameIsRunning && !gameMenu)
     {
       if (mousex != null && mousey != null) {
-        color bulletColor = color(0, 0, 0);
-        myBullet bullet = new myBullet(1, this, mousex, mousey, 4.0, bulletColor, "allied");
-        bullets.add(bullet);
-        mousex = null;
-        mousey = null;
+        if (timeAfterShot >= 15) {
+          color bulletColor = color(0, 0, 0);
+          myBullet bullet = new myBullet(strength, this, mousex, mousey, 4.0, bulletColor, "allied");
+          bullets.add(bullet);
+          timeAfterShot = 0;
+        }
       }
     }
   }
@@ -36,6 +39,15 @@ class Player extends Entity implements Alive {class Player extends Entity implem
       this.die();
     }
     takeDamage();
+    timeAfterShot++;
+  }
+  
+  void progressRoom(){
+    roomCurrent++;
+  }
+
+  Integer getRoomCurrent() {
+    return roomCurrent;
   }
 
   Integer getEnergy() {
