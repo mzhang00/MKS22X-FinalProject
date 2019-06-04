@@ -232,6 +232,36 @@ class Monster extends Entity implements Alive {
     }
   }
   
+  void rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity) {
+    int i = 0;
+    ArrayList<StationaryShooter> stationaryShooterLocations = new ArrayList<StationaryShooter>(numberOfRings);
+    while(i < numberOfRings)
+    {
+      Float angleVelocityChange = frameCount * angularVelocity;
+      Float ringHeading = (PI * i * 2) / numberOfRings + angleVelocityChange;
+      PVector ringDirection = PVector.fromAngle(ringHeading);
+      ringDirection.setMag(rangeBigRing);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
+      stationaryShooterLocations.add(stationaryShooter);
+      i ++;
+    }
+    for(i = 0 ; i < stationaryShooterLocations.size() ; i ++)
+    {
+      int m = 0;
+      while(m < bulletsPerRing)
+      {
+        Float bulletHeading = (PI * m * 2) / bulletsPerRing;
+        PVector bulletDirection = PVector.fromAngle(bulletHeading);
+        StationaryShooter theShooter = stationaryShooterLocations.get(i);
+        myBullet bullet = new myBullet(bulletStrength, theShooter, theShooter.getX() + bulletDirection.x, theShooter.getY() + bulletDirection.y, bulletSpeed);
+        bullet.size = bulletSize;
+        bullet.lifeSpan = bulletLife;
+        bullets.add(bullet);
+        m ++;
+      }
+    }
+  }
+  
   void rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
   {//angularVelocity is radians per time, here would be radians per frame
     Float heading = frameCount * angularVelocity;
@@ -723,7 +753,8 @@ class FirstBoss extends Monster {
         }
         if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          ringOfRingsShoot(20, 4.0, 20, 20, 280.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
+          ringOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10);//ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing)
+          //rotatingRingOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10, PI/240);//rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity)
         }
         detectPlayer(10000.0);
       }
