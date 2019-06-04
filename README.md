@@ -7,6 +7,10 @@ June 4th 2019:
 Derek lao:
 * Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
 * Added ringOfRingsShoot, where the monster would create a ring of entities (not visible) and those entities would shoot circular
+* Added lifeSpan for bullets, reason being that the bullets can despawn after a limited amount of time, giving them range and also preventing an overload of bullets on the screen slowing down the game
+* Improved player bullet collision for larger bullets by fixing the equation
+* Made bullet die() true if the lifeTime is greater than or equal to lifeSpan
+* Nullpointer exception fixed, bug caused by accidental switching of initialization between lifeTime and lifeSpan
 
 June 3rd 2019:
 =======================================================================================
