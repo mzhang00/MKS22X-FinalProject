@@ -232,6 +232,13 @@ class Monster extends Entity implements Alive {
     }
   }
   
+  void rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
+  {//angularVelocity is radians per time, here would be radians per frame
+    Float heading = frameCount * angularVelocity;
+    PVector bulletDirection = PVector.fromAngle(heading);
+    circleShoot(bulletDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+  }
+  
   void randomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
     singleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
@@ -241,7 +248,7 @@ class Monster extends Entity implements Alive {
   }
 
   void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
-   singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife);
+    singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
   
   void circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
@@ -641,9 +648,10 @@ class StationaryShooter extends Monster {
       detectPlayer(1000.0);
     else
     {
-      if ((frameCount - frameOnEncounter) % 10 == 0)
+      if ((frameCount - frameOnEncounter) % 5 == 0)
       {
-        circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+        //circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets)
+        rotatingTentaclesShoot(1, 5.0, 10, 100, 8, PI/240);//rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
       }
       detectPlayer(1000.0);
     }
@@ -711,11 +719,11 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          circleRandomAimShoot(1, 1.0, 5, 200, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+          circleRandomAimShoot(1, 1.0, 10, 200, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
         }
         if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          ringOfRingsShoot(20, 4.0, 10, 20, 280.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
+          ringOfRingsShoot(20, 4.0, 20, 20, 280.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
         }
         detectPlayer(10000.0);
       }
@@ -739,7 +747,7 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 5 == 0)
         {
-          circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+          rotatingTentaclesShoot(1, 5.0, 10, 100, 8, PI/240);
         }
         detectPlayer(10000.0);
       }

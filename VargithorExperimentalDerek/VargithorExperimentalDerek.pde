@@ -63,8 +63,8 @@ void loadGame() {
 
   thingsToShoot.add(player);
   //thingsToShoot.add(circler);
-  thingsToShoot.add(stationaryShooter);
-  //thingsToShoot.add(firstBoss);
+  //thingsToShoot.add(stationaryShooter);
+  thingsToShoot.add(firstBoss);
 }
 
 interface Alive {
@@ -262,7 +262,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  //System.out.println(frameRate);
+  System.out.println(frameRate);
   //System.out.println(millis());
   //System.out.println(thingsToDisplay);
   //System.out.println(thingsToMove);
