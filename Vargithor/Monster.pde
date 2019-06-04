@@ -5,6 +5,7 @@ class Monster extends Entity implements Alive {
   Player player;
   boolean playerDetected;
   Integer frameOnEncounter;
+  Integer size;
 
   Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy);
@@ -15,12 +16,13 @@ class Monster extends Entity implements Alive {
     generateRandomDirection();
     player = givenPlayer;
     playerDetected = false;
+    size = 10;
   }
 
   void display() {
     ellipseMode(CENTER);
     stroke(0);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), size, size);
     model.setFill(color(255, 0, 0));
     shape(model);
     if (health <= 0) {
@@ -46,15 +48,15 @@ class Monster extends Entity implements Alive {
     }
   }
 
-  boolean isColliding(Entity other) {
-    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= 5.5) {
+  boolean isColliding(myBullet other) {
+    if (Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX()) + (other.getY() - this.getY()) * (other.getY() - this.getY())) <= this.getSize() + other.getSize()) {
       return true;
     }
     return false;
   }
 
   boolean isColliding(myBullet other, int life) {
-    if (life <= 1 && Math.sqrt((other.getOriginalX() - this.getX()) * (other.getOriginalX() - this.getX()) + (other.getOriginalY() - this.getY()) * (other.getOriginalY() - this.getY())) <= 5.5) {
+    if (life <= 1 && Math.sqrt((other.getOriginalX() - this.getX()) * (other.getOriginalX() - this.getX()) + (other.getOriginalY() - this.getY()) * (other.getOriginalY() - this.getY())) <= this.getSize() + other.getSize()) {
       return true;
     }
     return false;
@@ -90,6 +92,10 @@ class Monster extends Entity implements Alive {
   Integer getSpeed() {
     return speed;
   }
+  
+  Integer getSize() {
+    return size;
+  }
 
   void setHealth(Integer newhealth) {
     health = newhealth;
@@ -101,6 +107,10 @@ class Monster extends Entity implements Alive {
 
   void setSpeed(Integer newspeed) {
     speed = newspeed;
+  }
+  
+  void setSize(Integer newsize) {
+    size = newsize;
   }
 
   boolean inRange(Float range) {
@@ -205,36 +215,19 @@ class Monster extends Entity implements Alive {
   
   void ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing) {
     int i = 0;
-    ArrayList<StationaryShooter> stationaryShooterLocations = new ArrayList<StationaryShooter>(numberOfRings);
     while(i < numberOfRings)
     {
       Float ringHeading = (PI * i * 2) / numberOfRings;
       PVector ringDirection = PVector.fromAngle(ringHeading);
       ringDirection.setMag(rangeBigRing);
       StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
-      stationaryShooterLocations.add(stationaryShooter);
+      stationaryShooter.circleShoot(ringDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, bulletsPerRing);
       i ++;
-    }
-    for(i = 0 ; i < stationaryShooterLocations.size() ; i ++)
-    {
-      int m = 0;
-      while(m < bulletsPerRing)
-      {
-        Float bulletHeading = (PI * m * 2) / bulletsPerRing;
-        PVector bulletDirection = PVector.fromAngle(bulletHeading);
-        StationaryShooter theShooter = stationaryShooterLocations.get(i);
-        myBullet bullet = new myBullet(bulletStrength, theShooter, theShooter.getX() + bulletDirection.x, theShooter.getY() + bulletDirection.y, bulletSpeed);
-        bullet.size = bulletSize;
-        bullet.lifeSpan = bulletLife;
-        bullets.add(bullet);
-        m ++;
-      }
     }
   }
   
   void rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity) {
     int i = 0;
-    ArrayList<StationaryShooter> stationaryShooterLocations = new ArrayList<StationaryShooter>(numberOfRings);
     while(i < numberOfRings)
     {
       Float angleVelocityChange = frameCount * angularVelocity;
@@ -242,23 +235,22 @@ class Monster extends Entity implements Alive {
       PVector ringDirection = PVector.fromAngle(ringHeading);
       ringDirection.setMag(rangeBigRing);
       StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
-      stationaryShooterLocations.add(stationaryShooter);
+      stationaryShooter.circleShoot(ringDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, bulletsPerRing);
       i ++;
     }
-    for(i = 0 ; i < stationaryShooterLocations.size() ; i ++)
+  }
+  
+  void ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter){
+    int i = 0;
+    while(i < numberOfShooters)
     {
-      int m = 0;
-      while(m < bulletsPerRing)
-      {
-        Float bulletHeading = (PI * m * 2) / bulletsPerRing;
-        PVector bulletDirection = PVector.fromAngle(bulletHeading);
-        StationaryShooter theShooter = stationaryShooterLocations.get(i);
-        myBullet bullet = new myBullet(bulletStrength, theShooter, theShooter.getX() + bulletDirection.x, theShooter.getY() + bulletDirection.y, bulletSpeed);
-        bullet.size = bulletSize;
-        bullet.lifeSpan = bulletLife;
-        bullets.add(bullet);
-        m ++;
-      }
+      Float shooterHeading = (PI * i * 2) / numberOfShooters;
+      PVector shooterLocationPointer = PVector.fromAngle(shooterHeading);
+      PVector shooterAimDirection = PVector.fromAngle(shooterHeading + headingFromZero);
+      shooterLocationPointer.setMag(rangeBigRing);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + shooterLocationPointer.x, getY() + shooterLocationPointer.y, 1000000, 0, 0, player);
+      stationaryShooter.spreadShoot(shooterAimDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, bulletsPerShooter);
+      i ++;
     }
   }
   
@@ -598,7 +590,7 @@ class Coward extends Monster {
   void display() {
     ellipseMode(CENTER);
     stroke(0);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), size, size);
     model.setFill(color(255, 255, 0));
     model.setStroke(color(0));
     shape(model);
@@ -632,7 +624,7 @@ class Circler extends Monster {
   void display() {
     ellipseMode(CENTER);
     stroke(0);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), size, size);
     model.setFill(color(255, 0, 255));
     model.setStroke(color(0));
     shape(model);
@@ -660,7 +652,7 @@ class StationaryShooter extends Monster {
   void display() {
     ellipseMode(CENTER);
     stroke(0);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), size, size);
     model.setFill(color(0));
     model.setStroke(color(255, 0, 0));
     shape(model);
@@ -695,12 +687,13 @@ class FirstBoss extends Monster {
   boolean phase4 = false;
   FirstBoss(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer) {
     super(newx, newy, h, str, spd, givenPlayer);
+    size = 50;
   }
 
   void display() {
     ellipseMode(CENTER);
     stroke(0);
-    model = createShape(ELLIPSE, getX(), getY(), 10, 10);
+    model = createShape(ELLIPSE, getX(), getY(), size, size);
     model.setFill(color(200));
     model.setStroke(color(0, 0, 0));
     shape(model);
@@ -729,12 +722,12 @@ class FirstBoss extends Monster {
   void move() {
     if (phase1)
     {
+      jitter();
     } else if (phase2)
     {
       circlePlayerClockwise(100.0);
     } else if (phase3)
     {
-      jitter();
     } else if (phase4)
     {
     }
@@ -747,18 +740,14 @@ class FirstBoss extends Monster {
         detectPlayer(10000.0);
       else
       {
-        if ((frameCount - frameOnEncounter) % 10 == 0)
+        if ((frameCount - frameOnEncounter) % 5 == 0)
         {
-          circleRandomAimShoot(1, 1.0, 10, 200, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
-        }
-        if ((frameCount - frameOnEncounter) % 20 == 0)
-        {
-          ringOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10);//ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing)
-          //rotatingRingOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10, PI/240);//rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity)
+          rotatingTentaclesShoot(1, 5.0, 10, 100, 8, PI/240);
         }
         detectPlayer(10000.0);
       }
-    } else if (phase2)
+    }
+    if (phase2)
     {
       if (!playerDetected)
         detectPlayer(10000.0);
@@ -768,21 +757,33 @@ class FirstBoss extends Monster {
         {
           circleLeadPlayerShoot(5, 9.0, 20, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
         }
+        if ((frameCount - frameOnEncounter) % 10 == 0)
+        {
+          ringOfSpreadShooting(PI, 20, 4.0, 30, 20, 280.0, PI/2 - PI/10, 10, 2);//ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
+        }
         detectPlayer(10000.0);
       }
-    } else if (phase3)
+    } 
+    else if (phase3)
     {
       if (!playerDetected)
         detectPlayer(10000.0);
       else
       {
-        if ((frameCount - frameOnEncounter) % 5 == 0)
+        if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          rotatingTentaclesShoot(1, 5.0, 10, 100, 8, PI/240);
+          circleRandomAimShoot(1, 1.0, 10, 200, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+        }
+        if ((frameCount - frameOnEncounter) % 32 == 0)
+        {
+          ringOfRingsShoot(20, 2.5, 30, 32, 280.0, 10, 10);//ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing)
+          //rotatingRingOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10, PI/240);//rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity)
         }
         detectPlayer(10000.0);
       }
-    } else if (phase4)
+    }
+    
+    else if (phase4)
     {
     }
   }
