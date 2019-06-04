@@ -755,7 +755,30 @@ class FirstBoss extends Monster {
         detectPlayer(10000.0);
       }
     }
-    if (phase2)
+    else if (phase2)
+    {
+      if (!playerDetected)
+        detectPlayer(10000.0);
+      else
+      {
+        if ((frameCount - frameOnEncounter) % 10 == 0)
+        {
+          ringOfSpreadShooting(0.0, 20, 4.0, 10, 16, 200.0, PI/2 + PI/10, 10, 2);
+          //ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
+          
+        }
+        if ((frameCount - frameOnEncounter) % 40 == 0)
+        {
+          circleLeadPlayerShoot(200, 2.0, 15, 50, 40);
+        }
+        if ((frameCount - frameOnEncounter) % 45 == 0)
+        {
+          circleLeadPlayerShoot(200, 1.0, 30, 480, 8);
+        }
+        detectPlayer(10000.0);
+      }
+    }
+    else if (phase3)
     {
       if (!playerDetected)
         detectPlayer(10000.0);
@@ -773,7 +796,7 @@ class FirstBoss extends Monster {
         detectPlayer(10000.0);
       }
     } 
-    else if (phase3)
+    else if (phase4)
     {
       if (!playerDetected)
         detectPlayer(10000.0);
@@ -783,17 +806,13 @@ class FirstBoss extends Monster {
         {
           circleRandomAimShoot(1, 1.0, 10, 200, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
         }
-        if ((frameCount - frameOnEncounter) % 32 == 0)
+        if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          ringOfRingsShoot(20, 2.5, 30, 32, 280.0, 10, 10);//ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing)
+          ringOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10);//ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing)
           //rotatingRingOfRingsShoot(20, 8.0, 30, 10, 280.0, 10, 10, PI/240);//rotatingRingOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing, Float angularVelocity)
         }
         detectPlayer(10000.0);
       }
-    }
-    
-    else if (phase4)
-    {
     }
   }
 }
