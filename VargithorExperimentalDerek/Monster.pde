@@ -773,8 +773,8 @@ class FirstBoss extends Monster {
         }
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          //ringOfSpreadShooting(PI, 20, 4.0, 30, 20, 280.0, PI/2 - PI/10, 10, 2);//ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
-          rotatingRingOfSpreadShooting(0.0, 20, 4.0, 30, 20, 280.0, PI/2 + PI/10, 10, 2, PI/240);//rotatingRingOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter, Float angularVelocity)
+          ringOfSpreadShooting(0.0, 20, 4.0, 30, 20, 280.0, PI/2 + PI/10, 10, 2);//ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
+          //rotatingRingOfSpreadShooting(0.0, 20, 4.0, 30, 20, 280.0, PI/2 + PI/10, 10, 2, PI/240);//rotatingRingOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter, Float angularVelocity)
         }
         detectPlayer(10000.0);
       }

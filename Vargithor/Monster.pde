@@ -254,8 +254,22 @@ class Monster extends Entity implements Alive {
     }
   }
   
-  void rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
-  {//angularVelocity is radians per time, here would be radians per frame
+  void rotatingRingOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter, Float angularVelocity){
+    int i = 0;
+    while(i < numberOfShooters)
+    {
+      Float angularVelocityChange = frameCount * angularVelocity;
+      Float shooterLocationHeading = (PI * i * 2) / numberOfShooters + angularVelocityChange;
+      PVector shooterLocationPointer = PVector.fromAngle(shooterLocationHeading);
+      PVector shooterAimDirection = PVector.fromAngle(shooterLocationHeading + headingFromZero);
+      shooterLocationPointer.setMag(rangeBigRing);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + shooterLocationPointer.x, getY() + shooterLocationPointer.y, 1000000, 0, 0, player);
+      stationaryShooter.spreadShoot(shooterAimDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, bulletsPerShooter);
+      i ++;
+    }
+  }
+  
+  void rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity){//angularVelocity is radians per time, here would be radians per frame
     Float heading = frameCount * angularVelocity;
     PVector bulletDirection = PVector.fromAngle(heading);
     circleShoot(bulletDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
@@ -725,7 +739,7 @@ class FirstBoss extends Monster {
       jitter();
     } else if (phase2)
     {
-      circlePlayerClockwise(100.0);
+      //circlePlayerClockwise(100.0);
     } else if (phase3)
     {
     } else if (phase4)
@@ -759,7 +773,8 @@ class FirstBoss extends Monster {
         }
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          ringOfSpreadShooting(PI, 20, 4.0, 30, 20, 280.0, PI/2 - PI/10, 10, 2);//ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
+          ringOfSpreadShooting(0.0, 20, 4.0, 30, 20, 280.0, PI/2 + PI/10, 10, 2);//ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
+          //rotatingRingOfSpreadShooting(0.0, 20, 4.0, 30, 20, 280.0, PI/2 + PI/10, 10, 2, PI/240);//rotatingRingOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter, Float angularVelocity)
         }
         detectPlayer(10000.0);
       }
