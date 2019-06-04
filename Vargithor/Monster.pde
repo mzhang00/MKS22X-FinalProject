@@ -220,7 +220,7 @@ class Monster extends Entity implements Alive {
       Float ringHeading = (PI * i * 2) / numberOfRings;
       PVector ringDirection = PVector.fromAngle(ringHeading);
       ringDirection.setMag(rangeBigRing);
-      StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000000, 0, 0, player);
       stationaryShooter.circleShoot(ringDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, bulletsPerRing);
       i ++;
     }
@@ -234,7 +234,7 @@ class Monster extends Entity implements Alive {
       Float ringHeading = (PI * i * 2) / numberOfRings + angleVelocityChange;
       PVector ringDirection = PVector.fromAngle(ringHeading);
       ringDirection.setMag(rangeBigRing);
-      StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000000, 0, 0, player);
       stationaryShooter.circleShoot(ringDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, bulletsPerRing);
       i ++;
     }
@@ -248,7 +248,7 @@ class Monster extends Entity implements Alive {
       PVector shooterLocationPointer = PVector.fromAngle(shooterHeading);
       PVector shooterAimDirection = PVector.fromAngle(shooterHeading + headingFromZero);
       shooterLocationPointer.setMag(rangeBigRing);
-      StationaryShooter stationaryShooter = new StationaryShooter(getX() + shooterLocationPointer.x, getY() + shooterLocationPointer.y, 1000000, 0, 0, player);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + shooterLocationPointer.x, getY() + shooterLocationPointer.y, 1000000000, 0, 0, player);
       stationaryShooter.spreadShoot(shooterAimDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, bulletsPerShooter);
       i ++;
     }
@@ -263,7 +263,7 @@ class Monster extends Entity implements Alive {
       PVector shooterLocationPointer = PVector.fromAngle(shooterLocationHeading);
       PVector shooterAimDirection = PVector.fromAngle(shooterLocationHeading + headingFromZero);
       shooterLocationPointer.setMag(rangeBigRing);
-      StationaryShooter stationaryShooter = new StationaryShooter(getX() + shooterLocationPointer.x, getY() + shooterLocationPointer.y, 1000000, 0, 0, player);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + shooterLocationPointer.x, getY() + shooterLocationPointer.y, 1000000000, 0, 0, player);
       stationaryShooter.spreadShoot(shooterAimDirection, bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, bulletsPerShooter);
       i ++;
     }
