@@ -186,10 +186,7 @@ class Monster extends Entity implements Alive {
       headingDifference = (i * 2 * PI) / numberOfBullets;
       heading = fixedHeading + headingDifference;
       monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-      bullet.size = bulletSize;
-      bullet.lifeSpan = bulletLife;
-      bullets.add(bullet);
+      singleShoot(monsterToPlayer, bulletStrength, bulletSpeed, bulletSize, bulletLife);
       i ++;
     }
   }
@@ -205,10 +202,7 @@ class Monster extends Entity implements Alive {
       Float headingDifference = ((float) i * fullAngle / ((float) numberOfBullets - 1));
       heading = fixedHeadingStart + headingDifference;
       monsterToPlayer = PVector.fromAngle(heading);
-      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
-      bullet.size = bulletSize;
-      bullet.lifeSpan = bulletLife;
-      bullets.add(bullet);
+      singleShoot(monsterToPlayer, bulletStrength, bulletSpeed, bulletSize, bulletLife);
       i ++;
     }
   }
