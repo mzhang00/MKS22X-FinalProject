@@ -40,6 +40,7 @@ class Player extends Entity implements Alive {
       this.die();
     }
     takeDamage();
+    regenerateHealth();
     timeAfterShot++;
   }
   
@@ -146,6 +147,13 @@ class Player extends Entity implements Alive {
           bullets.remove(bullet);
         }
       }
+    }
+  }
+  
+  void regenerateHealth() {
+    if(frameCount % 60 == 0)
+    {
+      player.setHealth(player.getHealth() + 1);
     }
   }
 }
