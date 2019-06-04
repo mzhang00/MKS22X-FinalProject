@@ -199,6 +199,35 @@ class Monster extends Entity implements Alive {
     }
   }
   
+  void ringOfRingsShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Integer numberOfRings, Integer bulletsPerRing) {
+    int i = 0;
+    ArrayList<StationaryShooter> stationaryShooterLocations = new ArrayList<StationaryShooter>(numberOfRings);
+    while(i < numberOfRings)
+    {
+      Float ringHeading = (PI * i * 2) / numberOfRings;
+      PVector ringDirection = PVector.fromAngle(ringHeading);
+      ringDirection.setMag(rangeBigRing);
+      StationaryShooter stationaryShooter = new StationaryShooter(getX() + ringDirection.x, getY() + ringDirection.y, 1000000, 0, 0, player);
+      stationaryShooterLocations.add(stationaryShooter);
+      i ++;
+    }
+    for(i = 0 ; i < stationaryShooterLocations.size() ; i ++)
+    {
+      int m = 0;
+      while(m < bulletsPerRing)
+      {
+        Float bulletHeading = (PI * m * 2) / bulletsPerRing;
+        PVector bulletDirection = PVector.fromAngle(bulletHeading);
+        StationaryShooter theShooter = stationaryShooterLocations.get(i);
+        myBullet bullet = new myBullet(bulletStrength, theShooter, theShooter.getX() + bulletDirection.x, theShooter.getY() + bulletDirection.y, bulletSpeed);
+        bullet.size = bulletSize;
+        bullet.lifeSpan = bulletLife;
+        bullets.add(bullet);
+        m ++;
+      }
+    }
+  }
+  
   void randomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
     singleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
@@ -207,7 +236,7 @@ class Monster extends Entity implements Alive {
     singleShoot(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
 
-  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {//find the velocity vector difference between player and bullet, use law of cosines to find angle
+  void leadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife) {
    singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
   
@@ -658,12 +687,12 @@ class FirstBoss extends Monster {
   void move() {
     if (phase1)
     {
-      circlePlayerClockwise(100.0);
     } else if (phase2)
     {
-      jitter();
+      circlePlayerClockwise(100.0);
     } else if (phase3)
     {
+      jitter();
     } else if (phase4)
     {
     }
@@ -676,9 +705,10 @@ class FirstBoss extends Monster {
         detectPlayer(1000.0);
       else
       {
-        if ((frameCount - frameOnEncounter) % 5 == 0)
+        if ((frameCount - frameOnEncounter) % 20 == 0)
         {
-          circleRandomAimShoot(1, 2.0, 10, 60, 10);//circleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+          circleRandomAimShoot(1, 1.0, 5, 100, 6);//circleRandomAimShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+          ringOfRingsShoot(1, 2.0, 10, 20, 140.0, 10, 10);//ringOfRingsShoot(bulletStrength, bulletSpeed, bulletSize, bulletLife, rangeBigRing, numberOfRings, bulletsPerRing)
         }
         detectPlayer(1000.0);
       }

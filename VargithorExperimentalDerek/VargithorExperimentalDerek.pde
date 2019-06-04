@@ -262,7 +262,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  System.out.println(frameRate);
+  //System.out.println(frameRate);
   //System.out.println(millis());
   //System.out.println(thingsToDisplay);
   //System.out.println(thingsToMove);
