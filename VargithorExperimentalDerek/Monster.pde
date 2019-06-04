@@ -138,17 +138,8 @@ class Monster extends Entity implements Alive {
       theta *= -1;
     monsterToPlayer.setMag(bulletSpeed);
     Float discriminant = (float)(Math.pow(playerVelocity * cos(angleBetweenMonsterPlayerVelocityAndPlayerVelocity), 2) - Math.pow(playerVelocity, 2) + Math.pow(bulletSpeed, 2));
-    //if (discriminant < 0)
-    //{
-    //  theta = player.velocity.heading();
-    //  monsterToPlayer = PVector.fromAngle(theta);
-    //}
-    //else
-    //{
-    //  monsterToPlayer.rotate(theta);
-    //}
-    //return monsterToPlayer;
-    if (discriminant < 0)
+    monsterToPlayer.rotate(theta);
+    if (discriminant <= 0)
       return aimAtPlayer();
     else
       return monsterToPlayer;
@@ -218,6 +209,23 @@ class Monster extends Entity implements Alive {
       i ++;
     }
   }
+  
+  void spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Float angleOfSpread, Integer numberOfBullets) {
+    PVector monsterToPlayer = leadPlayer(bulletSpeed);
+    float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
+    float heading = fixedHeadingStart;
+    Float fullAngle = Math.abs(angleOfSpread * 2);
+    Integer i = 0;
+    while(i < numberOfBullets)
+    {
+      Float headingDifference = ((float) i * fullAngle / ((float) numberOfBullets - 1));
+      heading = fixedHeadingStart + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      myBullet bullet = new myBullet(bulletStrength, this, getX() + monsterToPlayer.x, getY() + monsterToPlayer.y, bulletSpeed);
+      bullets.add(bullet);
+      i ++;
+    }
+  }
 
   void move() {
     if (inRange(50.0, 100.0))
@@ -250,8 +258,8 @@ class Monster extends Entity implements Alive {
   }
 
   private void generateRandomDirection() {
-    float angle = random(0, 360);
-    velocity.rotate(angle);
+    float angle = random(-PI, PI);
+    velocity = PVector.fromAngle(angle);
     velocity.setMag(float(getSpeed()));
   }
 
@@ -595,10 +603,11 @@ class StationaryShooter extends Monster {
       if ((frameCount - frameOnEncounter) % 10 == 0)
       {
         //shootAtPlayer(1, 2.0);
-        //leadPlayerShoot(1, 10.0);
+        //leadPlayerShoot(1, 9.0);
         //circleShootAtPlayer(1, 5.0, 5);
         //circleLeadPlayerShoot(1, 1.0, 10);
-        spreadShootAtPlayer(1, 10.0, PI/4, 7);
+        //spreadShootAtPlayer(1, 9.0, PI/4, 7);
+        //spreadLeadPlayerShoot(1, 9.0, PI/4, 6);
       }
       detectPlayer(1000.0);
     }
@@ -664,13 +673,13 @@ class FirstBoss extends Monster {
         detectPlayer(1000.0);
       else
       {
-        if ((frameCount - frameOnEncounter) % 20 == 0)
+        if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          circleLeadPlayerShoot(1, 10.0, 5);
+          circleLeadPlayerShoot(1, 2.0, 5);
         }
-        else if((frameCount - frameOnEncounter) % 20 == 10)
+        else if((frameCount - frameOnEncounter) % 10 == 5)
         {
-          circleShootAtPlayer(1, 10.0, 5);
+          circleShootAtPlayer(1, 2.0, 5);
         }
         detectPlayer(1000.0);
       }

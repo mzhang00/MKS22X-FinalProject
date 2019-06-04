@@ -63,8 +63,8 @@ void loadGame() {
 
   thingsToShoot.add(player);
   //thingsToShoot.add(circler);
-  thingsToShoot.add(stationaryShooter);
-  //thingsToShoot.add(firstBoss);
+  //thingsToShoot.add(stationaryShooter);
+  thingsToShoot.add(firstBoss);
 }
 
 interface Alive {
