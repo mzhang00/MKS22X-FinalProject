@@ -14,6 +14,10 @@ Derek lao:
 * Edited dance phase to give player more room to dodge
 * Fixed leadPlayerShoot by using discriminant or using the monsterPlayerVelocity
 * Added regenerateHealth() for player to regenerate health. Tweaked it to regenerate one health per second
+* Took out regenerateHealth() under request from Michael
+* Added and tested rotatingTentacles
+* Gave player more room to dodge in dance phase, made the spray bullets smaller, the outer bullets bigger, fire faster.
+* The claustrophobic phase was created. Outer bullets shoot in a fence-like formation, do tons of damage.
 
 June 3rd 2019:
 =======================================================================================
