@@ -17,7 +17,9 @@ Derek lao:
 * Took out regenerateHealth() under request from Michael
 * Added and tested rotatingTentacles
 * Gave player more room to dodge in dance phase, made the spray bullets smaller, the outer bullets bigger, fire faster.
-* The claustrophobic phase was created. Outer bullets shoot in a fence-like formation, do tons of damage.
+* The claustrophobic phase was created. Outer bullets shoot in a fence-like formation. Inner bullets do tons of damage
+* Made outer ring smaller for claustrophobic phase
+* Adjusted inner no-bullet ring size.
 
 June 3rd 2019:
 =======================================================================================
