@@ -34,37 +34,40 @@ Coward coward;
 Circler circler;
 StationaryShooter stationaryShooter;
 FirstBoss firstBoss;
+Room room = new Room();
 
 //LOADGAME
 void loadGame() {
   player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
-  monster = new Monster(400.0, 350.0, 5, 5, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-  chaser = new Chaser(300.0, 350.0, 5, 5, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-  coward = new Coward(200.0, 350.0, 5, 5, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-  circler = new Circler(100.0, 350.0, 5, 5, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
-  stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 5, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
-  firstBoss = new FirstBoss(250.0, 350.0, 100, 5, 1, player);
+  //monster = new Monster(400.0, 350.0, 5, 1, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+  //chaser = new Chaser(300.0, 350.0, 5, 1, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+  //coward = new Coward(200.0, 350.0, 5, 1, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+  //circler = new Circler(100.0, 350.0, 5, 1, 1, player);//Circler(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
+  //stationaryShooter = new StationaryShooter(150.0, 350.0, 5, 1, 1, player);//StationaryShooter(Float newx, Float newy, Integer h, Integer str, Integer spd, Player givenPlayer)
+  //firstBoss = new FirstBoss(450.0, 350.0, 100, 1, 1, player);
 
   thingsToDisplay.add(player);
-  thingsToDisplay.add(monster);
-  thingsToDisplay.add(chaser);
-  thingsToDisplay.add(coward);
-  thingsToDisplay.add(circler);
-  thingsToDisplay.add(stationaryShooter);
-  thingsToDisplay.add(firstBoss);
+  //thingsToDisplay.add(monster);
+  //thingsToDisplay.add(chaser);
+  //thingsToDisplay.add(coward);
+  //thingsToDisplay.add(circler);
+  //thingsToDisplay.add(stationaryShooter);
+  //thingsToDisplay.add(firstBoss);
 
   thingsToMove.add(player);
-  thingsToMove.add(monster);
-  thingsToMove.add(chaser);
-  thingsToMove.add(coward);
-  thingsToMove.add(circler);
-  thingsToMove.add(stationaryShooter);
-  thingsToMove.add(firstBoss);
+  //thingsToMove.add(monster);
+  //thingsToMove.add(chaser);
+  //thingsToMove.add(coward);
+  //thingsToMove.add(circler);
+  //thingsToMove.add(stationaryShooter);
+  //thingsToMove.add(firstBoss);
 
   thingsToShoot.add(player);
   //thingsToShoot.add(circler);
-  thingsToShoot.add(stationaryShooter);
-  thingsToShoot.add(firstBoss);
+  //thingsToShoot.add(stationaryShooter);
+  //thingsToShoot.add(firstBoss);
+  
+  room.createRoom();
 }
 
 interface Alive {
@@ -262,7 +265,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  System.out.println(frameRate);
+  //System.out.println(frameRate);
   //System.out.println(millis());
   //System.out.println(thingsToDisplay);
   //System.out.println(thingsToMove);
