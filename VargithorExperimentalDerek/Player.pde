@@ -4,7 +4,6 @@ class Player extends Entity implements Alive {
   PShape model;
   int energy = 100;
   int timeAfterShot = 0;
-  int roomCurrent = 1;
 
   Player(Float newx, Float newy, Integer h, Integer str, Integer spd) {
     super(newx, newy);
@@ -42,14 +41,38 @@ class Player extends Entity implements Alive {
     takeDamage();
     //regenerateHealth();
     timeAfterShot++;
-  }
-  
-  void progressRoom(){
-    roomCurrent++;
+    if (this.getX() <= 520 && this.getX() >= 470 && this.getY() <= 15) {
+      if (thingsToDisplay.size() == 1) {
+        room.increaseRoom();
+        this.setY(690.0);
+        room.createRoom();
+      }
+    }
+    if (this.getX() <= 520 && this.getX() >= 470 && this.getY() >= 680) {
+      if (thingsToDisplay.size() == 1) {
+        room.increaseRoom();
+        this.setY(15.0);
+        room.createRoom();
+      }
+    }
+    if (this.getY() <= 360 && this.getY() >= 320 && this.getX() <= 15) {
+      if (thingsToDisplay.size() == 1) {
+        room.increaseRoom();
+        this.setX(930.0);
+        room.createRoom();
+      }
+    }
+    if (this.getY() <= 360 && this.getY() >= 320 && this.getX() >= 980) {
+      //if (thingsToDisplay.size() == 1) {
+        room.increaseRoom();
+        this.setX(15.0);
+        //room.createRoom();
+      //}
+    }
   }
 
   Integer getRoomCurrent() {
-    return roomCurrent;
+    return room.getRoom();
   }
 
   Integer getEnergy() {
@@ -149,7 +172,7 @@ class Player extends Entity implements Alive {
       }
     }
   }
-  
+
   //void regenerateHealth() {
   //  if(frameCount % 60 == 0)
   //  {
