@@ -150,10 +150,10 @@ class Player extends Entity implements Alive {
     }
   }
   
-  void regenerateHealth() {
-    if(frameCount % 60 == 0)
-    {
-      player.setHealth(player.getHealth() + 1);
-    }
-  }
+  //void regenerateHealth() {
+  //  if(frameCount % 60 == 0)
+  //  {
+  //    player.setHealth(player.getHealth() + 1);
+  //  }
+  //}
 }

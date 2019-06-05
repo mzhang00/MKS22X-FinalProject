@@ -175,6 +175,16 @@ class Monster extends Entity implements Alive {
     bullets.add(bullet);
   }
   
+  void singleShootTelescope(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    Integer i = 1;
+    while (i <= numberOfBullets)
+    {
+      Float speedOfBullet = bulletSpeed / numberOfBullets * i;
+      singleShoot(direction, bulletStrength, speedOfBullet, bulletSize, bulletLife);
+      i ++;
+    }
+  }
+  
   void circleShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
     PVector monsterToPlayer = direction;
     float fixedHeading = monsterToPlayer.heading();
@@ -191,6 +201,22 @@ class Monster extends Entity implements Alive {
     }
   }
   
+  void circleShootTelescope(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBulletsInCircle, Integer numberOfBulletsPerTelescope) {
+    PVector monsterToPlayer = direction;
+    float fixedHeading = monsterToPlayer.heading();
+    float heading = monsterToPlayer.heading();
+    float headingDifference;
+    Integer i = 0;
+    while (i < numberOfBulletsInCircle)
+    {
+      headingDifference = (i * 2 * PI) / numberOfBulletsInCircle;
+      heading = fixedHeading + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      singleShootTelescope(monsterToPlayer, bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBulletsPerTelescope);
+      i ++;
+    }
+  }
+  
   void spreadShoot(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
     PVector monsterToPlayer = direction;
     float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
@@ -203,6 +229,22 @@ class Monster extends Entity implements Alive {
       heading = fixedHeadingStart + headingDifference;
       monsterToPlayer = PVector.fromAngle(heading);
       singleShoot(monsterToPlayer, bulletStrength, bulletSpeed, bulletSize, bulletLife);
+      i ++;
+    }
+  }
+  
+  void spreadShootTelescope(PVector direction, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBulletsInSpread, Integer numberOfBulletsInTelescope) {
+    PVector monsterToPlayer = direction;
+    float fixedHeadingStart = monsterToPlayer.heading() - angleOfSpread;
+    float heading = fixedHeadingStart;
+    Float fullAngle = Math.abs(angleOfSpread * 2);
+    Integer i = 0;
+    while(i < numberOfBulletsInSpread)
+    {
+      Float headingDifference = ((float) i * fullAngle / ((float) numberOfBulletsInSpread - 1));
+      heading = fixedHeadingStart + headingDifference;
+      monsterToPlayer = PVector.fromAngle(heading);
+      singleShootTelescope(monsterToPlayer, bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBulletsInTelescope);
       i ++;
     }
   }
@@ -281,6 +323,18 @@ class Monster extends Entity implements Alive {
     singleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife);
   }
   
+  void randomAimShootTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    singleShootTelescope(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+  }
+  
+  void shootAtPlayerTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    singleShootTelescope(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+  }
+  
+  void leadPlayerShootTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
+    singleShootTelescope(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
+  }
+  
   void circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets) {
     circleShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
   }
@@ -293,6 +347,18 @@ class Monster extends Entity implements Alive {
     circleShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBullets);
   }
   
+  void circleRandomAimShootTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBulletsInCircle, Integer numberOfBulletsInTelescope) {
+    circleShootTelescope(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBulletsInCircle, numberOfBulletsInTelescope);
+  }
+
+  void circleShootAtPlayerTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBulletsInCircle, Integer numberOfBulletsInTelescope) {
+    circleShootTelescope(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBulletsInCircle, numberOfBulletsInTelescope);
+  }
+
+  void circleLeadPlayerShootTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBulletsInCircle, Integer numberOfBulletsInTelescope) {
+    circleShootTelescope(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, numberOfBulletsInCircle, numberOfBulletsInTelescope);
+  }
+  
   void spreadRandomShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
     spreadShoot(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBullets);
   }
@@ -303,6 +369,18 @@ class Monster extends Entity implements Alive {
   
   void spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets) {
     spreadShoot(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBullets);
+  }
+  
+  void spreadRandomShootTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBulletsInSpread, Integer numberOfBulletsInTelescope) {
+    spreadShootTelescope(randomAim(), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBulletsInSpread, numberOfBulletsInTelescope);
+  }
+  
+  void spreadShootAtPlayerTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBulletsInSpread, Integer numberOfBulletsInTelescope) {
+    spreadShootTelescope(aimAtPlayer(), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBulletsInSpread, numberOfBulletsInTelescope);
+  }
+  
+  void spreadLeadPlayerShootTelescope(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBulletsInSpread, Integer numberOfBulletsInTelescope) {
+    spreadShootTelescope(leadPlayer(bulletSpeed), bulletStrength, bulletSpeed, bulletSize, bulletLife, angleOfSpread, numberOfBulletsInSpread, numberOfBulletsInTelescope);
   }
 
   void move() {
@@ -690,15 +768,16 @@ class StationaryShooter extends Monster {
 
   void shoot() {
     if (!playerDetected)
-      detectPlayer(1000.0);
+      detectPlayer(400.0);
     else
     {
-      if ((frameCount - frameOnEncounter) % 20 == 0)
+      if ((frameCount - frameOnEncounter) % 120 == 0)
       {
         //circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets)
-        rotatingTentaclesShoot(10, 5.0, 5, 100, 8, PI/240);//rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
+        //rotatingTentaclesShoot(10, 5.0, 5, 100, 8, PI/240);//rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
+        circleShootTelescope(aimAtPlayer(), 10, 8.0, 5, 50, 8, 8);
       }
-      detectPlayer(1000.0);
+      detectPlayer(400.0);
     }
   }
 }
