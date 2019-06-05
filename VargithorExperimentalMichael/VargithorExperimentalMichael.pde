@@ -28,17 +28,17 @@ ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
 Player player;
-Monster monster;
-Chaser chaser;
-Coward coward;
-Circler circler;
-StationaryShooter stationaryShooter;
-FirstBoss firstBoss;
+//Monster monster;
+//Chaser chaser;
+//Coward coward;
+//Circler circler;
+//StationaryShooter stationaryShooter;
+//FirstBoss firstBoss;
 Room room = new Room();
 
 //LOADGAME
 void loadGame() {
-  player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
+  player = new Player(500.0, 350.0, 500, 1, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
   //monster = new Monster(400.0, 350.0, 5, 1, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   //chaser = new Chaser(300.0, 350.0, 5, 1, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   //coward = new Coward(200.0, 350.0, 5, 1, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
