@@ -23,12 +23,12 @@ class Room {
       return 750 - (float)(Math.random() * 246 + 100);
     }
   }
-  
-  int getRoom(){
+
+  int getRoom() {
     return roomNumber;
   }
-  
-  void increaseRoom(){
+
+  void increaseRoom() {
     roomNumber++;
   }
 
@@ -58,6 +58,10 @@ class Room {
           thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
         }
       }
+    } else {
+      thingsToDisplay.add(new FirstBoss(500.0, 350.0, 100, 1, 1, player));
+      thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
+      thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
     }
   }
 }
