@@ -18,6 +18,7 @@
 
 PFont gameMenuFont, mainMenuFont, loreScreenFont;
 boolean gameMenu, howToScreen, loreScreen, gamePaused;
+boolean gameExists = false;
 boolean gameIsRunning = false;
 boolean mainMenu = true;
 boolean gameOver = false;
@@ -28,17 +29,17 @@ ArrayList<Entity> thingsToDisplay = new ArrayList<Entity>();
 ArrayList<Entity> thingsToMove = new ArrayList<Entity>();
 ArrayList<Entity> thingsToShoot = new ArrayList<Entity>();
 Player player;
+Room room = new Room();
 //Monster monster;
 //Chaser chaser;
 //Coward coward;
 //Circler circler;
 //StationaryShooter stationaryShooter;
 //FirstBoss firstBoss;
-Room room = new Room();
 
 //LOADGAME
 void loadGame() {
-  player = new Player(500.0, 350.0, 500, 1, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
+  player = new Player(500.0, 350.0, 500, 5, 3);//Player(Float newx, Float newy, Integer h, Integer str, Integer spd)
   //monster = new Monster(400.0, 350.0, 5, 1, 1, player);//Monster(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   //chaser = new Chaser(300.0, 350.0, 5, 1, 1, player);//Chaser(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
   //coward = new Coward(200.0, 350.0, 5, 1, 1, player);//Coward(Float newx, Float newy, Integer h, Integer str, Integer spd, Player player)
@@ -66,7 +67,6 @@ void loadGame() {
   //thingsToShoot.add(circler);
   //thingsToShoot.add(stationaryShooter);
   //thingsToShoot.add(firstBoss);
-  
   room.createRoom();
 }
 
@@ -454,14 +454,26 @@ void draw() {
         mainMenu = false;
         gameIsRunning = true;
         gameOver = false;
-        mousex = null;
-        mousey = null;
         clearEntities();
         loadGame();
+        mousex = null;
+        mousey = null; 
       } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
       {
-        mainMenu = false;
-        gameIsRunning = true;
+        if(gameExists)
+        {
+          mainMenu = false;
+          gameIsRunning = true;
+        }
+        else
+        {
+          mainMenu = false;
+          gameIsRunning = true;
+          gameOver = false;
+          gameExists = true;
+          clearEntities();
+          loadGame();
+        }
         mousex = null;
         mousey = null;
       } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
