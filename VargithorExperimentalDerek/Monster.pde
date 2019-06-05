@@ -180,7 +180,8 @@ class Monster extends Entity implements Alive {
     while (i <= numberOfBullets)
     {
       Float speedOfBullet = bulletSpeed / numberOfBullets * i;
-      singleShoot(direction, bulletStrength, speedOfBullet, bulletSize, bulletLife);
+      Integer sizeChanger = (numberOfBullets - i) * bulletSize / numberOfBullets;
+      singleShoot(direction, bulletStrength, speedOfBullet, bulletSize + sizeChanger, bulletLife);
       i ++;
     }
   }
