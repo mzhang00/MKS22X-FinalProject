@@ -1,14 +1,21 @@
 # MKS22X-FinalProject
 AP CS Final Project
 
-Vargithor is a bullet hell game. To run, double click the Vargithor folder, double click Varigthor.pde, and when the code file opens, go to the top left corner where you see the play button. Click it to run the game. Enjoy!
+Project description:
+
+Vargithor is a bullet hell game. To run, double click the Vargithor folder, double click Varigthor.pde, and when the code file opens, go to the top left corner where you see the play button. Click it to run the game. Press the How-To button to look at the keybinds and press New Game to start playing. Enjoy!
 
 Development log:
 
 June 4th 2019:
 =======================================================================================
 Michael Zhang:
-* Update tmrw
+* Finish room progression
+* Randomly generate enemies on each room
+* Integrated boss level into rooms
+* Gave player bullets a range
+* Gave player health upon killing a boss
+* Created a keybind for godmode
 
 Derek Lao:
 * Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
@@ -35,7 +42,10 @@ Derek Lao:
 June 3rd 2019:
 =======================================================================================
 Michael Zhang:
-* Update tmrw
+* Updated the color of enemy and allied bullets
+* Made enemies able to take damage from bullets and die
+* Made bullets fire semi-automatically
+* Update bulles with multiple shooting methods
 
 Derek Lao:
 * Updated chaser enemy to be a circle shape, not a triangle shape
@@ -51,7 +61,8 @@ Derek Lao:
 June 2nd 2019:
 =======================================================================================
 Michael Zhang:
-* Did lots of stuff, will update tomorrow
+* Fixed a bug that didn't allow collisions to deal damage if the enemy was too close to the player
+* Integrate death screen with player death
 
 Derek Lao:
 * Using law of cosines, calculated the magnitude of the vector difference of bullet velocity and player velocity by using the angle between the player velocity and the displacement velocity between the player and the bullet. Then using law of cosines, calculated the angle between the bulletplayer velocity difference vector, and the bullet velocity vector. Then fire the bullet. Took me an hour to code, seems to only work when player travels clockwise.
