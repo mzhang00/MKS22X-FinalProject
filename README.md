@@ -26,6 +26,8 @@ Derek Lao:
 * Added telescope shooting methods
 * Made stationary shooter shoot with telescope
 * Made stationary shooter shoot with a stronger omni-directional telescope shot
+* Fixed bug where continue game would have the same effect as start game
+* Made firstBoss tentacles have more damage
 
 June 3rd 2019:
 =======================================================================================
