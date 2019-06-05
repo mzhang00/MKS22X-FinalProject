@@ -32,22 +32,22 @@ class Room {
         if (enemyType == 0) {
           thingsToDisplay.add(new Chaser(randomX(), randomY(), 5, 1, 1, player));
           thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
-          //thingsToShoot.add(chaser);
+          thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
         }
         if (enemyType == 1) {
           thingsToDisplay.add(new Coward(randomX(), randomY(), 5, 1, 1, player));
           thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
-          //thingsToShoot.add(coward);
+          thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
         }
         if (enemyType == 2) {
           thingsToDisplay.add(new Circler(randomX(), randomY(), 5, 1, 1, player));
           thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
-          //thingsToShoot.add(circler);
+          thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
         }
         if (enemyType == 3) {
           thingsToDisplay.add(new StationaryShooter(randomX(), randomY(), 5, 1, 1, player));
           thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
-          //thingsToShoot.add(stationaryShooter);
+          thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
         }
       }
     }
