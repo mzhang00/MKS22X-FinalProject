@@ -325,6 +325,8 @@ void draw() {
       color armorTextColor = color(128);
       String energyText = "Energy: " + player.getEnergy();
       color energyTextColor = color(225, 225, 0);
+      String roomText = "Room: " + room.getRoom();
+      color roomTextColor = color(255, 0, 0);
 
       textSize(30);//12 is the smallest size to display on a height 15 textbox.
       fill(healthTextColor);   
@@ -354,6 +356,9 @@ void draw() {
 
       fill(energyTextColor);
       text(energyText, 300, 420, 500, 40);
+      
+      fill(roomTextColor);
+      text(roomText, 300, 465, 500, 40);
     }
   } else if (gameOver)
   {
