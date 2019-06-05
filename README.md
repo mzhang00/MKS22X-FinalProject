@@ -38,6 +38,8 @@ Derek Lao:
 * Made stationary shooter shoot with a stronger omni-directional telescope shot
 * Fixed bug where continue game would have the same effect as start game
 * Made firstBoss tentacles have more damage
+* Tweaked setHealth() player method  to edit the maxHealth as well
+* Made chaser chase the player unconditionally
 
 June 3rd 2019:
 =======================================================================================
