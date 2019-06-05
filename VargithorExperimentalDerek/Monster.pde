@@ -845,7 +845,7 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 5 == 0)
         {
-          rotatingTentaclesShoot(1, 5.0, 10, 100, 8, PI/240);
+          rotatingTentaclesShoot(1, 5.0, 10, 1000, 8, PI/240);
         }
         detectPlayer(10000.0);
       }
