@@ -858,7 +858,7 @@ class FirstBoss extends Monster {
       {
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
-          ringOfSpreadShooting(0.0, 20, 4.0, 10, 16, 200.0, PI/2 + PI/10, 10, 2);
+          ringOfSpreadShooting(0.0, 50, 4.0, 10, 16, 200.0, PI/2 + PI/10, 10, 2);
           //ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)  
         }
         if ((frameCount - frameOnEncounter) % 40 == 0)
