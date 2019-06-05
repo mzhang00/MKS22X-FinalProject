@@ -11,11 +11,15 @@ June 4th 2019:
 =======================================================================================
 Michael Zhang:
 * Finish room progression
+* Added createRoom() method to Room class to generate a room based on how many rooms you’ve completed
 * Randomly generate enemies on each room
 * Integrated boss level into rooms
-* Gave player bullets a range
-* Gave player health upon killing a boss
-* Created a keybind for godmode
+* Gave player bullets a maximum range so they don’t travel forever 
+* Gave player strength upon killing a boss
+* Created a keybind for godmode (for demos)
+* Readded health regeneration to lower the game’s difficulty 
+* Fixed a bug that made the end screen not trigger properly once the player dies by adding an entityID field to each entity
+* Removed separate shooting modes
 
 Derek Lao:
 * Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
@@ -45,9 +49,10 @@ June 3rd 2019:
 =======================================================================================
 Michael Zhang:
 * Updated the color of enemy and allied bullets
-* Made enemies able to take damage from bullets and die
-* Made bullets fire semi-automatically
-* Update bulles with multiple shooting methods
+* Added die() method to all enemies 
+* Made enemies able to take damage from bullets with a takeDamage() method
+* Made bullets fire semi-automatically every 100 ticks
+* Update bulles with multiple shooting methods, single shot, semi-auto, and full-auto
 
 Derek Lao:
 * Updated chaser enemy to be a circle shape, not a triangle shape
@@ -64,6 +69,7 @@ June 2nd 2019:
 =======================================================================================
 Michael Zhang:
 * Fixed a bug that didn't allow collisions to deal damage if the enemy was too close to the player
+* Used the distance formula to now calculate collisions
 * Integrate death screen with player death
 
 Derek Lao:
