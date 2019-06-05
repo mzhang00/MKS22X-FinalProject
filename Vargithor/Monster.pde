@@ -617,15 +617,15 @@ class Coward extends Monster {
 
   void shoot() {
     if (!playerDetected)
-      detectPlayer(10000.0);
+      detectPlayer(250.0);
     else
     {
-      if((frameCount - frameOnEncounter) % 30 == 0)
+      if((frameCount - frameOnEncounter) % 15 == 0)
       {
-        leadPlayerShoot(10, 5.0, 5, 40);//spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets)
+        leadPlayerShoot(10, 5.0, 5, 60);//spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets)
       }
     }
-    detectPlayer(10000.0);
+    detectPlayer(250.0);
   }
 }
 
@@ -659,7 +659,7 @@ class Circler extends Monster {
     {
       if((frameCount - frameOnEncounter) % 30 == 0)
       {
-        circleLeadPlayerShoot(10, 5.0, 5, 40, 8);
+        circleLeadPlayerShoot(10, 5.0, 5, 50, 8);
       }
     }
     detectPlayer(10000.0);
@@ -693,7 +693,7 @@ class StationaryShooter extends Monster {
       detectPlayer(1000.0);
     else
     {
-      if ((frameCount - frameOnEncounter) % 5 == 0)
+      if ((frameCount - frameOnEncounter) % 20 == 0)
       {
         //circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets)
         rotatingTentaclesShoot(10, 5.0, 5, 100, 8, PI/240);//rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
