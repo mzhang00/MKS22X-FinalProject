@@ -27,13 +27,12 @@ class Player extends Entity implements Alive {
       }
     }
   }
-  
+
   Integer getID() {
     return 1;
   }
 
   void display() {
-    rectMode(CENTER);
     stroke(0);
     model = createShape(ELLIPSE, getX(), getY(), 10, 10);
     model.setStroke(color(0));
@@ -43,7 +42,7 @@ class Player extends Entity implements Alive {
       this.die();
     }
     takeDamage();
-    //regenerateHealth();
+    regenerateHealth();
     timeAfterShot++;
     if (this.getX() <= 520 && this.getX() >= 470 && this.getY() <= 15) {
       if (thingsToDisplay.size() == 1) {
@@ -169,7 +168,7 @@ class Player extends Entity implements Alive {
       myBullet bullet = bullets.get(i);
       if (isColliding(bullet) || isColliding(bullet, bullet.getLifetime())) {
         if (bullet.getType().equals("enemy")) {
-          if(this.getHealth() - bullet.getStrength() >= 0)
+          if (this.getHealth() - bullet.getStrength() >= 0)
             this.setHealth(this.getHealth() - bullet.getStrength());
           else
             this.setHealth(0);
@@ -180,10 +179,12 @@ class Player extends Entity implements Alive {
     }
   }
 
-  //void regenerateHealth() {
-  //  if(frameCount % 60 == 0)
-  //  {
-  //    player.setHealth(player.getHealth() + 1);
-  //  }
-  //}
+  void regenerateHealth() {
+    if (frameCount % 120 == 0)
+    {
+      if (getHealth() != 500) {
+        player.setHealth(player.getHealth() + 1);
+      }
+    }
+  }
 }
