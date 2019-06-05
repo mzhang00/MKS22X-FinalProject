@@ -20,7 +20,7 @@ class Room {
     if (Math.random() < 0.5) {
       return (float)(Math.random() * 246 + 100);
     } else {
-      return (float)(Math.random() * 404 + 600);
+      return 750 - (float)(Math.random() * 246 + 100);
     }
   }
 
@@ -30,27 +30,23 @@ class Room {
       for (int i = 0; i < enemies; i++) {
         enemyType = (int) (Math.random() * 4);
         if (enemyType == 0) {
-          Chaser chaser = new Chaser(randomX(), randomY(), 5, 1, 1, player);
-          thingsToDisplay.add(chaser);
-          thingsToMove.add(chaser);
+          thingsToDisplay.add(new Chaser(randomX(), randomY(), 5, 1, 1, player));
+          thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
           //thingsToShoot.add(chaser);
         }
         if (enemyType == 1) {
-          Coward coward = new Coward(randomX(), randomY(), 5, 1, 1, player);
-          thingsToDisplay.add(coward);
-          thingsToMove.add(coward);
+          thingsToDisplay.add(new Coward(randomX(), randomY(), 5, 1, 1, player));
+          thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
           //thingsToShoot.add(coward);
         }
         if (enemyType == 2) {
-          Circler circler = new Circler(randomX(), randomY(), 5, 1, 1, player);
-          thingsToDisplay.add(circler);
-          thingsToMove.add(circler);
+          thingsToDisplay.add(new Circler(randomX(), randomY(), 5, 1, 1, player));
+          thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
           //thingsToShoot.add(circler);
         }
         if (enemyType == 3) {
-          StationaryShooter stationaryShooter = new StationaryShooter(randomX(), randomY(), 5, 1, 1, player);
-          thingsToDisplay.add(stationaryShooter);
-          thingsToMove.add(stationaryShooter);
+          thingsToDisplay.add(new StationaryShooter(randomX(), randomY(), 5, 1, 1, player));
+          thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
           //thingsToShoot.add(stationaryShooter);
         }
       }
