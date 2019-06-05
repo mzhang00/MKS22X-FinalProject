@@ -23,6 +23,9 @@ Derek Lao:
 * The claustrophobic phase was created. Outer bullets shoot in a fence-like formation. Inner bullets do tons of damage
 * Made outer ring smaller for claustrophobic phase
 * Adjusted inner no-bullet ring size.
+* Added telescope shooting methods
+* Made stationary shooter shoot with telescope
+* Made stationary shooter shoot with a stronger omni-directional telescope shot
 
 June 3rd 2019:
 =======================================================================================
