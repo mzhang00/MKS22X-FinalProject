@@ -470,6 +470,7 @@ void draw() {
           mainMenu = false;
           gameIsRunning = true;
           gameOver = false;
+          gameExists = true;
           clearEntities();
           loadGame();
         }
