@@ -66,7 +66,7 @@ class Room {
         }
       }
     } else {      
-      thingsToDisplay.add(new FirstBoss(500.0, 350.0, 8000, 1, 1, player));
+      thingsToDisplay.add(new FirstBoss(500.0, 350.0, 2000, 1, 1, player));
       thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
       thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
     }
