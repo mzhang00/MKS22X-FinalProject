@@ -370,6 +370,8 @@ void draw() {
     textFont(mainMenuFont);
     textAlign(CENTER);
     text("Game Paused", 375, 175, 250, 100);
+    fill(220, 0, 0);
+    text("Room: " + room.getRoom(), 375, 225, 250, 100);
 
     fill(200);
     stroke(0);
