@@ -477,6 +477,7 @@ void draw() {
         gameOver = false;
         gameExists = true;
         clearEntities();
+        room.resetRoom();
         loadGame();
         mousex = null;
         mousey = null;
@@ -494,6 +495,7 @@ void draw() {
           gameExists = true;
           clearEntities();
           loadGame();
+          room.resetRoom();
         }
         mousex = null;
         mousey = null;
