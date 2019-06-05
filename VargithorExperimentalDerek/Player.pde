@@ -165,7 +165,10 @@ class Player extends Entity implements Alive {
       myBullet bullet = bullets.get(i);
       if (isColliding(bullet) || isColliding(bullet, bullet.getLifetime())) {
         if (bullet.getType().equals("enemy")) {
-          this.setHealth(this.getHealth() - bullet.getStrength());
+          if(this.getHealth() - bullet.getStrength() >= 0)
+            this.setHealth(this.getHealth() - bullet.getStrength());
+          else
+            this.setHealth(0);
           i--;
           bullets.remove(bullet);
         }

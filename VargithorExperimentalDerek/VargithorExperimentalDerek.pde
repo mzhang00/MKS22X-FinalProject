@@ -312,10 +312,7 @@ void draw() {
 
       textAlign(LEFT, TOP);
       String healthText;
-      if (player.getHealth() > 0)
-        healthText = "Health: " + player.getHealth();
-      else
-        healthText = "Health: 0";
+      healthText = "Health: " + player.getHealth();
       color healthTextColor = color(0, 255, 0);
       String strengthText = "Strength: " + player.getStrength();
       color strengthTextColor = color(0, 0, 255);
@@ -339,7 +336,9 @@ void draw() {
       else if (healthFraction <= 0.3 && healthFraction > 0.1)
         fill(255, 150, 0);
       else if (healthFraction <= 0.1)
+      {
         fill(255, 0, 0);
+      }
       rect(300, 260, dividingLineDistance, 10);
       //player.setHealth(46);
       fill(0);
