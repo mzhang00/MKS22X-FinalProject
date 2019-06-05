@@ -2,7 +2,6 @@ class myBullet extends Entity {
   Integer strength, size;
   Integer lifetime = 0;
   Integer lifeSpan = 1000000000;
-  Integer lifeSpanAllied = 0;
   Float speed, originalx, originaly;
   color bulletColor;
   String type = "enemy"; 
@@ -59,7 +58,6 @@ class myBullet extends Entity {
     model.setFill(bulletColor);
     shape(model);
     lifetime++;
-    lifeSpanAllied++;
   }
 
   void move() {
@@ -77,7 +75,7 @@ class myBullet extends Entity {
   Integer getLifetime() {
     return lifetime;
   }
-
+  
   Integer getSize() {
     return size;
   }
@@ -99,15 +97,9 @@ class myBullet extends Entity {
       bullets.remove(this);
       return true;
     }
-    if (lifetime >= lifeSpan) {
+    if (lifetime >= lifeSpan){
       bullets.remove(this);
       return true;
-    }
-    if (type.equals("allied")) {
-      if (lifeSpanAllied > 74) {
-        bullets.remove(this);
-        return true;
-      }
     }
     return false;
   }
