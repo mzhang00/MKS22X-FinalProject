@@ -776,7 +776,7 @@ class StationaryShooter extends Monster {
       {
         //circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets)
         //rotatingTentaclesShoot(10, 5.0, 5, 100, 8, PI/240);//rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
-        circleShootTelescope(aimAtPlayer(), 2, 8.0, 5, 50, 16, 8);
+        circleShootTelescope(aimAtPlayer(), 5, 8.0, 5, 50, 16, 8);
       }
       detectPlayer(400.0);
     }
@@ -863,7 +863,7 @@ class FirstBoss extends Monster {
         }
         if ((frameCount - frameOnEncounter) % 40 == 0)
         {
-          circleLeadPlayerShoot(200, 2.0, 15, 60, 40);
+          circleLeadPlayerShoot(80, 2.0, 15, 60, 40);
         }
         if ((frameCount - frameOnEncounter) % 45 == 0)
         {
