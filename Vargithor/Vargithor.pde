@@ -159,9 +159,10 @@ void keyPressed() {
   {
     switch(key)
     {
-      case 'g':
+    case 'g':
       player.setHealth(9500);
       player.setStrength(10);
+      break;
     case 'r' :
       player.dodge = true;
       break;
