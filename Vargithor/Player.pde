@@ -40,7 +40,7 @@ class Player extends Entity implements Alive {
       this.die();
     }
     takeDamage();
-    regenerateHealth();
+    //regenerateHealth();
     timeAfterShot++;
   }
   
