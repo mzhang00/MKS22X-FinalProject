@@ -644,10 +644,7 @@ class Chaser extends Monster {
   }
 
   void move() {
-    if (inRange(50.0))
-      runFromPlayer();
-    else
-      followPlayer();
+    followPlayer();
   }
 
   void shoot() {
