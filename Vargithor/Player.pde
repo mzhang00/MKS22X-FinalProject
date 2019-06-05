@@ -27,6 +27,10 @@ class Player extends Entity implements Alive {
       }
     }
   }
+  
+  Integer getID() {
+    return 1;
+  }
 
   void display() {
     rectMode(CENTER);

@@ -42,6 +42,10 @@ class Entity {
   Integer getHealth() {
     return 0;
   }
+  
+  Integer getID() {
+    return 0;
+  }
 
   void display() {
     ellipse(getX(), getY(), 10, 10);
