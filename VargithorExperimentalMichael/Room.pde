@@ -23,6 +23,14 @@ class Room {
       return 750 - (float)(Math.random() * 246 + 100);
     }
   }
+  
+  int getRoom(){
+    return roomNumber;
+  }
+  
+  void increaseRoom(){
+    roomNumber++;
+  }
 
   void createRoom() {
     if (roomNumber % 5 != 0) {
