@@ -1,7 +1,9 @@
 # MKS22X-FinalProject
 AP CS Final Project
 
-Vargithor is a bullet hell game. To run, double click the Vargithor folder, double click Varigthor.pde, and when the code file opens, go to the top left corner where you see the play button. Click it to run the game. Enjoy!
+Project description:
+
+Vargithor is a bullet hell game. To run, double click the Vargithor folder, double click Varigthor.pde, and when the code file opens, go to the top left corner where you see the play button. Click it to run the game. Press the How-To button to look at the keybinds and press New Game to start playing. Enjoy!
 
 Development log:
 
