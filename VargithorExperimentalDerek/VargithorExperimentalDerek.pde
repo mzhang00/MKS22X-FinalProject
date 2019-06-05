@@ -18,6 +18,7 @@
 
 PFont gameMenuFont, mainMenuFont, loreScreenFont;
 boolean gameMenu, howToScreen, loreScreen, gamePaused;
+boolean gameExists = false;
 boolean gameIsRunning = false;
 boolean mainMenu = true;
 boolean gameOver = false;
@@ -63,7 +64,7 @@ void loadGame() {
 
   thingsToShoot.add(player);
   //thingsToShoot.add(circler);
-  thingsToShoot.add(stationaryShooter);
+  //thingsToShoot.add(stationaryShooter);
   thingsToShoot.add(firstBoss);
 }
 
@@ -262,7 +263,7 @@ void setup() {
 
 //DRAW
 void draw() {
-  System.out.println(frameRate);
+  //System.out.println(frameRate);
   //System.out.println(millis());
   //System.out.println(thingsToDisplay);
   //System.out.println(thingsToMove);
@@ -451,14 +452,25 @@ void draw() {
         mainMenu = false;
         gameIsRunning = true;
         gameOver = false;
-        mousex = null;
-        mousey = null;
         clearEntities();
         loadGame();
+        mousex = null;
+        mousey = null; 
       } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
       {
-        mainMenu = false;
-        gameIsRunning = true;
+        if(gameExists)
+        {
+          mainMenu = false;
+          gameIsRunning = true;
+        }
+        else
+        {
+          mainMenu = false;
+          gameIsRunning = true;
+          gameOver = false;
+          clearEntities();
+          loadGame();
+        }
         mousex = null;
         mousey = null;
       } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 425 && mousey <= 425 + 100)
