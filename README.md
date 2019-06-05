@@ -4,7 +4,10 @@ Development log:
 
 June 4th 2019:
 =======================================================================================
-Derek lao:
+Michael Zhang:
+* Update tmrw
+
+Derek Lao:
 * Added bulletLife, bulletSpeed, bulletStrength, to all monster shoot methods
 * Added ringOfRingsShoot, where the monster would create a ring of entities (not visible) and those entities would shoot circular
 * Added lifeSpan for bullets, reason being that the bullets can despawn after a limited amount of time, giving them range and also preventing an overload of bullets on the screen slowing down the game
