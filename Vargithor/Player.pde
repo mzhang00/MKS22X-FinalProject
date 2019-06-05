@@ -63,11 +63,11 @@ class Player extends Entity implements Alive {
       }
     }
     if (this.getY() <= 360 && this.getY() >= 320 && this.getX() >= 980) {
-      //if (thingsToDisplay.size() == 1) {
+      if (thingsToDisplay.size() == 1) {
         room.increaseRoom();
         this.setX(15.0);
-        //room.createRoom();
-      //}
+        room.createRoom();
+      }
     }
   }
 
