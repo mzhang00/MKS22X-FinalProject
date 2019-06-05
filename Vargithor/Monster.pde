@@ -585,7 +585,7 @@ class Chaser extends Monster {
   }
 
   void shoot() {
-    super.shoot();
+    //spreadShootAtPlayer(10, 5.0, 5, 20)//spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets)
   }
 }
 
@@ -764,12 +764,11 @@ class FirstBoss extends Monster {
         if ((frameCount - frameOnEncounter) % 10 == 0)
         {
           ringOfSpreadShooting(0.0, 20, 4.0, 10, 16, 200.0, PI/2 + PI/10, 10, 2);
-          //ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)
-          
+          //ringOfSpreadShooting(Float headingFromZero, Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float rangeBigRing, Float angleOfSpread, Integer numberOfShooters, Integer bulletsPerShooter)  
         }
         if ((frameCount - frameOnEncounter) % 40 == 0)
         {
-          circleLeadPlayerShoot(200, 2.0, 15, 50, 40);
+          circleLeadPlayerShoot(200, 2.0, 15, 60, 40);
         }
         if ((frameCount - frameOnEncounter) % 45 == 0)
         {
