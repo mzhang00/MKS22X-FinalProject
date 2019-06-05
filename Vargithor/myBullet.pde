@@ -104,7 +104,7 @@ class myBullet extends Entity {
       return true;
     }
     if (type.equals("allied")) {
-      if (lifeSpanAllied >= 75) {
+      if (lifeSpanAllied > 74) {
         bullets.remove(this);
         return true;
       }
