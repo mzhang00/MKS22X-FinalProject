@@ -37,6 +37,9 @@ class Room {
   }
 
   void createRoom() {
+    if (roomNumber != 1 && roomNumber % 5 == 1) {
+      player.setStrength(player.getStrength() + 1);
+    }
     if (roomNumber % 5 != 0) {
       enemies = (int) (Math.random() * 5) + 3;
       for (int i = 0; i < enemies; i++) {
@@ -62,7 +65,7 @@ class Room {
           thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
         }
       }
-    } else {
+    } else {      
       thingsToDisplay.add(new FirstBoss(500.0, 350.0, 100, 1, 1, player));
       thingsToMove.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
       thingsToShoot.add(thingsToDisplay.get(thingsToDisplay.size() - 1));
