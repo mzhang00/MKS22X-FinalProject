@@ -22,6 +22,7 @@ boolean gameExists = false;
 boolean gameIsRunning = false;
 boolean mainMenu = true;
 boolean gameOver = false;
+boolean stopYet = true;
 Float mousex;
 Float mousey;
 ArrayList<myBullet> bullets = new ArrayList<myBullet>(); 
@@ -82,7 +83,7 @@ interface Alive {
 
 //MAKEGRID
 void makeGrid() {//33 and 36 for vertical, 47 and 52 for horizontal
-  stroke(200);
+  stroke(250);
   for (int i = 0; i < width/10; i++) {
     line(i * 10, 0, i * 10, height);
   }
@@ -302,6 +303,20 @@ void draw() {
       }
     }
 
+    for (int i = 0; i < thingsToDisplay.size(); i++) {
+      if (thingsToDisplay.get(i).getID() == 1) {
+        stopYet = false;
+      } else {
+      }
+    }
+
+    if (stopYet) {
+      gameIsRunning = false;
+      gameOver = true;
+    }else{
+      stopYet = !stopYet;
+    }
+
     if (gameMenu)
     {
       fill(255, 100);
@@ -355,7 +370,7 @@ void draw() {
 
       fill(energyTextColor);
       text(energyText, 300, 420, 500, 40);
-      
+
       fill(roomTextColor);
       text(roomText, 300, 465, 500, 40);
     }
@@ -462,17 +477,17 @@ void draw() {
         gameOver = false;
         gameExists = true;
         clearEntities();
+        room.resetRoom();
         loadGame();
         mousex = null;
-        mousey = null; 
+        mousey = null;
       } else if (mousex >= 375 && mousex <= 375 + 250 && mousey >= 300 && mousey <= 300 + 100)
       {
-        if(gameExists)
+        if (gameExists)
         {
           mainMenu = false;
           gameIsRunning = true;
-        }
-        else
+        } else
         {
           mainMenu = false;
           gameIsRunning = true;
@@ -480,6 +495,7 @@ void draw() {
           gameExists = true;
           clearEntities();
           loadGame();
+          room.resetRoom();
         }
         mousex = null;
         mousey = null;

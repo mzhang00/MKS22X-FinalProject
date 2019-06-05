@@ -24,6 +24,10 @@ class Room {
     }
   }
 
+  void resetRoom() {
+    roomNumber = 1;
+  }
+
   int getRoom() {
     return roomNumber;
   }

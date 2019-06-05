@@ -776,7 +776,7 @@ class StationaryShooter extends Monster {
       {
         //circleLeadPlayerShoot(5, 3.0, 10, 100, 6);//circleRandomAimShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets)
         //rotatingTentaclesShoot(10, 5.0, 5, 100, 8, PI/240);//rotatingTentaclesShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Integer numberOfBullets, Float angularVelocity)
-        circleShootTelescope(aimAtPlayer(), 10, 8.0, 5, 50, 16, 8);
+        circleShootTelescope(aimAtPlayer(), 2, 8.0, 5, 50, 16, 8);
       }
       detectPlayer(400.0);
     }
