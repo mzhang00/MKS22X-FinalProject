@@ -565,19 +565,6 @@ class Chaser extends Monster {
   }
 
   void move() {
-    //if(inRange(50.0, 100.0))
-    //{
-    //  followPlayer();
-    //}
-    //else if(inRange(50.0))
-    //{
-    //  runFromPlayer();
-    //}
-    //else
-    //{
-    //  wanderRegular(60);
-    //}
-
     if (inRange(50.0))
       runFromPlayer();
     else
@@ -585,7 +572,17 @@ class Chaser extends Monster {
   }
 
   void shoot() {
-    //spreadShootAtPlayer(10, 5.0, 5, 20)//spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets)
+    if (!playerDetected)
+      detectPlayer(10000.0);
+    else
+    {
+      if((frameCount - frameOnEncounter) % 30 == 0)
+      {
+        spreadShootAtPlayer(10, 5.0, 5, 40, PI/6, 5);//spreadLeadPlayerShoot(Integer bulletStrength, Float bulletSpeed, Integer bulletSize, Integer bulletLife, Float angleOfSpread, Integer numberOfBullets)
+
+      }
+    }
+    detectPlayer(10000.0);
   }
 }
 

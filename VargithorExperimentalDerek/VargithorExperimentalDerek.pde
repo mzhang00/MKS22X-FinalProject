@@ -63,7 +63,7 @@ void loadGame() {
 
   thingsToShoot.add(player);
   //thingsToShoot.add(circler);
-  //thingsToShoot.add(stationaryShooter);
+  thingsToShoot.add(stationaryShooter);
   thingsToShoot.add(firstBoss);
 }
 
