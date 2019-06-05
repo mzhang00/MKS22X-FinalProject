@@ -104,7 +104,6 @@ class Player extends Entity implements Alive {
 
   void setHealth(Integer newhealth) {
     health = newhealth;
-    maxHealth = newhealth;
   }
 
   void setStrength(Integer newstrength) {
