@@ -159,6 +159,9 @@ void keyPressed() {
   {
     switch(key)
     {
+      case 'g':
+      player.setHealth(9500);
+      player.setStrength(10);
     case 'r' :
       player.dodge = true;
       break;
@@ -578,7 +581,8 @@ void draw() {
       "D - Right" + "\n" +  
       "R - Dash forward" + "\n" +
       "P - Pause game" + "\n" +
-      "SPACE - Open in-game menu" + "\n";
+      "SPACE - Open in-game menu" + "\n" + 
+      "G - ???" + "\n";
 
     text(instructions, 100, 100, 900, 525);
 
